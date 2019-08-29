@@ -16,6 +16,12 @@
   "devDependencies": {
     "@types/node": "^12.7.2",
     "@types/react": "^16.9.2",
+    "husky": "^3.0.4",
     "typescript": "^3.6.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "touch out/.nojekyll && touch out/CNAME && echo \"twitchsocal.com\" >> out/CNAME"
+    }
   }
 }
