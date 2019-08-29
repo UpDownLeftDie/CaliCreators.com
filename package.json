@@ -21,7 +21,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "touch out/.nojekyll && touch out/CNAME && echo \"twitchsocal.com\" >> out/CNAME"
+      "pre-commit": "touch out/.nojekyll && touch out/CNAME && echo \"twitchsocal.com\" >> out/CNAME && git add ."
     }
   }
 }
