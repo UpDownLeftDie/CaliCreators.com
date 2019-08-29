@@ -1,0 +1,21 @@
+{
+  "name": "twitch-socal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "export": "npm run build && next export",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "9.0.5",
+    "react": "16.9.0",
+    "react-dom": "16.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.2",
+    "@types/react": "^16.9.2",
+    "typescript": "^3.6.2"
+  }
+}
