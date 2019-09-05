@@ -14,7 +14,9 @@ const Home = () => (
     </Head>
 
     <div className='hero'>
-      <h1 className='title'>Twitch SoCal</h1>
+      <span className="title-wrapper">
+        <h1 className='title'>Twitch SoCal</h1>
+      </span>
       <p className='description'>
         We're the meetup group for Twitch in Southern California!<br/>Find the closest one to you or come to all our events!
       </p>
@@ -52,7 +54,17 @@ const Home = () => (
         line-height: 1.15;
         font-size: 48px;
         font-family: 'Knewave', sans-serif;
-        text-shadow: 0 5px 5px rgba(0,0,0,0.4);
+        animation: colorwipe 6s infinite;
+        background: rgb(255,255,255);
+        background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 10%, rgba(131,58,180,1) 25%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 75%, rgba(255,255,255,1) 90%, rgba(255,255,255,1) 100%);
+        background-size: 900%;
+        background-position: 0%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .title-wrapper {
+        filter: drop-shadow(0 5px 5px rgba(0,0,0,0.4));
+        display: block;
       }
       .title,
       .description {
@@ -85,6 +97,11 @@ const Home = () => (
             flex-direction: column;
             align-items: center;
           }
+      }
+      @keyframes colorwipe {
+        0% { background-position: 0%; }
+        49% { background-position: 0%; }
+        100% {background-position: 100%; }
       }
     `}</style>
   </div>
