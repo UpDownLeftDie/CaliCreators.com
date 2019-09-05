@@ -4,7 +4,9 @@ import Head from 'next/head'
 import Card from '../components/card'
 
 const Home = () => (
-  <div>
+  <div style={{
+    minHeight: '100%', position: 'absolute', width: '100%'
+  }}>
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>TwtichSoCal.com</title>
@@ -28,10 +30,14 @@ const Home = () => (
     </div>
 
     <style jsx>{`
+      :global(html, body) {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
       :global(body) {
         background-color: #5F3F9F;
         background-image: url('/static/cubes_@2X.png');
-        margin: 0;
         font-family: 'Kanit', sans-serif, Avenir Next, Avenir,
           Helvetica, sans-serif;
       }
@@ -66,10 +72,11 @@ const Home = () => (
       }
       .footer {
         color: #ddd;
-        position: relative;
+        position: absolute;
         bottom: 0;
+        width: 100%;
         text-align: center;
-        font-size: 100;
+        font-weight: 100;
         font-style: italic;
         font-family: sans-serif;
       }

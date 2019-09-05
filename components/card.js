@@ -36,7 +36,7 @@ const Card = (props) => {
       <style jsx>{`
         .card {
           padding: 18px;
-          width: 180px;
+          width: 200px;
           height: 300px;
           color: #fff;
           text-align: left;
