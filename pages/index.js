@@ -13,9 +13,13 @@ const Home = () => (
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>{siteTitle}.com</title>
       <link href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap" rel="stylesheet"></link>
-      <meta property="og:site_name" content={siteTitle}></meta>
+      <meta property="og:title" content={siteTitle}></meta>
+      <meta property="og:url" content={`https://${siteTitle.toLowerCase().replace(' ', '')}.com`}></meta>
       <meta property="og:image" content="/static/twitchsocal.gif"></meta>
+      <meta property="og:image:width" content="800"></meta>
+      <meta property="og:image:height" content="800"></meta>
       <meta property="og:description" content={description.replace('<br/>', ' ')}></meta>
+      <meta property="og:type" content="website" />
       <meta property="og:locale" content="en_US" />
     </Head>
 
