@@ -4,6 +4,7 @@ import Card from '../components/card'
 
 const siteTitle = "Twitch SoCal";
 const description = "We're the meetup groups for Twitch in Southern California!<br/>Find the closest one to you or come to all our events!";
+const url = "https://twitchsocal.com";
 
 const Home = () => (
   <div style={{
@@ -14,8 +15,8 @@ const Home = () => (
       <title>{siteTitle}.com</title>
       <link href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap" rel="stylesheet"></link>
       <meta property="og:title" content={siteTitle}></meta>
-      <meta property="og:url" content={`https://${siteTitle.toLowerCase().replace(' ', '')}.com`}></meta>
-      <meta property="og:image" content="/static/twitchsocal.gif"></meta>
+      <meta property="og:url" content={url}></meta>
+      <meta property="og:image" content={`${url}/static/twitchsocal.gif`}></meta>
       <meta property="og:image:width" content="800"></meta>
       <meta property="og:image:height" content="800"></meta>
       <meta property="og:description" content={description.replace('<br/>', ' ')}></meta>
