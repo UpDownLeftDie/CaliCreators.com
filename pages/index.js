@@ -1,7 +1,9 @@
 import React from 'react'
-import Link from 'next/link'
 import Head from 'next/head'
 import Card from '../components/card'
+
+const siteTitle = "Twitch SoCal";
+const description = "We're the meetup groups for Twitch in Southern California!<br/>Find the closest one to you or come to all our events!";
 
 const Home = () => (
   <div style={{
@@ -9,17 +11,19 @@ const Home = () => (
   }}>
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>TwtichSoCal.com</title>
+      <title>{siteTitle}.com</title>
       <link href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap" rel="stylesheet"></link>
+      <meta property="og:site_name" content={siteTitle}></meta>
+      <meta property="og:image" content="/static/twitchsocal.gif"></meta>
+      <meta property="og:description" content={description.replace('<br/>', ' ')}></meta>
+      <meta property="og:locale" content="en_US" />
     </Head>
 
     <div className='hero'>
       <span className="title-wrapper">
-        <h1 className='title'>Twitch SoCal</h1>
+        <h1 className='title'>{siteTitle}</h1>
       </span>
-      <p className='description'>
-        We're the meetup group for Twitch in Southern California!<br/>Find the closest one to you or come to all our events!
-      </p>
+      <p className='description'  dangerouslySetInnerHTML={{__html: description}}></p>
 
       <div className='row'>
         <Card name={"Twitch La"} /> 
