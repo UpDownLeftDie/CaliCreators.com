@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Head from 'next/head'
-import Nav from '../components/nav'
+import Card from '../components/card'
 
 const Home = () => (
   <div>
@@ -18,33 +18,19 @@ const Home = () => (
       </p>
 
       <div className='row'>
-        <Link href='https://meetups.twitch.tv/los-angeles/'>
-          <a className='card'>
-            <h3>Twitch LA</h3>
-            <h4>Next Event</h4>
-            <p>TBD</p>
-          </a>
-        </Link>
-        <Link href='https://www.meetup.com/ocstreamers'>
-          <a className='card'>
-            <h3>OC Streamers</h3>
-            <h4>Next Event</h4>
-            <p>9/21<br />Beach Cleanup</p>
-          </a>
-        </Link>
-        <Link href='https://meetups.twitch.tv/san-diego/'>
-          <a className='card'>
-            <h3>Twitch SD</h3>
-            <h4>Next Event</h4>
-            <p>TDB</p>
-          </a>
-        </Link>
+        <Card name={"Twitch La"} /> 
+        <Card name={"OC Streamers"} /> 
+        <Card name={"Twitch SD"} /> 
       </div>
+    </div>
+    <div className='footer'>
+        <p>This site is not affiliated or endorsed by Twitch or Meetup.</p>
     </div>
 
     <style jsx>{`
       :global(body) {
         background-color: #5F3F9F;
+        background-image: url('/static/cubes_@2X.png');
         margin: 0;
         font-family: 'Kanit', sans-serif, Avenir Next, Avenir,
           Helvetica, sans-serif;
@@ -78,41 +64,20 @@ const Home = () => (
         flex-direction: row;
         justify-content: space-around;
       }
-      .card {
-        padding: 18px;
-        width: 180px;
-        height: 300px;
-        color: #fff;
-        text-align: left;
-        text-decoration: none;
-        background: #660000;
-        transition: filter 150ms, transform 200ms;
-        filter: drop-shadow(0 5px 3px rgba(0,0,0,0.4));
-        border-radius: 20px;
+      .footer {
+        color: #ddd;
+        position: relative;
+        bottom: 0;
+        text-align: center;
+        font-size: 100;
+        font-style: italic;
+        font-family: sans-serif;
       }
-      .card:hover {
-        transform: scale(1.06);
-        filter: drop-shadow(0 8px 6px rgba(0,0,0,0.3));
-      }
-      .card h3 {
-        margin: 0;
-        color: #fff;
-        font-size: 22px;
-        font-weight: 700;
-        position: absolute;
-        bottom: 10px;
-      }
-      .card h4 {
-        font-weight: 700;
-        font-size: 20px;
-        margin: 12px 0 0;
-      }
-      .card p {
-        margin: 0;
-        padding: 6px 0 0;
-        font-size: 18px;
-        color: #fff;
-        font-weight: 400;
+      @media (max-width: 840px) {
+          .row {
+            flex-direction: column;
+            align-items: center;
+          }
       }
     `}</style>
   </div>
