@@ -23,7 +23,7 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
   const nextEventInfo = findNextEvent(city, upcomingEvents);
   let nextEvent = {
     title: 'TBA',
-    date: '',
+    date: 'Click here for updates',
     url: href
   }
   if (nextEventInfo) {
@@ -44,7 +44,7 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
           <h3>{groupName}</h3>
           <h4>Next Event</h4>
           <h5 className="event-title">{nextEvent.title}</h5>
-          {nextEvent.date ? <span className="event-date">{nextEvent.date}</span> : '' }
+          <span className="event-date">{nextEvent.date}</span>
         </div>
       </a>  
       <style jsx>{`
