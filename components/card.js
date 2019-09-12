@@ -3,9 +3,9 @@ import moment from 'moment'
 // import Link from 'next/link'
 
 const images = [
-  {groupName: 'Twitch LA', path: 'la.jpg'},
-  {groupName: 'OC Streamers', path: 'oc.jpg'},
-  {groupName: 'Twitch SD', path: 'sd.jpg'}
+  {groupName: 'Twitch LA', path: 'la.webp'},
+  {groupName: 'OC Streamers', path: 'oc.webp'},
+  {groupName: 'Twitch SD', path: 'sd.webp'}
 ];
 
 const findNextEvent = (city, upcomingEvents) => {

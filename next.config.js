@@ -1,3 +1,3 @@
 module.exports = {
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/TwitchSoCal.com' : '',
-}
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/TwitchSoCal.com' : ''
+};
