@@ -73,13 +73,13 @@ const Home = ({upcomingEvents}) => {
         .title {
           margin: 0;
           width: 100%;
-          padding-top: 80px;
+          margin-top: 80px;
           line-height: 1.15;
           font-size: 48px;
           font-family: 'Knewave', sans-serif;
           animation: colorwipe 6s infinite;
           background: rgb(255,255,255);
-          background: linear-gradient(6deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 15%, rgba(131,58,180,1) 25%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 75%, rgba(255,255,255,1) 85%, rgba(255,255,255,1) 100%);
+          background: linear-gradient(15deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 15%, rgba(131,58,180,1) 25%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 75%, rgba(255,255,255,1) 80%, rgba(255,255,255,1) 100%);
           background-size: 900%;
           background-position: 0%;
           -webkit-background-clip: text;
