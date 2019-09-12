@@ -1,39 +1,54 @@
 import React from 'react'
-import Link from 'next/link'
-
-const links = [
-  { href: 'https://meetups.twitch.tv/los-angeles/', name: 'Twitch LA' },
-  { href: 'https://www.meetup.com/ocstreamers', name: 'OC Streamers' },
-  { href: 'https://meetups.twitch.tv/san-diego/', name: 'Twitch SD' }
-];
+import moment from 'moment'
+// import Link from 'next/link'
 
 const images = [
-  {name: 'Twitch LA', path: 'la.jpg'},
-  {name: 'OC Streamers', path: 'oc.jpg'},
-  {name: 'Twitch SD', path: 'sd.jpg'}
+  {groupName: 'Twitch LA', path: 'la.jpg'},
+  {groupName: 'OC Streamers', path: 'oc.jpg'},
+  {groupName: 'Twitch SD', path: 'sd.jpg'}
 ];
 
-const Card = (props) => {
-  let link = links.find(l => l.name.toLowerCase() === props.name.toLowerCase());
-  let img = images.find(i => i.name.toLowerCase() === props.name.toLowerCase());
-  if (!link) link = { href:'https://meetups.twitch.tv/', name: 'Twitch Meetups' };
+const findNextEvent = (city, upcomingEvents) => {
+  return upcomingEvents.find(event => {
+    if (event.chapter.city === city) return true;
+    return false;
+  })
+}
 
+const Card = ({groupName, city, href, upcomingEvents}) => {
+  let img = images.find(i => i.groupName.toLowerCase() === groupName.toLowerCase());
   let backgroundImage = '';
   if (img) backgroundImage = `background-image: url('/static/${img.path}');`;
 
-  let nextEventDate = 'TBD';
-  // TODO: get next event info
+  const nextEventInfo = findNextEvent(city, upcomingEvents);
+  let nextEvent = {
+    title: 'TBA',
+    date: '',
+    url: href
+  }
+  if (nextEventInfo) {
+    const {url, start_date, title} = nextEventInfo;
+
+    nextEvent = {
+      ...nextEvent,
+      title,
+      date: moment(start_date).format("MMM Do YYYY"),
+      url
+    }
+  }
 
   return (
     <>
-      <Link href={link.href} name={link.name}>
-        <a className='card'>
-          <h3>{link.name}</h3>
+      <a href={nextEvent.url} name={groupName}>
+        <div className='card'>
+          <h3>{groupName}</h3>
           <h4>Next Event</h4>
-          <p>{nextEventDate}</p>
-        </a>
-      </Link>  
+          <h5 className="event-title">{nextEvent.title}</h5>
+          {nextEvent.date ? <span className="event-date">{nextEvent.date}</span> : '' }
+        </div>
+      </a>  
       <style jsx>{`
+        a:link { text-decoration: none }
         .card {
           padding: 18px;
           width: 200px;
@@ -67,16 +82,23 @@ const Card = (props) => {
           font-size: 20px;
           margin: 12px 0 0;
         }
-        .card p {
-          margin: 0;
-          padding: 6px 0 0;
+        .card .event-date {
           font-size: 18px;
           color: #fff;
           font-weight: 400;
+          text-decoration: overline;
+          margin-top: 8px;
+          display: block;
+        }
+        .card h5 {
+          font-weight: 700;
+          font-size: 2em;
+          margin: 12px 0 0;
         }
         @media (max-width: 840px) {
+          a { width: 80% }
           .card {
-            width: 80%;
+            width: auto;
             margin-bottom: 25px;
           }
           .card h3 {

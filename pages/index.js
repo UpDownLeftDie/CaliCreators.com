@@ -1,19 +1,31 @@
 import React from 'react'
 import Head from 'next/head'
 import Card from '../components/card'
+import fetch from 'isomorphic-unfetch';
 
 const siteTitle = "Twitch SoCal";
 const description = "We're the meetup groups for Twitch in Southern California!<br/>Find the closest one to you or come to all our events!";
 const url = "https://twitchsocal.com";
 
-const Home = () => (
+const tempOCMeetupEvent = [
+  {
+    chapter: {
+      city: "Orange County"
+    },
+    url: "https://www.meetup.com/ocstreamers/events/262088356/",
+    start_date: "2019-09-21T09:00:00-07:00",
+    title:"Coastal Cleanup Day"
+  }
+];
+
+const Home = ({upcomingEvents}) => (
   <div style={{
     minHeight: '100%', position: 'absolute', width: '100%'
   }}>
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>{siteTitle}.com</title>
-      <link href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap" rel="stylesheet"></link>
+      <link href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap" rel="preload" as="style"></link>
       <meta property="og:title" content={siteTitle}></meta>
       <meta property="og:url" content={url}></meta>
       <meta property="og:image" content={`${url}/static/twitchsocal.gif`}></meta>
@@ -28,12 +40,12 @@ const Home = () => (
       <span className="title-wrapper">
         <h1 className='title'>{siteTitle}</h1>
       </span>
-      <p className='description'  dangerouslySetInnerHTML={{__html: description}}></p>
+      <p className='description' dangerouslySetInnerHTML={{__html: description}}></p>
 
       <div className='row'>
-        <Card name={"Twitch La"} /> 
-        <Card name={"OC Streamers"} /> 
-        <Card name={"Twitch SD"} /> 
+        <Card groupName={"Twitch La"} city={"Los Angeles"} href={"https://meetups.twitch.tv/los-angeles/"} upcomingEvents={upcomingEvents} /> 
+        <Card groupName={"OC Streamers"} city={"Orange County"} href={"https://www.meetup.com/ocstreamers"} upcomingEvents={tempOCMeetupEvent} /> 
+        <Card groupName={"Twitch SD"} city={"San Diego"} href={"https://meetups.twitch.tv/san-diego/"} upcomingEvents={upcomingEvents} /> 
       </div>
     </div>
     <div className='footer'>
@@ -65,7 +77,7 @@ const Home = () => (
         font-family: 'Knewave', sans-serif;
         animation: colorwipe 6s infinite;
         background: rgb(255,255,255);
-        background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 10%, rgba(131,58,180,1) 25%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 75%, rgba(255,255,255,1) 90%, rgba(255,255,255,1) 100%);
+        background: linear-gradient(6deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 15%, rgba(131,58,180,1) 25%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 75%, rgba(255,255,255,1) 85%, rgba(255,255,255,1) 100%);
         background-size: 900%;
         background-position: 0%;
         -webkit-background-clip: text;
@@ -109,11 +121,21 @@ const Home = () => (
       }
       @keyframes colorwipe {
         0% { background-position: 0%; }
-        49% { background-position: 0%; }
+        35% { background-position: 0%; }
         100% {background-position: 100%; }
       }
     `}</style>
   </div>
 )
+
+Home.getInitialProps = async() => {
+  const res = await fetch(
+    'https://meetups.twitch.tv/api/search/?result_types=upcoming_event&country_code=Earth', 
+    {
+      mode: 'cors',
+    });
+    const json = await res.json()
+    return { upcomingEvents: json.results }
+}
 
 export default Home
