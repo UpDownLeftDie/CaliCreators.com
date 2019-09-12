@@ -26,7 +26,7 @@ const Home = ({upcomingEvents}) => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{siteTitle}.com</title>
-        <link href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap" rel="preload" as="style"></link>
+        <link href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap" rel="stylesheet"></link>
         <meta name="Description" content={description.replace('<br/>', ' ')}></meta>
         <meta property="og:title" content={siteTitle}></meta>
         <meta property="og:url" content={url}></meta>
