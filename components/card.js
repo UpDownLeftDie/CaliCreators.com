@@ -56,7 +56,7 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
           color: #fff;
           text-align: left;
           text-decoration: none;
-          background: #660000;
+          background: #3D2769;
           ${backgroundImage}
           background-size: cover;
           background-position: center;

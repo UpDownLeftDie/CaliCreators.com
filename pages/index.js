@@ -154,7 +154,7 @@ function mergeEventLists(twitch, meetup) {
       title: event.name
     }
   });
-  
+
   return eventList.concat(meetupList);
 }
 
