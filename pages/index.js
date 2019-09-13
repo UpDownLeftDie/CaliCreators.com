@@ -7,17 +7,6 @@ const siteTitle = "Twitch SoCal";
 const description = "We're the meetup groups for Twitch in Southern California!<br/>Find the closest one to you or come to all our events!";
 const url = "https://twitchsocal.com";
 
-const tempOCMeetupEvent = [
-  {
-    chapter: {
-      city: "Orange County"
-    },
-    url: "https://www.meetup.com/ocstreamers/events/262088356/",
-    start_date: "2019-09-21T09:00:00-07:00",
-    title:"Coastal Cleanup Day"
-  }
-];
-
 const Home = ({upcomingEvents}) => {
   return (
     <div style={{
@@ -46,7 +35,7 @@ const Home = ({upcomingEvents}) => {
 
         <div className='row'>
           <Card groupName={"Twitch La"} city={"Los Angeles"} href={"https://meetups.twitch.tv/los-angeles/"} upcomingEvents={upcomingEvents} /> 
-          <Card groupName={"OC Streamers"} city={"Orange County"} href={"https://www.meetup.com/ocstreamers"} upcomingEvents={tempOCMeetupEvent} /> 
+          <Card groupName={"OC Streamers"} city={"Orange"} href={"https://www.meetup.com/ocstreamers"} upcomingEvents={upcomingEvents} /> 
           <Card groupName={"Twitch SD"} city={"San Diego"} href={"https://meetups.twitch.tv/san-diego/"} upcomingEvents={upcomingEvents} /> 
         </div>
       </div>
@@ -132,14 +121,41 @@ const Home = ({upcomingEvents}) => {
 }
 
 Home.getInitialProps = async() => {
+  const meetupComReq = fetch('https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false',
+    {
+      mode: 'cors',
+    });
 
-  const res = await fetch(
+  const twitchReq = fetch(
     'https://meetups.twitch.tv/api/search/?result_types=upcoming_event&country_code=Earth', 
     {
       mode: 'cors',
     });
-    const json = await res.json()
-    return { upcomingEvents: json.results }
+  
+  const meetupCom = await meetupComReq;
+  const twitch = await twitchReq;
+
+  const meetupComJson = await meetupCom.json();
+  const twitchJson = await twitch.json();
+  const upcomingEvents = mergeEventLists(twitchJson, meetupComJson);
+  return { upcomingEvents }
+}
+
+function mergeEventLists(twitch, meetup) {
+  let eventList = twitch.results;
+  const meetupList = meetup.map(event => {
+    const city = event.group.localized_location.split(',')[0];
+    return {
+      chapter: {
+        city
+      },
+      url: event.link,
+      start_date: event.local_date,
+      title: event.name
+    }
+  });
+  
+  return eventList.concat(meetupList);
 }
 
 export default Home
