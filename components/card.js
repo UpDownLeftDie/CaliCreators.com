@@ -64,6 +64,7 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
           filter: drop-shadow(0 5px 3px rgba(0,0,0,0.4));
           border-radius: 20px;
           text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+          word-break: break-word;
         }
         .card:hover {
           transform: scale(1.06);
@@ -90,10 +91,13 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
           margin-top: 8px;
           display: block;
         }
-        .card h5 {
+        .card .event-title {
           font-weight: 700;
           font-size: 2em;
           margin: 12px 0 0;
+          overflow: hidden;
+          max-height: 180px;
+          line-height: 35px;
         }
         @media (max-width: 840px) {
           a { width: 80% }
@@ -106,6 +110,9 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
           }
           .card h4 {
             font-size: 28px;
+          }
+          .card .event-title {
+            max-height: 145px;
           }
           .card p {
             font-size: 26px;
