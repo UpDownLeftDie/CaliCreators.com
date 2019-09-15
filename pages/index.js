@@ -124,7 +124,7 @@ Home.getInitialProps = async() => {
     });
 
   const twitchReq = fetch(
-    'https://meetups.twitch.tv/api/search/?result_types=upcoming_event&country_code=Earth', 
+    `https://meetups.twitch.tv/api/search/?result_types=upcoming_event&country_code=Earth&${Math.floor(Math.random() * 1000)}`,
     {
       mode: 'cors',
     });
