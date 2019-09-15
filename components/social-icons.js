@@ -4,7 +4,7 @@ const SocialIcons = ({links}) => {
 
     const icons = links.map(link => {
         return (
-            <a href={link.href} key={link.site} className="sociallink">
+            <a href={link.href} key={link.site} target="_blank">
                 <i className={`fab fa-${link.site}`} />
             </a>
         );
