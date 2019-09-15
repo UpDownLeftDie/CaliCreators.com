@@ -1,11 +1,50 @@
 import React from 'react'
 import moment from 'moment'
-// import Link from 'next/link'
+import SocialIcons from '../components/social-icons'
 
-const images = [
-  {groupName: 'Twitch LA', path: 'la.webp'},
-  {groupName: 'OC Streamers', path: 'oc.webp'},
-  {groupName: 'Twitch SD', path: 'sd.webp'}
+const groupsInfo = [
+  { groupName: 'Twitch LA', path: 'la.webp', links: [
+    { 
+      site: 'twitter',
+      href: 'https://twitter.com/TwitchLosAngele' 
+    },
+    {
+      site: 'discord',
+      href: 'https://discord.gg/8E75rA5' 
+    },
+    {
+      site: 'instagram',
+      href: 'https://www.instagram.com/twitch_LA'
+    }
+  ]},
+  { groupName: 'OC Streamers', path: 'oc.webp', links: [
+    { 
+      site: 'twitter',
+      href: 'https://twitter.com/OCStreamers' 
+    },
+    {
+      site: 'discord',
+      href: 'https://discord.gg/a5SUFUK' 
+    },
+    {
+      site: 'instagram',
+      href: 'https://www.instagram.com/ocstreamers'
+    }
+  ]},
+  { groupName: 'Twitch SD', path: 'sd.webp', links: [
+    { 
+      site: 'twitch',
+      href: 'https://www.twitch.tv/twitch_sandiego' 
+    },
+    { 
+      site: 'twitter',
+      href: 'https://twitter.com/TwitchSanDiego' 
+    },
+    {
+      site: 'discord',
+      href: 'https://t.co/m0wLLQNnk8'
+    }
+  ]}
 ];
 
 const findNextEvent = (city, upcomingEvents) => {
@@ -16,9 +55,12 @@ const findNextEvent = (city, upcomingEvents) => {
 }
 
 const Card = ({groupName, city, href, upcomingEvents}) => {
-  let img = images.find(i => i.groupName.toLowerCase() === groupName.toLowerCase());
+  const group = groupsInfo.find(i => i.groupName.toLowerCase() === groupName.toLowerCase());
   let backgroundImage = '';
-  if (img) backgroundImage = `background-image: url('/static/${img.path}');`;
+  if (group) {
+    backgroundImage = `background-image: url('/static/${group.path}');`;
+
+  }
 
   const nextEventInfo = findNextEvent(city, upcomingEvents);
   let nextEvent = {
@@ -38,7 +80,7 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
   }
 
   return (
-    <>
+    <span className="card-container">
       <a href={nextEvent.url} name={groupName}>
         <div className='card'>
           <h3>{groupName}</h3>
@@ -46,13 +88,14 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
           <h5 className="event-title">{nextEvent.title}</h5>
           <span className="event-date">{nextEvent.date}</span>
         </div>
-      </a>  
+      </a>
+      <SocialIcons links={group.links}/>
       <style jsx>{`
         a:link { text-decoration: none }
         .card {
-          padding: 18px;
           width: 200px;
           height: 300px;
+          padding: 18px;
           color: #fff;
           text-align: left;
           text-decoration: none;
@@ -60,7 +103,7 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
           ${backgroundImage}
           background-size: cover;
           background-position: center;
-          transition: filter 150ms, transform 200ms;
+          transition: all 150ms, transform 200ms;
           filter: drop-shadow(0 5px 3px rgba(0,0,0,0.4));
           border-radius: 20px;
           text-shadow: 0 2px 10px rgba(0,0,0,0.8);
@@ -100,10 +143,12 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
           line-height: 35px;
         }
         @media (max-width: 840px) {
-          a { width: 80% }
+          .card-container{
+            width: 80%
+          }
           .card {
             width: auto;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
           }
           .card h3 {
             font-size: 30px;
@@ -119,7 +164,7 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
           }
       }
       `}</style>
-    </>
+    </span>
   )
 };
 

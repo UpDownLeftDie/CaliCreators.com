@@ -14,7 +14,6 @@ const Home = ({upcomingEvents}) => (
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>{siteTitle}.com</title>
-      <link href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap" rel="stylesheet"></link>
       <meta name="Description" content={description.replace('<br/>', ' ')}></meta>
       <meta property="og:title" content={siteTitle}></meta>
       <meta property="og:url" content={url}></meta>
@@ -61,7 +60,7 @@ const Home = ({upcomingEvents}) => (
       .title {
         margin: 0;
         width: 100%;
-        margin-top: 80px;
+        margin-top: 50px;
         line-height: 1.15;
         font-size: 48px;
         font-family: 'Knewave', sans-serif;
