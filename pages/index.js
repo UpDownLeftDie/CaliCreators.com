@@ -93,7 +93,7 @@ const Home = ({upcomingEvents}) => (
         justify-content: space-around;
       }
       .footer {
-        color: #ddd;
+        color: #fff;
         position: absolute;
         bottom: 0;
         width: 100%;

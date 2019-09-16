@@ -1,10 +1,10 @@
 import React from 'react'
 
-const SocialIcons = ({links}) => {
+const SocialIcons = ({links, groupName}) => {
 
     const icons = links.map(link => {
         return (
-            <a href={link.href} key={link.site} target="_blank">
+            <a href={link.href} key={link.site} aria-label={`${groupName}'s ${link.site}`} target="_blank" rel="noopener">
                 <i className={`fab fa-${link.site}`} />
             </a>
         );

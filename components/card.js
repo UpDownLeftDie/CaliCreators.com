@@ -3,7 +3,7 @@ import moment from 'moment'
 import SocialIcons from '../components/social-icons'
 
 const groupsInfo = [
-  { groupName: 'Twitch LA', path: 'la.webp', links: [
+  { name: 'Twitch LA', path: 'la.webp', links: [
     { 
       site: 'twitter',
       href: 'https://twitter.com/TwitchLosAngele' 
@@ -17,7 +17,7 @@ const groupsInfo = [
       href: 'https://www.instagram.com/twitch_LA'
     }
   ]},
-  { groupName: 'OC Streamers', path: 'oc.webp', links: [
+  { name: 'OC Streamers', path: 'oc.webp', links: [
     { 
       site: 'twitter',
       href: 'https://twitter.com/OCStreamers' 
@@ -31,7 +31,7 @@ const groupsInfo = [
       href: 'https://www.instagram.com/ocstreamers'
     }
   ]},
-  { groupName: 'Twitch SD', path: 'sd.webp', links: [
+  { name: 'Twitch SD', path: 'sd.webp', links: [
     { 
       site: 'twitch',
       href: 'https://www.twitch.tv/twitch_sandiego' 
@@ -55,11 +55,12 @@ const findNextEvent = (city, upcomingEvents) => {
 }
 
 const Card = ({groupName, city, href, upcomingEvents}) => {
-  const group = groupsInfo.find(i => i.groupName.toLowerCase() === groupName.toLowerCase());
+  const group = groupsInfo.find(i => i.name.toLowerCase() === groupName.toLowerCase());
   let backgroundImage = '';
+  let socialIcons = null;
   if (group) {
     backgroundImage = `background-image: url('/static/${group.path}');`;
-
+    socialIcons = <SocialIcons links={group.links} groupName={group.name}/>
   }
 
   const nextEventInfo = findNextEvent(city, upcomingEvents);
@@ -89,7 +90,7 @@ const Card = ({groupName, city, href, upcomingEvents}) => {
           <span className="event-date">{nextEvent.date}</span>
         </div>
       </a>
-      <SocialIcons links={group.links}/>
+      { socialIcons }
       <style jsx>{`
         a:link { text-decoration: none }
         .card {
