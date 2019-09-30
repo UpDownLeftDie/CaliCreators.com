@@ -48,8 +48,9 @@ const Home = ({upcomingEvents}) => (
         padding: 0;
       }
       :global(body) {
-        background-color: #5F3F9F;
-        background-image: url('/static/cubes_@2X.webp');
+        background-color: #9146FF;
+        background-image: url('/static/funky-lines.webp');
+        background-size: 600px;
         font-family: 'Kanit', sans-serif, Avenir Next, Avenir,
           Helvetica, sans-serif;
       }
