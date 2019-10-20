@@ -89,8 +89,9 @@ const Home = () => {
           padding: 0;
         }
         :global(body) {
-          background-color: #5f3f9f;
-          background-image: url("/static/cubes_@2X.webp");
+          background-color: #9146ff;
+          background-image: url("/static/funky-lines.webp");
+          background-size: 600px;
           font-family: "Kanit", sans-serif, Avenir Next, Avenir, Helvetica,
             sans-serif;
         }
@@ -143,7 +144,7 @@ const Home = () => {
           justify-content: space-around;
         }
         .footer {
-          color: #ddd;
+          color: #fff;
           position: absolute;
           bottom: 0;
           width: 100%;
