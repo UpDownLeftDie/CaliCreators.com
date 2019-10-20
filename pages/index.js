@@ -178,7 +178,7 @@ const Home = () => {
 async function getUpcomingEvents() {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
   let meetupComReq = fetch(
-    `https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`
+    `https://cors-anywhere.herokuapp.com/https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`
   ).catch(err => {
     console.log(err);
   });
