@@ -2,15 +2,10 @@
 // Event handlers like onClick can't be added to this file
 
 // ./pages/_document.js
-import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { GA_TRACKING_ID } from '../lib/gtag'
+import Document, { Html, Head, Main, NextScript } from "next/document";
+import { GA_TRACKING_ID } from "../lib/gtag";
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx)
-    return { ...initialProps }
-  }
-
   render() {
     return (
       <Html lang="en">
@@ -27,9 +22,13 @@ class MyDocument extends Document {
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', '${GA_TRACKING_ID}');
-            `}}
+            `
+            }}
           />
-          <link href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap" rel="stylesheet"></link>
+          <link
+            href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap"
+            rel="stylesheet"
+          ></link>
           <script src="https://kit.fontawesome.com/d03f0d01ad.js"></script>
           <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
         </Head>
@@ -38,8 +37,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
 
-export default MyDocument
+export default MyDocument;

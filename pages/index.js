@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Card from "../components/card";
 import fetch from "isomorphic-unfetch";
+import { GA_TRACKING_ID } from "../lib/gtag";
 
 const siteTitle = "Twitch SoCal";
 const description =
@@ -178,7 +179,7 @@ const Home = () => {
 async function getUpcomingEvents() {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
   let meetupComReq = fetch(
-    `https://cors-anywhere.herokuapp.com/https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`
+    `https://shielded-plateau-06167.herokuapp.com/https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`
   ).catch(err => {
     console.log(err);
   });
