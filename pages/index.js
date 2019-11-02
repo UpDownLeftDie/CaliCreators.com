@@ -2,19 +2,25 @@ import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import Card from "../components/card";
 import fetch from "isomorphic-unfetch";
-import { GA_TRACKING_ID } from "../lib/gtag";
 
-const siteTitle = "Twitch SoCal";
+const siteTitle = "CA Creators";
 const description =
-  "We're the meetup groups for Twitch in Southern California!<br/>Find the closest one to you or come to all our events!";
-const url = "https://twitchsocal.com";
+  "We're the meetup groups for Twitch, Mixer, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
+const url = "https://cacreators.com";
 
 const Home = () => {
-  const [upcomingEvents, setEvents] = useState([]);
+  const [upcomingTwitchEvents, setTwitchEvents] = useState([]);
+  const [upcomingMeetupEvents, setMeetupEvents] = useState([]);
 
   useEffect(() => {
-    getUpcomingEvents().then(events => {
-      setEvents(events);
+    getUpcomingTwitchEvents().then(twithcEvents => {
+      setTwitchEvents(twithcEvents);
+    });
+  }, []);
+
+  useEffect(() => {
+    getUpcomingMeetupEvents().then(meetupEvents => {
+      setMeetupEvents(meetupEvents);
     });
   }, []);
 
@@ -63,24 +69,26 @@ const Home = () => {
             groupName={"Twitch La"}
             city={"Los Angeles"}
             href={"https://meetups.twitch.tv/los-angeles/"}
-            upcomingEvents={upcomingEvents}
+            upcomingEvents={upcomingTwitchEvents}
           />
           <Card
             groupName={"OC Streamers"}
             city={"Orange"}
             href={"https://www.meetup.com/ocstreamers"}
-            upcomingEvents={upcomingEvents}
+            upcomingEvents={upcomingMeetupEvents}
           />
           <Card
             groupName={"Twitch SD"}
             city={"San Diego"}
             href={"https://meetups.twitch.tv/san-diego/"}
-            upcomingEvents={upcomingEvents}
+            upcomingEvents={upcomingTwitchEvents}
           />
         </div>
       </div>
       <div className="footer">
-        <p>This site is not affiliated or endorsed by Twitch or Meetup.</p>
+        <p>
+          This site is not affiliated or endorsed by Twitch, Mixer, or Meetup.
+        </p>
       </div>
 
       <style jsx>{`
@@ -176,30 +184,34 @@ const Home = () => {
   );
 };
 
-async function getUpcomingEvents() {
+async function getUpcomingTwitchEvents() {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
-  let meetupComReq = fetch(
-    `https://shielded-plateau-06167.herokuapp.com/https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`
-  ).catch(err => {
-    console.log(err);
-  });
-  let twitchReq = fetch(
+  const twitchReq = await fetch(
     `https://meetups.twitch.tv/api/search/?result_types=upcoming_event&country_code=Earth${cacheBuster}`
   ).catch(err => {
     console.log(err);
   });
 
-  const meetupCom = await meetupComReq;
-  const twitch = await twitchReq;
-  const twitchJson = await twitch.json();
+  const twitchJson = await twitchReq.json();
 
-  if (meetupCom) {
-    const meetupComJson = await meetupCom.json();
-    const meetupEvents = convertMeetupToTwitch(meetupComJson);
-    const eventList = twitchJson.results;
-    return eventList.concat(meetupEvents);
-  } else if (twitchJson) {
+  if (twitchJson) {
     return twitchJson.results;
+  }
+
+  return [];
+}
+
+async function getUpcomingMeetupEvents() {
+  const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
+  const meetupComReq = await fetch(
+    `https://shielded-plateau-06167.herokuapp.com/https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`
+  ).catch(err => {
+    console.log(err);
+  });
+
+  if (meetupComReq) {
+    const meetupComJson = await meetupComReq.json();
+    return convertMeetupToTwitch(meetupComJson);
   }
 
   return [];
