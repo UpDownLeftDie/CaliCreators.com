@@ -3,90 +3,24 @@ import moment from "moment";
 import SocialIcons from "../components/social-icons";
 import LoadingIcon from "../components/loading-icon";
 
-const groupsInfo = [
-  {
-    name: "Twitch LA",
-    path: "la.webp",
-    links: [
-      {
-        site: "twitter",
-        href: "https://twitter.com/TwitchLosAngele"
-      },
-      {
-        site: "discord",
-        href: "https://discord.gg/8E75rA5"
-      },
-      {
-        site: "instagram",
-        href: "https://www.instagram.com/twitch_LA"
-      }
-    ]
-  },
-  {
-    name: "OC Streamers",
-    path: "oc.webp",
-    links: [
-      {
-        site: "twitter",
-        href: "https://twitter.com/OCStreamers"
-      },
-      {
-        site: "discord",
-        href: "https://discord.gg/a5SUFUK"
-      },
-      {
-        site: "instagram",
-        href: "https://www.instagram.com/ocstreamers"
-      }
-    ]
-  },
-  {
-    name: "Twitch SD",
-    path: "sd.webp",
-    links: [
-      {
-        site: "twitch",
-        href: "https://www.twitch.tv/twitch_sandiego"
-      },
-      {
-        site: "twitter",
-        href: "https://twitter.com/TwitchSanDiego"
-      },
-      {
-        site: "discord",
-        href: "https://t.co/m0wLLQNnk8"
-      }
-    ]
-  }
-];
-
-const findNextEvent = (city, upcomingEvents) => {
-  return upcomingEvents.find(event => {
-    if (event.chapter.city === city) return true;
-    return false;
-  });
-};
-
-const Card = ({ groupName, city, href, upcomingEvents }) => {
-  const group = groupsInfo.find(
-    i => i.name.toLowerCase() === groupName.toLowerCase()
-  );
+const Card = ({ group, loading }) => {
   let backgroundImage = "";
   let socialIcons = null;
-  if (group) {
+  if (group.path) {
     backgroundImage = `background-image: url('/static/${group.path}');`;
+  }
+  if (group.links && group.name) {
     socialIcons = <SocialIcons links={group.links} groupName={group.name} />;
   }
 
-  const nextEventInfo = findNextEvent(city, upcomingEvents);
   let nextEvent = {
     title: "TBA",
     date: "Click here for updates",
-    url: href
+    url: group.url
   };
 
-  if (nextEventInfo) {
-    const { url, start_date, title } = nextEventInfo;
+  if (Object.keys(group.nextEvent).length) {
+    const { url, start_date, title } = group.nextEvent;
 
     nextEvent = {
       ...nextEvent,
@@ -111,7 +45,7 @@ const Card = ({ groupName, city, href, upcomingEvents }) => {
       `}</style>
     </Fragment>
   );
-  if (upcomingEvents.length) {
+  if (!loading) {
     cardInfo = (
       <Fragment>
         <h4>Next Event</h4>
@@ -154,9 +88,9 @@ const Card = ({ groupName, city, href, upcomingEvents }) => {
 
   return (
     <span className="card-container">
-      <a href={nextEvent.url} name={groupName}>
+      <a href={nextEvent.url} name={group.name}>
         <div className="card">
-          <h3>{groupName}</h3>
+          <h3>{group.name}</h3>
           {cardInfo}
         </div>
       </a>

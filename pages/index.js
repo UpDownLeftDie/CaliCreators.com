@@ -2,64 +2,71 @@ import React, { useState, useEffect, Fragment } from "react";
 import Head from "next/head";
 import Card from "../components/card";
 import fetch from "isomorphic-unfetch";
+import moment from "moment";
+let groups = require("../groups.json");
 
 const siteTitle = "CA Creators";
 const description =
   "We're the meetup groups for Twitch, Mixer, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
 const url = "https://cacreators.com";
 
-// const groups = [
-//   { city: "Los Angeles", groupName: "Twitch LA" },
-//   { city: "Orange", groupName: "OC Streamers" },
-//   { city: "San Diego", groupName: "TwitchSD" }
-// ];
-
 const Home = () => {
-  const [upcomingTwitchEvents, setTwitchEvents] = useState([]);
-  const [upcomingMeetupEvents, setMeetupEvents] = useState([]);
+  const [upcomingTwitchEvents, setTwitchEvents] = useState({
+    events: [],
+    loading: true
+  });
+  const [upcomingMeetupEvents, setMeetupEvents] = useState({
+    events: [],
+    loading: true
+  });
 
   useEffect(() => {
     getUpcomingTwitchEvents().then(twithcEvents => {
-      setTwitchEvents(twithcEvents);
+      setTwitchEvents({ events: twithcEvents, loading: false });
     });
   }, []);
 
   useEffect(() => {
     getUpcomingMeetupEvents().then(meetupEvents => {
-      setMeetupEvents(meetupEvents);
+      setMeetupEvents({ events: meetupEvents, loading: false });
     });
   }, []);
 
-  const findNextEvent = (city, upcomingEvents) => {
-    return upcomingEvents.find(event => {
-      if (event.chapter.city === city) return true;
-      return false;
+  const findNextEvent = (groups, upcomingEvents) => {
+    return groups.map(group => {
+      const nextEvent = upcomingEvents.find(event => {
+        if (event.chapter.city === group.city) return true;
+        return false;
+      });
+      return {
+        ...group,
+        nextEvent: nextEvent || {}
+      };
     });
   };
 
   const renderCards = () => {
-    return (
-      <Fragment>
-        <Card
-          groupName={"Twitch La"}
-          city={"Los Angeles"}
-          href={"https://meetups.twitch.tv/los-angeles/"}
-          upcomingEvents={upcomingTwitchEvents}
-        />
-        <Card
-          groupName={"OC Streamers"}
-          city={"Orange"}
-          href={"https://www.meetup.com/ocstreamers"}
-          upcomingEvents={upcomingMeetupEvents}
-        />
-        <Card
-          groupName={"Twitch SD"}
-          city={"San Diego"}
-          href={"https://meetups.twitch.tv/san-diego/"}
-          upcomingEvents={upcomingTwitchEvents}
-        />
-      </Fragment>
+    const upcomingEvents = upcomingTwitchEvents.events.concat(
+      upcomingMeetupEvents.events
     );
+    const loading =
+      upcomingTwitchEvents.loading || upcomingMeetupEvents.loading;
+    const groupsWithEvents = findNextEvent(groups, upcomingEvents).sort(
+      (a, b) => {
+        if (!a.nextEvent.start_date) return 1;
+        if (!b.nextEvent.start_date) return -1;
+        return (
+          new Date(a.nextEvent.start_date) - new Date(b.nextEvent.start_date)
+        );
+      }
+    );
+    return groupsWithEvents.map(groupWithEvent => (
+      <Card
+        key={groupWithEvent.name}
+        group={groupWithEvent}
+        loading={loading}
+      />
+    ));
   };
 
   return (
@@ -222,6 +229,7 @@ async function getUpcomingTwitchEvents() {
 
 async function getUpcomingMeetupEvents() {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
+  // TODO remove hardcoded group name, dynamically get from groups.json
   const meetupComReq = await fetch(
     `https://shielded-plateau-06167.herokuapp.com/https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`
   ).catch(err => {
@@ -239,12 +247,16 @@ async function getUpcomingMeetupEvents() {
 function convertMeetupToTwitch(meetup) {
   const meetupList = meetup.map(event => {
     const city = event.group.localized_location.split(",")[0];
+    const startDate = moment
+      .utc(event.time)
+      .utcOffset(event.utc_offset / 3600000)
+      .format();
     return {
       chapter: {
         city
       },
       url: event.link,
-      start_date: event.local_date,
+      start_date: startDate,
       title: event.name
     };
   });
