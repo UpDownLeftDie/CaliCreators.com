@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Head from "next/head";
 import Card from "../components/card";
 import fetch from "isomorphic-unfetch";
@@ -7,6 +7,12 @@ const siteTitle = "CA Creators";
 const description =
   "We're the meetup groups for Twitch, Mixer, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
 const url = "https://cacreators.com";
+
+// const groups = [
+//   { city: "Los Angeles", groupName: "Twitch LA" },
+//   { city: "Orange", groupName: "OC Streamers" },
+//   { city: "San Diego", groupName: "TwitchSD" }
+// ];
 
 const Home = () => {
   const [upcomingTwitchEvents, setTwitchEvents] = useState([]);
@@ -23,6 +29,38 @@ const Home = () => {
       setMeetupEvents(meetupEvents);
     });
   }, []);
+
+  const findNextEvent = (city, upcomingEvents) => {
+    return upcomingEvents.find(event => {
+      if (event.chapter.city === city) return true;
+      return false;
+    });
+  };
+
+  const renderCards = () => {
+    return (
+      <Fragment>
+        <Card
+          groupName={"Twitch La"}
+          city={"Los Angeles"}
+          href={"https://meetups.twitch.tv/los-angeles/"}
+          upcomingEvents={upcomingTwitchEvents}
+        />
+        <Card
+          groupName={"OC Streamers"}
+          city={"Orange"}
+          href={"https://www.meetup.com/ocstreamers"}
+          upcomingEvents={upcomingMeetupEvents}
+        />
+        <Card
+          groupName={"Twitch SD"}
+          city={"San Diego"}
+          href={"https://meetups.twitch.tv/san-diego/"}
+          upcomingEvents={upcomingTwitchEvents}
+        />
+      </Fragment>
+    );
+  };
 
   return (
     <div
@@ -64,26 +102,7 @@ const Home = () => {
           dangerouslySetInnerHTML={{ __html: description }}
         ></p>
 
-        <div className="row">
-          <Card
-            groupName={"Twitch La"}
-            city={"Los Angeles"}
-            href={"https://meetups.twitch.tv/los-angeles/"}
-            upcomingEvents={upcomingTwitchEvents}
-          />
-          <Card
-            groupName={"OC Streamers"}
-            city={"Orange"}
-            href={"https://www.meetup.com/ocstreamers"}
-            upcomingEvents={upcomingMeetupEvents}
-          />
-          <Card
-            groupName={"Twitch SD"}
-            city={"San Diego"}
-            href={"https://meetups.twitch.tv/san-diego/"}
-            upcomingEvents={upcomingTwitchEvents}
-          />
-        </div>
+        <div className="row">{renderCards()}</div>
       </div>
       <div className="footer">
         <p>
