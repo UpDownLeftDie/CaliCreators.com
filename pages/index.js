@@ -153,7 +153,7 @@ const Home = () => {
             rgba(255, 255, 255, 1) 80%,
             rgba(255, 255, 255, 1) 100%
           );
-          background-size: 900%;
+          background-size: 2000px;
           background-position: 0%;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -196,13 +196,10 @@ const Home = () => {
         }
         @keyframes colorwipe {
           0% {
-            background-position: 0%;
-          }
-          35% {
-            background-position: 0%;
+            background-position: -70%;
           }
           100% {
-            background-position: 100%;
+            background-position: 170%;
           }
         }
       `}</style>

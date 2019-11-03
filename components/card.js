@@ -6,11 +6,13 @@ import LoadingIcon from "../components/loading-icon";
 const Card = ({ group, loading }) => {
   let backgroundImage = "";
   let socialIcons = null;
-  if (group.path) {
-    backgroundImage = `background-image: url('/static/${group.path}');`;
-  }
-  if (group.links && group.name) {
-    socialIcons = <SocialIcons links={group.links} groupName={group.name} />;
+  if (!loading) {
+    if (group.path) {
+      backgroundImage = `background-image: url('/static/${group.path}');`;
+    }
+    if (group.links && group.name) {
+      socialIcons = <SocialIcons links={group.links} groupName={group.name} />;
+    }
   }
 
   let nextEvent = {
@@ -40,6 +42,7 @@ const Card = ({ group, loading }) => {
           position: absolute;
           font-size: 100px;
           top: 50%;
+          right: 50%;
           transform: translate(50%, -50%);
         }
       `}</style>
@@ -49,6 +52,7 @@ const Card = ({ group, loading }) => {
     cardInfo = (
       <Fragment>
         <h4>Next Event</h4>
+        <h3>{group.name}</h3>
         <h5 className="event-title">{nextEvent.title}</h5>
         <span className="event-date">{nextEvent.date}</span>
         <style jsx>{`
@@ -56,6 +60,14 @@ const Card = ({ group, loading }) => {
             font-weight: 700;
             font-size: 20px;
             margin: 12px 0 0;
+          }
+          h3 {
+            margin: 0;
+            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+            position: absolute;
+            bottom: 10px;
           }
           .event-date {
             font-size: 18px;
@@ -77,6 +89,9 @@ const Card = ({ group, loading }) => {
             h4 {
               font-size: 28px;
             }
+            h3 {
+              font-size: 30px;
+            }
             .event-title {
               max-height: 145px;
             }
@@ -89,10 +104,7 @@ const Card = ({ group, loading }) => {
   return (
     <span className="card-container">
       <a href={nextEvent.url} name={group.name}>
-        <div className="card">
-          <h3>{group.name}</h3>
-          {cardInfo}
-        </div>
+        <div className="card">{cardInfo}</div>
       </a>
       {socialIcons}
       <style jsx>{`
@@ -106,7 +118,8 @@ const Card = ({ group, loading }) => {
           color: #fff;
           text-align: left;
           text-decoration: none;
-          background: #3d2769;
+          background: ${loading ? "#3d2769" : "#555"};
+          background-blend-mode: overlay;
           ${backgroundImage}
           background-size: cover;
           background-position: center;
@@ -120,14 +133,6 @@ const Card = ({ group, loading }) => {
           transform: scale(1.06);
           filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.3));
         }
-        .card h3 {
-          margin: 0;
-          color: #fff;
-          font-size: 22px;
-          font-weight: 700;
-          position: absolute;
-          bottom: 10px;
-        }
 
         @media (max-width: 840px) {
           .card-container {
@@ -136,9 +141,6 @@ const Card = ({ group, loading }) => {
           .card {
             width: auto;
             margin-bottom: 15px;
-          }
-          .card h3 {
-            font-size: 30px;
           }
           .card p {
             font-size: 26px;
