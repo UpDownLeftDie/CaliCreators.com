@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "export": "npm run build && next export && touch out/.nojekyll && touch out/CNAME && echo cacreators.com >> out/CNAME",
-    "start": "next start"
+    "start": "next start",
+    "deploy": "git push && git subtree push --prefix=out origin gh-pages"
   },
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0",
