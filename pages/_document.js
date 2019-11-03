@@ -10,6 +10,12 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <link
+            rel="preconnect"
+            href="https://shielded-plateau-06167.herokuapp.com"
+          />
+          <link rel="preconnect" href="https://stats.g.doubleclick.net" />
+          <link rel="preconnect" href="https://meetups.twitch.tv" />
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <script
             async
