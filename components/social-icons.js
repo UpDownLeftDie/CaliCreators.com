@@ -1,40 +1,49 @@
-import React from 'react'
+import React from "react";
 
-const SocialIcons = ({links, groupName}) => {
-
-    const icons = links.map(link => {
-        return (
-            <a href={link.href} key={link.site} aria-label={`${groupName}'s ${link.site}`} target="_blank" rel="noopener">
-                <i className={`fab fa-${link.site}`} />
-            </a>
-        );
-    })
+const SocialIcons = ({ links, groupName }) => {
+  const icons = links.map(link => {
+    return (
+      <a
+        href={link.href}
+        key={link.site}
+        aria-label={`${groupName}'s ${link.site}`}
+        target="_blank"
+        rel="noopener"
+      >
+        <i className={`fab fa-${link.site}`} />
+      </a>
+    );
+  });
   return (
     <div className="socialicons">
-      { icons }
+      {icons}
       <style jsx>{`
         .socialicons {
-            display: flex;
-            place-content: space-evenly;
-            font-size: 36px;
-            padding: 10px;
+          display: flex;
+          justify-content: space-around;
+          font-size: 36px;
+          padding: 10px;
+        }
+
+        @supports not (-ms-ime-align: auto) {
+          justify-content: space-evenly !important;
         }
         .socialicons :global(a) {
-            color: #fff;
-            text-decoration: none;
-            transition: transform 200ms;
+          color: #fff;
+          text-decoration: none;
+          transition: transform 200ms;
         }
         .socialicons :global(a):hover {
-            transform: scale(1.2);
+          transform: scale(1.2);
         }
         @media (max-width: 840px) {
-            .socialicons {
-                padding: 0 10px 35px;
-            }
+          .socialicons {
+            padding: 0 10px 35px;
+          }
         }
       `}</style>
     </div>
-  )
+  );
 };
 
-export default SocialIcons
+export default SocialIcons;

@@ -6,6 +6,7 @@ import LoadingIcon from "../components/loading-icon";
 const Card = ({ group, loading }) => {
   let backgroundImage = "";
   let socialIcons = null;
+  let startInSevenDays = false;
   if (!loading) {
     if (group.path) {
       backgroundImage = `background-image: url('/static/${group.path}');`;
@@ -23,7 +24,11 @@ const Card = ({ group, loading }) => {
 
   if (Object.keys(group.nextEvent).length) {
     const { url, start_date, title } = group.nextEvent;
+    const now = new Date();
+    const sevenDays = new Date();
+    sevenDays.setDate(sevenDays.getDate() + 18);
 
+    startInSevenDays = new Date(start_date) - now < sevenDays;
     nextEvent = {
       ...nextEvent,
       title,
@@ -104,7 +109,9 @@ const Card = ({ group, loading }) => {
   return (
     <span className="card-container">
       <a href={nextEvent.url} name={group.name}>
-        <div className="card">{cardInfo}</div>
+        <div className="card">
+          {cardInfo} <span className="card-background"></span>
+        </div>
       </a>
       {socialIcons}
       <style jsx>{`
@@ -112,22 +119,45 @@ const Card = ({ group, loading }) => {
           text-decoration: none;
         }
         .card {
+          position: relative;
           width: 200px;
           height: 300px;
           padding: 18px;
           color: #fff;
           text-align: left;
           text-decoration: none;
-          background: ${loading ? "#3d2769" : "#555"};
-          background-blend-mode: overlay;
-          ${backgroundImage}
-          background-size: cover;
-          background-position: center;
+          // background: ${loading ? "#3d2769" : "#555"};
+          // background-blend-mode: overlay;
+          // ${backgroundImage}
+          // background-size: cover;
+          // background-position: center;
           transition: all 150ms, transform 200ms;
           filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.4));
           border-radius: 20px;
           text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
           word-break: break-word;
+        }
+        .card-background {
+          background: ${loading ? "#3d2769" : "#555"};
+          // background-blend-mode: overlay;
+          ${backgroundImage}
+          background-size: cover;
+          background-position: center;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          border-radius: 20px;
+          z-index: -100;
+          top: 0;
+        }
+        .card-background:before {
+          content: "";
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          border-radius: 20px;
+          background-color: rgba(0, 0, 0, 0.40);
         }
         .card:hover {
           transform: scale(1.06);
