@@ -6,7 +6,7 @@ import LoadingIcon from "../components/loading-icon";
 const Card = ({ group, loading }) => {
   let backgroundImage = "";
   let socialIcons = null;
-  let startInSevenDays = false;
+  let startsInSevenDays = null;
   if (!loading) {
     if (group.path) {
       backgroundImage = `background-image: url('/static/${group.path}');`;
@@ -24,8 +24,8 @@ const Card = ({ group, loading }) => {
 
   if (Object.keys(group.nextEvent).length) {
     const { url, start_date, title } = group.nextEvent;
-    const sevenDays = moment().add(7, "days");
-    startInSevenDays = moment(start_date).isBefore(sevenDays);
+    const sevenDays = moment().add(8, "days");
+    startsInSevenDays = moment(start_date).isBefore(sevenDays);
 
     nextEvent = {
       ...nextEvent,
@@ -107,7 +107,7 @@ const Card = ({ group, loading }) => {
   return (
     <span className="card-container">
       <a href={nextEvent.url} name={group.name}>
-        <div className="card">
+        <div className={`card ${startsInSevenDays ? "glow" : null}`}>
           {cardInfo} <span className="card-background"></span>
         </div>
       </a>
@@ -126,10 +126,20 @@ const Card = ({ group, loading }) => {
           text-decoration: none;
           transition: all 150ms, transform 200ms;
           filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.4));
-          ${startInSevenDays ? "animation: cardglow 6s infinite" : null};
           border-radius: 20px;
           text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
           word-break: break-word;
+        }
+        .glow {
+          animation: fadein 1.5s ease-out infinite alternate;
+        }
+        @keyframes fadein {
+          from {
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+          }
+          to {
+            filter: drop-shadow(0 0 25px rgba(255, 255, 255, 1));
+          }
         }
         .card::after {
           content: "";
@@ -182,15 +192,6 @@ const Card = ({ group, loading }) => {
           }
           .card p {
             font-size: 26px;
-          }
-        }
-
-        @keyframes cardglow {
-          0% {
-            filter:: drop-shadow(0 0px 15px rgba(255, 255, 255, 0.8)) !important;
-          }
-          100% {
-            filter:: drop-shadow(0 0px 15px rgba(255, 255, 255, 0)) !important;
           }
         }
       `}</style>
