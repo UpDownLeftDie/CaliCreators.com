@@ -5119,7 +5119,7 @@ function connect(options) {
       error.name = err.name;
       error.stack = err.stack; // __NEXT_DIST_DIR is provided by webpack
 
-      (0, _sourceMapSupport.rewriteStacktrace)(error, "/Users/jaredkotoff/personal/git/twitchsocal/.next");
+      (0, _sourceMapSupport.rewriteStacktrace)(error, "/Users/jaredkotoff/personal/git/ca-creators/.next");
       return error;
     }
   };

@@ -4,7 +4,7 @@ const SocialIcons = ({ links, groupName }) => {
   const icons = links.map(link => {
     return (
       <a
-        href={link.href}
+        href={link.url}
         key={link.site}
         aria-label={`${groupName}'s ${link.site}`}
         target="_blank"
