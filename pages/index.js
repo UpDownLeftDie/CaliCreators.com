@@ -172,7 +172,7 @@ const Home = () => {
           font-family: "Kanit", sans-serif;
         }
         .row {
-          max-width: 880px;
+          max-width: 1000px;
           margin: 40px auto;
           display: flex;
           flex-direction: row;
@@ -188,7 +188,7 @@ const Home = () => {
           font-style: italic;
           font-family: sans-serif;
         }
-        @media (max-width: 840px) {
+        @media (max-width: 900px) {
           .row {
             flex-direction: column;
             align-items: center;

@@ -36,7 +36,7 @@ const SocialIcons = ({ links, groupName }) => {
         .socialicons :global(a):hover {
           transform: scale(1.2);
         }
-        @media (max-width: 840px) {
+        @media (max-width: 900px) {
           .socialicons {
             padding: 0 10px 35px;
           }

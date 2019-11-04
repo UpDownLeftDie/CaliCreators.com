@@ -88,7 +88,7 @@ const Card = ({ group, loading }) => {
             max-height: 180px;
             line-height: 35px;
           }
-          @media (max-width: 840px) {
+          @media (max-width: 900px) {
             h4 {
               font-size: 28px;
             }
@@ -182,7 +182,7 @@ const Card = ({ group, loading }) => {
           background-color: rgba(0, 0, 0, 0.4);
         }
 
-        @media (max-width: 840px) {
+        @media (max-width: 900px) {
           .card-container {
             width: 80%;
           }
