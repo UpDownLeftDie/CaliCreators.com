@@ -118,7 +118,7 @@ const Card = ({ group, loading }) => {
         }
         .card {
           position: relative;
-          width: 200px;
+          width: 250px;
           height: 300px;
           padding: 18px;
           color: #fff;
