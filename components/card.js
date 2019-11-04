@@ -24,11 +24,9 @@ const Card = ({ group, loading }) => {
 
   if (Object.keys(group.nextEvent).length) {
     const { url, start_date, title } = group.nextEvent;
-    const now = new Date();
-    const sevenDays = new Date();
-    sevenDays.setDate(sevenDays.getDate() + 18);
+    const sevenDays = moment().add(7, "days");
+    startInSevenDays = moment(start_date).isBefore(sevenDays);
 
-    startInSevenDays = new Date(start_date) - now < sevenDays;
     nextEvent = {
       ...nextEvent,
       title,
@@ -126,20 +124,34 @@ const Card = ({ group, loading }) => {
           color: #fff;
           text-align: left;
           text-decoration: none;
-          // background: ${loading ? "#3d2769" : "#555"};
-          // background-blend-mode: overlay;
-          // ${backgroundImage}
-          // background-size: cover;
-          // background-position: center;
           transition: all 150ms, transform 200ms;
           filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.4));
+          ${startInSevenDays ? "animation: cardglow 6s infinite" : null};
           border-radius: 20px;
           text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
           word-break: break-word;
         }
+        .card::after {
+          content: "";
+          border-radius: 20px;
+          position: absolute;
+          z-index: -1;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.3));
+          opacity: 0;
+          transition: all 150ms, transform 200ms;
+        }
+        .card:hover {
+          transform: scale(1.06);
+        }
+        .card:hover::after {
+          opacity: 1;
+        }
         .card-background {
           background: ${loading ? "#3d2769" : "#555"};
-          // background-blend-mode: overlay;
           ${backgroundImage}
           background-size: cover;
           background-position: center;
@@ -157,11 +169,7 @@ const Card = ({ group, loading }) => {
           height: 100%;
           width: 100%;
           border-radius: 20px;
-          background-color: rgba(0, 0, 0, 0.40);
-        }
-        .card:hover {
-          transform: scale(1.06);
-          filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.3));
+          background-color: rgba(0, 0, 0, 0.4);
         }
 
         @media (max-width: 840px) {
@@ -174,6 +182,15 @@ const Card = ({ group, loading }) => {
           }
           .card p {
             font-size: 26px;
+          }
+        }
+
+        @keyframes cardglow {
+          0% {
+            filter:: drop-shadow(0 0px 15px rgba(255, 255, 255, 0.8)) !important;
+          }
+          100% {
+            filter:: drop-shadow(0 0px 15px rgba(255, 255, 255, 0)) !important;
           }
         }
       `}</style>
