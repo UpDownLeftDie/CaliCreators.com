@@ -156,6 +156,7 @@ const Card = ({ group, loading }) => {
         }
         .card:hover {
           transform: scale(1.06);
+          -webkit-font-smoothing: subpixel-antialiased;
         }
         .card:hover::after {
           opacity: 1;
