@@ -3,7 +3,8 @@ import moment from "moment";
 import SocialIcons from "../components/social-icons";
 import LoadingIcon from "../components/loading-icon";
 
-const Card = ({ group, loading }) => {
+const Card = props => {
+  const { group, loading } = props;
   let backgroundImage = "";
   let socialIcons = null;
   let startsInSevenDays = null;
@@ -19,7 +20,7 @@ const Card = ({ group, loading }) => {
   let nextEvent = {
     title: "TBA",
     date: "Click here for updates",
-    url: group.url
+    url: loading ? "#" : group.url
   };
 
   if (Object.keys(group.nextEvent).length) {
@@ -31,7 +32,7 @@ const Card = ({ group, loading }) => {
       ...nextEvent,
       title,
       date: moment(start_date).format("MMM Do YYYY"),
-      url
+      url: loading ? "#" : url
     };
   }
 
@@ -107,7 +108,9 @@ const Card = ({ group, loading }) => {
   return (
     <span className="card-container">
       <a href={nextEvent.url} name={group.name}>
-        <div className={`card ${startsInSevenDays ? "glow" : null}`}>
+        <div
+          className={`card ${startsInSevenDays && !loading ? "glow" : null}`}
+        >
           {cardInfo} <span className="card-background"></span>
         </div>
       </a>
