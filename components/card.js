@@ -5,7 +5,9 @@ import LoadingIcon from "../components/loading-icon";
 import SoonBanner from "../components/soon-banner";
 
 const Card = props => {
-  const { group, loading } = props;
+  const { group, loading, totalCards, position } = props;
+  const isFirst = !loading && position === 1;
+  const isLast = !loading && position === totalCards;
   let backgroundImage = "";
   let socialIcons = null;
   let startsInSevenDays = null;
@@ -112,7 +114,11 @@ const Card = props => {
   };
 
   return (
-    <span className="card-container">
+    <span
+      className={`card-container ${
+        isFirst ? "first-card" : isLast ? "last-card" : ""
+      }`}
+    >
       <a href={nextEvent.url} name={group.name}>
         <div className={`card ${startsInSevenDays ? "glow" : ""}`}>
           {renderSoonBanner(startsInSevenDays)}
@@ -122,8 +128,21 @@ const Card = props => {
       {socialIcons}
       <style jsx>{`
         .card-container {
-          position: relative;
+          position: absolute;
+          display: inline-block;
+          transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+          transform: translateX(-50%);
+          left: 50%;
         }
+        .first-card {
+          transform: translateX(0%);
+          left: 0%;
+        }
+        .last-card {
+          transform: translateX(-100%);
+          left: 100%;
+        }
+
         a:link {
           text-decoration: none;
         }
@@ -196,7 +215,11 @@ const Card = props => {
 
         @media (max-width: 900px) {
           .card-container {
+            position: relative;
+            margin: 0 auto;
             width: 80%;
+            transform: translateX(0);
+            left: 0%;
           }
           .card {
             width: auto;

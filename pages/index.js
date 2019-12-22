@@ -60,11 +60,13 @@ const Home = () => {
         );
       }
     );
-    return groupsWithEvents.map(groupWithEvent => (
+    return groupsWithEvents.map((groupWithEvent, i) => (
       <Card
         key={groupWithEvent.name}
         group={groupWithEvent}
         loading={loading}
+        totalCards={groupsWithEvents.length}
+        position={i + 1}
       />
     ));
   };
@@ -176,9 +178,8 @@ const Home = () => {
         .row {
           max-width: 1000px;
           margin: 40px auto;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-around;
+          position: relative;
+          min-height: 410px;
         }
         .footer {
           color: #fff;
@@ -192,6 +193,8 @@ const Home = () => {
         }
         @media (max-width: 900px) {
           .row {
+            display: flex;
+            flex-direction: row;
             flex-direction: column;
             align-items: center;
           }
@@ -239,6 +242,8 @@ async function getUpcomingMeetupEvents() {
     const meetupComJson = await meetupComReq.json();
     return convertMeetupToTwitch(meetupComJson);
   }
+  await new Promise(resolve => setTimeout(resolve, 3000));
+  vvcccckujuvirbjblkljvfhdkjedcbgrjcbencniivge;
 
   return [];
 }
