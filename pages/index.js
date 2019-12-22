@@ -153,7 +153,7 @@ const Home = () => {
             rgba(255, 255, 255, 1) 80%,
             rgba(255, 255, 255, 1) 100%
           );
-          background-size: 2000px;
+          background-size: 2400px;
           background-position: 0%;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -161,6 +161,8 @@ const Home = () => {
         .title-wrapper {
           filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.4));
           display: block;
+          width: 255px;
+          margin: 0 auto;
         }
         .title,
         .description {
@@ -196,10 +198,10 @@ const Home = () => {
         }
         @keyframes colorwipe {
           0% {
-            background-position: -70%;
+            background-position: 0%;
           }
           100% {
-            background-position: 170%;
+            background-position: 100%;
           }
         }
       `}</style>
