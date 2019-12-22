@@ -2,12 +2,19 @@ import React, { Fragment } from "react";
 import moment from "moment";
 import SocialIcons from "../components/social-icons";
 import LoadingIcon from "../components/loading-icon";
+import SoonBanner from "../components/soon-banner";
 
 const Card = props => {
   const { group, loading } = props;
   let backgroundImage = "";
   let socialIcons = null;
   let startsInSevenDays = null;
+  let nextEvent = {
+    title: "TBA",
+    date: "Click here for updates",
+    url: loading ? "#" : group.url
+  };
+
   if (!loading) {
     if (group.path) {
       backgroundImage = `background-image: url('/static/${group.path}');`;
@@ -15,25 +22,19 @@ const Card = props => {
     if (group.links && group.name) {
       socialIcons = <SocialIcons links={group.links} groupName={group.name} />;
     }
-  }
 
-  let nextEvent = {
-    title: "TBA",
-    date: "Click here for updates",
-    url: loading ? "#" : group.url
-  };
+    if (Object.keys(group.nextEvent).length) {
+      const { url, start_date, title } = group.nextEvent;
+      const sevenDays = moment().add(8, "days");
+      startsInSevenDays = moment(start_date).isBefore(sevenDays);
 
-  if (Object.keys(group.nextEvent).length) {
-    const { url, start_date, title } = group.nextEvent;
-    const sevenDays = moment().add(8, "days");
-    startsInSevenDays = moment(start_date).isBefore(sevenDays);
-
-    nextEvent = {
-      ...nextEvent,
-      title,
-      date: moment(start_date).format("MMM Do YYYY"),
-      url: loading ? "#" : url
-    };
+      nextEvent = {
+        ...nextEvent,
+        title,
+        date: moment(start_date).format("MMM Do YYYY"),
+        url: loading ? "#" : url
+      };
+    }
   }
 
   let cardInfo = (
@@ -105,17 +106,24 @@ const Card = props => {
     );
   }
 
+  const renderSoonBanner = startsSoon => {
+    if (startsSoon) return <SoonBanner />;
+    return;
+  };
+
   return (
     <span className="card-container">
       <a href={nextEvent.url} name={group.name}>
-        <div
-          className={`card ${startsInSevenDays && !loading ? "glow" : null}`}
-        >
+        <div className={`card ${startsInSevenDays ? "glow" : ""}`}>
+          {renderSoonBanner(startsInSevenDays)}
           {cardInfo} <span className="card-background"></span>
         </div>
       </a>
       {socialIcons}
       <style jsx>{`
+        .card-container {
+          position: relative;
+        }
         a:link {
           text-decoration: none;
         }
