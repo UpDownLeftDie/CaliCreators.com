@@ -127,7 +127,7 @@ const Home = () => {
         }
         :global(body) {
           background-color: #9146ff;
-          background-image: url("/static/funky-lines.webp");
+          background-image: url("/static/funky-lines.png");
           background-size: 600px;
           font-family: "Kanit", sans-serif, Avenir Next, Avenir, Helvetica,
             sans-serif;
@@ -163,7 +163,7 @@ const Home = () => {
         .title-wrapper {
           filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.4));
           display: block;
-          width: 255px;
+          width: 270px;
           margin: 0 auto;
         }
         .title,

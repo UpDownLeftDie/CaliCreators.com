@@ -1,7 +1,7 @@
 [{
         "city": "Los Angeles",
         "name": "Twitch LA",
-        "path": "la.webp",
+        "path": "la.jpg",
         "url": "https://meetups.twitch.tv/los-angeles",
         "links": [{
                 "site": "twitter",
@@ -20,7 +20,7 @@
     {
         "city": "Orange",
         "name": "OC Streamers",
-        "path": "oc.webp",
+        "path": "oc.jpg",
         "url": "https://www.meetup.com/ocstreamers",
         "links": [{
                 "site": "twitter",
@@ -39,7 +39,7 @@
     {
         "city": "San Diego",
         "name": "Twitch SD",
-        "path": "sd.webp",
+        "path": "sd.jpg",
         "url": "https://meetups.twitch.tv/san-diego",
         "links": [{
                 "site": "twitch",
