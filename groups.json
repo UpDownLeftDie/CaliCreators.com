@@ -36,7 +36,8 @@
             }
         ],
         "charity": {
-            "url": "https://www.extra-life.org/team/ocstreamers2020"
+            "url": "https://www.extra-life.org/team/ocstreamers2020",
+            "image": "/extralife-icon.png"
         }
     },
     {

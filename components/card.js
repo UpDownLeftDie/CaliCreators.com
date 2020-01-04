@@ -159,7 +159,8 @@ const Card = props => {
           text-align: left;
           text-decoration: none;
           transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
-          filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.4));
+          filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.4))
+            drop-shadow(0 -4px 3px rgba(0, 0, 0, 0.3));
           border-radius: 20px;
           text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
           word-break: break-word;
@@ -184,7 +185,8 @@ const Card = props => {
           left: 0;
           width: 100%;
           height: 100%;
-          filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.3));
+          filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.3))
+            drop-shadow(0 0px 6px rgba(0, 0, 0, 0.2));
           opacity: 0;
           transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
         }
@@ -224,6 +226,10 @@ const Card = props => {
             width: 80%;
             transform: translateX(0);
             left: 0%;
+            margin-bottom: 75px;
+          }
+          .last-card {
+            margin-bottom: 15px;
           }
           .card {
             width: auto;

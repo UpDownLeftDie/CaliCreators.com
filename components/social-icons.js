@@ -31,14 +31,14 @@ const SocialIcons = ({ links, groupName }) => {
         .socialicons :global(a) {
           color: #fff;
           text-decoration: none;
-          transition: transform 200ms;
+          transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
         }
         .socialicons :global(a):hover {
-          transform: scale(1.2);
+          transform: scale(1.3);
         }
         @media (max-width: 900px) {
           .socialicons {
-            padding: 0 10px 35px;
+            padding: 0 10px;
           }
         }
       `}</style>

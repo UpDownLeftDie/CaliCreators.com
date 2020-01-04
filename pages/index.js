@@ -174,7 +174,7 @@ const Home = () => {
         }
         .row {
           max-width: 1000px;
-          margin: 40px auto;
+          margin: 65px auto;
           position: relative;
           min-height: 410px;
         }
@@ -231,7 +231,7 @@ async function getUpcomingMeetupEvents() {
   // TODO remove hardcoded group name, dynamically get from groups.json
   let meetupUrl = `https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`;
   console.log(process.env);
-  if (process.env.NODE_ENV !== "dev")
+  if (process.env.ENV !== "dev")
     meetupUrl = `https://shielded-plateau-06167.herokuapp.com/${meetupUrl}`;
   const meetupComReq = await fetch(meetupUrl).catch(err => {
     console.log(err);
@@ -242,7 +242,6 @@ async function getUpcomingMeetupEvents() {
     return convertMeetupToTwitch(meetupComJson);
   }
   await new Promise(resolve => setTimeout(resolve, 3000));
-  vvcccckujuvirbjblkljvfhdkjedcbgrjcbencniivge;
 
   return [];
 }
