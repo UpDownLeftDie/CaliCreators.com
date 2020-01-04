@@ -36,7 +36,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           ></link>
           <script src="https://kit.fontawesome.com/d03f0d01ad.js"></script>
-          <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+          <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         </Head>
         <body>
           <Main />

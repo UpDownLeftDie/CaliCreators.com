@@ -88,10 +88,7 @@ const Home = () => {
         ></meta>
         <meta property="og:title" content={siteTitle}></meta>
         <meta property="og:url" content={url}></meta>
-        <meta
-          property="og:image"
-          content={`${url}/static/twitchsocal.gif`}
-        ></meta>
+        <meta property="og:image" content={`${url}/twitchsocal.gif`}></meta>
         <meta property="og:image:width" content="800"></meta>
         <meta property="og:image:height" content="800"></meta>
         <meta
@@ -127,7 +124,7 @@ const Home = () => {
         }
         :global(body) {
           background-color: #9146ff;
-          background-image: url("/static/funky-lines.png");
+          background-image: url("/funky-lines.png");
           background-size: 600px;
           font-family: "Kanit", sans-serif, Avenir Next, Avenir, Helvetica,
             sans-serif;
@@ -232,9 +229,11 @@ async function getUpcomingTwitchEvents() {
 async function getUpcomingMeetupEvents() {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
   // TODO remove hardcoded group name, dynamically get from groups.json
-  const meetupComReq = await fetch(
-    `https://shielded-plateau-06167.herokuapp.com/https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`
-  ).catch(err => {
+  let meetupUrl = `https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`;
+  console.log(process.env);
+  if (process.env.NODE_ENV !== "dev")
+    meetupUrl = `https://shielded-plateau-06167.herokuapp.com/${meetupUrl}`;
+  const meetupComReq = await fetch(meetupUrl).catch(err => {
     console.log(err);
   });
 

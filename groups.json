@@ -34,7 +34,10 @@
                 "site": "instagram",
                 "url": "https://www.instagram.com/ocstreamers"
             }
-        ]
+        ],
+        "charity": {
+            "url": "https://www.extra-life.org/team/ocstreamers2020"
+        }
     },
     {
         "city": "San Diego",

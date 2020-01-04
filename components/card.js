@@ -3,6 +3,7 @@ import moment from "moment";
 import SocialIcons from "../components/social-icons";
 import LoadingIcon from "../components/loading-icon";
 import SoonBanner from "../components/soon-banner";
+import CharityBanner from "../components/charity-banner";
 
 const Card = props => {
   const { group, loading, totalCards, position } = props;
@@ -19,7 +20,7 @@ const Card = props => {
 
   if (!loading) {
     if (group.path) {
-      backgroundImage = `background-image: url('/static/${group.path}');`;
+      backgroundImage = `background-image: url('/${group.path}');`;
     }
     if (group.links && group.name) {
       socialIcons = <SocialIcons links={group.links} groupName={group.name} />;
@@ -55,7 +56,9 @@ const Card = props => {
       `}</style>
     </Fragment>
   );
+  let charityBanner = null;
   if (!loading) {
+    charityBanner = <CharityBanner charity={group.charity} />;
     cardInfo = (
       <Fragment>
         <h4>Next Event</h4>
@@ -119,6 +122,7 @@ const Card = props => {
         isFirst ? "first-card" : isLast ? "last-card" : ""
       }`}
     >
+      {charityBanner}
       <a href={nextEvent.url} name={group.name}>
         <div className={`card ${startsInSevenDays ? "glow" : ""}`}>
           {renderSoonBanner(startsInSevenDays)}
