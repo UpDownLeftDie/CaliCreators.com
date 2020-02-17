@@ -294,7 +294,7 @@ var SoonBanner = function SoonBanner() {
 /*! exports provided: 0, 1, 2, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("[{\"city\":\"Los Angeles\",\"name\":\"Twitch LA\",\"path\":\"la.jpg\",\"url\":\"https://meetups.twitch.tv/los-angeles\",\"links\":[{\"site\":\"twitter\",\"url\":\"https://twitter.com/TwitchLosAngele\"},{\"site\":\"discord\",\"url\":\"https://discord.gg/8E75rA5\"},{\"site\":\"instagram\",\"url\":\"https://www.instagram.com/twitch_LA\"}]},{\"city\":\"Orange\",\"name\":\"OC Streamers\",\"path\":\"oc.jpg\",\"url\":\"https://www.meetup.com/ocstreamers\",\"links\":[{\"site\":\"twitter\",\"url\":\"https://twitter.com/OCStreamers\"},{\"site\":\"discord\",\"url\":\"https://discord.gg/a5SUFUK\"},{\"site\":\"instagram\",\"url\":\"https://www.instagram.com/ocstreamers\"}],\"charity\":{\"url\":\"https://www.extra-life.org/team/ocstreamers2020\",\"image\":\"/extralife-icon.png\"}},{\"city\":\"San Diego\",\"name\":\"Twitch SD\",\"path\":\"sd.jpg\",\"url\":\"https://meetups.twitch.tv/san-diego\",\"links\":[{\"site\":\"twitch\",\"url\":\"https://www.twitch.tv/twitch_sandiego\"},{\"site\":\"twitter\",\"url\":\"https://twitter.com/TwitchSanDiego\"},{\"site\":\"discord\",\"url\":\"https://t.co/m0wLLQNnk8\"}]}]");
+module.exports = JSON.parse("[{\"city\":\"Los Angeles\",\"name\":\"Twitch LA\",\"path\":\"la.jpg\",\"url\":\"https://meetups.twitch.tv/los-angeles\",\"links\":[{\"site\":\"twitter\",\"url\":\"https://twitter.com/TwitchLosAngele\"},{\"site\":\"discord\",\"url\":\"https://discord.gg/8E75rA5\"},{\"site\":\"instagram\",\"url\":\"https://www.instagram.com/twitch_LA\"}]},{\"city\":\"Orange\",\"name\":\"OC Streamers\",\"path\":\"oc.jpg\",\"url\":\"https://www.meetup.com/ocstreamers\",\"links\":[{\"site\":\"twitter\",\"url\":\"https://twitter.com/OCStreamers\"},{\"site\":\"discord\",\"url\":\"https://discord.gg/a5SUFUK\"},{\"site\":\"instagram\",\"url\":\"https://www.instagram.com/ocstreamers\"}],\"charity\":{\"url\":\"https://www.extra-life.org/team/ocstreamers2020\",\"image\":\"/extralife-icon.png\"}},{\"city\":\"San Diego\",\"name\":\"Twitch SD\",\"path\":\"sd.jpg\",\"url\":\"https://meetups.twitch.tv/san-diego\",\"links\":[{\"site\":\"twitch\",\"url\":\"https://www.twitch.tv/twitch_sandiego\"},{\"site\":\"twitter\",\"url\":\"https://twitter.com/TwitchSanDiego\"},{\"site\":\"discord\",\"url\":\"https://discord.gg/twitchsandiego\"}],\"charity\":{\"url\":\"https://www.extra-life.org/team/TwitchSanDiego\",\"image\":\"/extralife-icon.png\"}}]");
 
 /***/ }),
 
@@ -24388,7 +24388,7 @@ function convertMeetupToTwitch(meetup) {
 
 /***/ }),
 
-/***/ 1:
+/***/ 0:
 /*!*****************************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2F&absolutePagePath=%2FUsers%2Fjaredkotoff%2Fpersonal%2Fgit%2Fca-creators%2Fpages%2Findex.js ***!
   \*****************************************************************************************************************************************/
@@ -24411,5 +24411,5 @@ module.exports = dll_ef0ff7c60362f24a921f;
 
 /***/ })
 
-},[[1,"static/runtime/webpack.js"]]]);
+},[[0,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=index.js.map

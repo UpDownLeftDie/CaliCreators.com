@@ -55,8 +55,12 @@
             },
             {
                 "site": "discord",
-                "url": "https://t.co/m0wLLQNnk8"
+                "url": "https://discord.gg/twitchsandiego"
             }
-        ]
+        ],
+        "charity": {
+            "url": "https://www.extra-life.org/team/TwitchSanDiego",
+            "image": "/extralife-icon.png"
+        }
     }
 ]
