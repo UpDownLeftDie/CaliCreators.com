@@ -13,41 +13,41 @@ const url = "https://cacreators.com";
 const Home = () => {
   const [upcomingTwitchEvents, setTwitchEvents] = useState({
     events: [],
-    loading: true
+    loading: true,
   });
   const [upcomingMeetupEvents, setMeetupEvents] = useState({
     events: [],
-    loading: true
+    loading: true,
   });
 
   useEffect(() => {
-    getUpcomingTwitchEvents().then(twithcEvents => {
+    getUpcomingTwitchEvents().then((twithcEvents) => {
       setTwitchEvents({ events: twithcEvents, loading: false });
     });
   }, []);
 
   useEffect(() => {
-    getUpcomingMeetupEvents().then(meetupEvents => {
+    getUpcomingMeetupEvents().then((meetupEvents) => {
       setMeetupEvents({ events: meetupEvents, loading: false });
     });
   }, []);
 
   const findNextEvent = (groups, upcomingEvents) => {
-    return groups.map(group => {
-      const nextEvent = upcomingEvents.find(event => {
+    return groups.map((group) => {
+      const nextEvent = upcomingEvents.find((event) => {
         if (event.chapter.city === group.city) return true;
         return false;
       });
       return {
         ...group,
-        nextEvent: nextEvent || {}
+        nextEvent: nextEvent || {},
       };
     });
   };
 
   const renderCards = () => {
     const upcomingEvents = upcomingTwitchEvents.events.concat(
-      upcomingMeetupEvents.events
+      upcomingMeetupEvents.events,
     );
     const loading =
       upcomingTwitchEvents.loading || upcomingMeetupEvents.loading;
@@ -58,7 +58,7 @@ const Home = () => {
         return (
           new Date(a.nextEvent.start_date) - new Date(b.nextEvent.start_date)
         );
-      }
+      },
     );
     return groupsWithEvents.map((groupWithEvent, i) => (
       <Card
@@ -76,16 +76,14 @@ const Home = () => {
       style={{
         minHeight: "100%",
         position: "absolute",
-        width: "100%"
-      }}
-    >
+        width: "100%",
+      }}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{siteTitle}.com</title>
         <meta
           name="Description"
-          content={description.replace("<br/>", " ")}
-        ></meta>
+          content={description.replace("<br/>", " ")}></meta>
         <meta property="og:title" content={siteTitle}></meta>
         <meta property="og:url" content={url}></meta>
         <meta property="og:image" content={`${url}/twitchsocal.gif`}></meta>
@@ -93,8 +91,7 @@ const Home = () => {
         <meta property="og:image:height" content="800"></meta>
         <meta
           property="og:description"
-          content={description.replace("<br/>", " ")}
-        ></meta>
+          content={description.replace("<br/>", " ")}></meta>
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_US" />
       </Head>
@@ -105,8 +102,7 @@ const Home = () => {
         </span>
         <p
           className="description"
-          dangerouslySetInnerHTML={{ __html: description }}
-        ></p>
+          dangerouslySetInnerHTML={{ __html: description }}></p>
 
         <div className="row">{renderCards()}</div>
       </div>
@@ -212,8 +208,8 @@ const Home = () => {
 async function getUpcomingTwitchEvents() {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
   const twitchReq = await fetch(
-    `https://meetups.twitch.tv/api/search/?result_types=upcoming_event&country_code=Earth${cacheBuster}`
-  ).catch(err => {
+    `https://meetups.twitch.tv/api/search/?result_types=upcoming_event&country_code=Earth${cacheBuster}`,
+  ).catch((err) => {
     console.log(err);
   });
 
@@ -231,9 +227,9 @@ async function getUpcomingMeetupEvents() {
   // TODO remove hardcoded group name, dynamically get from groups.json
   let meetupUrl = `https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`;
   console.log(process.env);
-  if (process.env.ENV !== "dev")
+  if (process.env.ENV !== "development")
     meetupUrl = `https://shielded-plateau-06167.herokuapp.com/${meetupUrl}`;
-  const meetupComReq = await fetch(meetupUrl).catch(err => {
+  const meetupComReq = await fetch(meetupUrl).catch((err) => {
     console.log(err);
   });
 
@@ -241,13 +237,13 @@ async function getUpcomingMeetupEvents() {
     const meetupComJson = await meetupComReq.json();
     return convertMeetupToTwitch(meetupComJson);
   }
-  await new Promise(resolve => setTimeout(resolve, 3000));
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
   return [];
 }
 
 function convertMeetupToTwitch(meetup) {
-  const meetupList = meetup.map(event => {
+  const meetupList = meetup.map((event) => {
     const city = event.group.localized_location.split(",")[0];
     const startDate = moment
       .utc(event.time)
@@ -255,11 +251,11 @@ function convertMeetupToTwitch(meetup) {
       .format();
     return {
       chapter: {
-        city
+        city,
       },
       url: event.link,
       start_date: startDate,
-      title: event.name
+      title: event.name,
     };
   });
 

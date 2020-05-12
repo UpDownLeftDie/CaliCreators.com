@@ -4,24 +4,24 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "cross-env NODE_ENV=dev next dev",
+    "dev": "cross-env NODE_ENV=development next dev",
     "export": "npm run build && next export && touch out/.nojekyll && touch out/CNAME && echo cacreators.com >> out/CNAME",
     "start": "next start",
     "deploy": "npm run export && git add . && git commit --amend --no-edit && git push && git subtree push --prefix=out origin gh-pages"
   },
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0",
-    "moment": "^2.24.0",
-    "next": "9.3.3",
+    "moment": "^2.25.3",
+    "next": "9.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "webp-loader": "^0.6.0"
   },
   "devDependencies": {
-    "@types/node": "^13.9.8",
-    "@types/react": "^16.9.28",
+    "@types/node": "^13.13.5",
+    "@types/react": "^16.9.35",
     "cross-env": "^7.0.2",
-    "husky": "^4.2.3",
+    "husky": "^4.2.5",
     "typescript": "^3.8.3"
   }
 }
