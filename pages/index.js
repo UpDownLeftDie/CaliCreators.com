@@ -228,7 +228,7 @@ async function getUpcomingMeetupEvents() {
   let meetupUrl = `https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`;
   console.log(process.env);
   if (process.env.ENV !== "development")
-    meetupUrl = `https://shielded-plateau-06167.herokuapp.com/${meetupUrl}`;
+    meetupUrl = `https://lym20nhb8j.execute-api.us-west-2.amazonaws.com/dev?url=${meetupUrl}`;
   const meetupComReq = await fetch(meetupUrl).catch((err) => {
     console.log(err);
   });
