@@ -1,0 +1,20 @@
+{
+  "oc": {
+    "url": "https://www.extra-life.org/team/ocstreamers2020",
+    "members": [
+      {
+        "name": "UpDownLeftDie"
+      },
+      {
+        "name": "Reizna"
+      }
+    ],
+    "schedule": [
+      {
+        "streamer": "UpDownLeftDie",
+        "timeStart": "8:00",
+        "timeEnd": "16:00"
+      }
+    ]
+  }
+}

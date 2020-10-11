@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Card from '../components/card';
 import fetch from 'isomorphic-unfetch';
 import moment from 'moment';
-let groups = require('../groups.json');
+const data = require('./data.json');
 
 const siteTitle = 'Cali Creators MeetUps';
 const description =
@@ -51,7 +51,7 @@ const Home = () => {
     );
     const loading =
       upcomingTwitchEvents.loading || upcomingMeetupEvents.loading;
-    const groupsWithEvents = findNextEvent(groups, upcomingEvents).sort(
+    const groupsWithEvents = findNextEvent(data.groups, upcomingEvents).sort(
       (a, b) => {
         if (!a.nextEvent.start_date) return 1;
         if (!b.nextEvent.start_date) return -1;
@@ -213,7 +213,7 @@ async function getUpcomingTwitchEvents() {
 
 async function getUpcomingMeetupEvents() {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
-  // TODO remove hardcoded group name, dynamically get from groups.json
+  // TODO remove hardcoded group name, dynamically get from data.json
   let meetupUrl = `https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`;
   if (process.env.ENV !== 'development')
     meetupUrl = `https://lym20nhb8j.execute-api.us-west-2.amazonaws.com/dev?url=${meetupUrl}`;

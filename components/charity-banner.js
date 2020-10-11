@@ -1,15 +1,32 @@
-const CharityBanner = props => {
+import Link from 'next/link';
+
+const CharityBanner = (props) => {
   const { charity } = props;
   if (!charity) return null;
   const { url, image } = charity;
   if (!url) return null;
+  const isInternalLink = url.toLowerCase().startsWith('http') ? false : true;
+
+  let WrapperLink = ({ children }) => {
+    return <>{children}</>;
+  };
+
+  if (isInternalLink) {
+    WrapperLink = ({ children }) => {
+      return <Link href={url}>{children}</Link>;
+    };
+  }
 
   return (
     <>
-      <a href={url} target="_blank">
-        <img src={image} />
-        <span>Extra Life Team</span>
-      </a>
+      <WrapperLink>
+        <a
+          href={isInternalLink ? null : url}
+          target={isInternalLink ? null : '_blank'}>
+          <img src={image} />
+          <span>Extra Life Team</span>
+        </a>
+      </WrapperLink>
       <style jsx>
         {`
           a {
@@ -20,6 +37,7 @@ const CharityBanner = props => {
             text-align: center;
             background: #ffffff;
             color: #1d5b7d;
+            cursor: pointer;
             border-radius: 20px 20px 0 0;
             transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
             text-decoration: none;
