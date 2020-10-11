@@ -1,11 +1,11 @@
 {
-  "name": "ca-creators",
+  "name": "cali-creators",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "next build",
     "dev": "cross-env NODE_ENV=development next dev",
-    "export": "npm run build && next export && touch out/.nojekyll && touch out/CNAME && echo cacreators.com >> out/CNAME",
+    "export": "npm run build && next export && touch out/.nojekyll && touch out/CNAME && echo calicreators.com >> out/CNAME",
     "start": "next start",
     "deploy": "npm run export && git add . && git commit --amend --no-edit && git push && git subtree push --prefix=out origin gh-pages"
   },
@@ -14,12 +14,11 @@
     "moment": "^2.29.1",
     "next": "9.5.5",
     "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "seedrandom": "^3.0.5"
+    "react-dom": "16.13.1"
   },
   "devDependencies": {
     "@types/node": "^14.11.8",
-    "@types/react": "^16.9.51",
+    "@types/react": "^16.9.52",
     "cross-env": "^7.0.2",
     "husky": "^4.3.0",
     "typescript": "^4.0.3"

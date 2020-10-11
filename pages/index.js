@@ -5,7 +5,7 @@ import fetch from 'isomorphic-unfetch';
 import moment from 'moment';
 let groups = require('../groups.json');
 
-const siteTitle = 'CA Creators';
+const siteTitle = 'Cali Creators MeetUps';
 const description =
   "We're the meetup groups for Twitch, Mixer, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
 const url = 'https://cacreators.com';
@@ -80,7 +80,7 @@ const Home = () => {
       }}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{siteTitle}.com</title>
+        <title>{siteTitle}</title>
         <meta
           name="Description"
           content={description.replace('<br/>', ' ')}></meta>
@@ -127,13 +127,13 @@ const Home = () => {
           animation: colorwipe 6s infinite;
           background: rgb(255, 255, 255);
           background: linear-gradient(
-            15deg,
+            40deg,
             rgba(255, 255, 255, 1) 0%,
-            rgba(255, 255, 255, 1) 15%,
-            rgba(131, 58, 180, 1) 25%,
-            rgba(253, 29, 29, 1) 50%,
-            rgba(252, 176, 69, 1) 75%,
-            rgba(255, 255, 255, 1) 80%,
+            rgba(255, 255, 255, 1) 25%,
+            rgba(131, 58, 180, 1) 30%,
+            rgba(253, 29, 29, 1) 55%,
+            rgba(252, 176, 69, 1) 70%,
+            rgba(255, 255, 255, 1) 75%,
             rgba(255, 255, 255, 1) 100%
           );
           background-size: 2400px;
@@ -144,7 +144,7 @@ const Home = () => {
         .title-wrapper {
           filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.4));
           display: block;
-          width: 270px;
+          width: 300px;
           margin: 0 auto;
         }
         .title,
