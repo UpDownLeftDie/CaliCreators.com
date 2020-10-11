@@ -4,7 +4,6 @@ module.exports = {
       '/': { page: '/' },
     };
   },
-  distDir: 'docs',
   env: {
     ENV: process.env.NODE_ENV,
   },
