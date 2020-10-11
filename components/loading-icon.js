@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
 
 const LoadingIcon = () => (
   <Fragment>
-    <i className="fad fa-spinner-third fa-spin"></i>
+    <i aria-hidden className="fad fa-spinner-third fa-spin"></i>
     <style jsx>{`
       .fad {
         display: block;

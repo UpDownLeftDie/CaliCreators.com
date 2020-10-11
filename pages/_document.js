@@ -2,8 +2,8 @@
 // Event handlers like onClick can't be added to this file
 
 // ./pages/_document.js
-import Document, { Html, Head, Main, NextScript } from "next/document";
-import { GA_TRACKING_ID } from "../lib/gtag";
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { GA_TRACKING_ID } from '../lib/gtag';
 
 class MyDocument extends Document {
   render() {
@@ -58,6 +58,30 @@ class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
+        <style jsx global>{`
+          :global(html, body) {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+          }
+          :global(body) {
+            background-color: #7230d3;
+            font-family: 'Kanit', sans-serif, Avenir Next, Avenir, Helvetica,
+              sans-serif;
+            overflow: hidden;
+          }
+          :global(body::before) {
+            content: '';
+            background-image: url('/funky-lines.png');
+            background-size: 700px;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            opacity: 0.25;
+          }
+        `}</style>
       </Html>
     );
   }

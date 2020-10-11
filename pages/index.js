@@ -1,14 +1,14 @@
-import React, { useState, useEffect, Fragment } from "react";
-import Head from "next/head";
-import Card from "../components/card";
-import fetch from "isomorphic-unfetch";
-import moment from "moment";
-let groups = require("../groups.json");
+import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
+import Card from '../components/card';
+import fetch from 'isomorphic-unfetch';
+import moment from 'moment';
+let groups = require('../groups.json');
 
-const siteTitle = "CA Creators";
+const siteTitle = 'Cali Creators MeetUps';
 const description =
   "We're the meetup groups for Twitch, Mixer, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
-const url = "https://cacreators.com";
+const url = 'https://cacreators.com';
 
 const Home = () => {
   const [upcomingTwitchEvents, setTwitchEvents] = useState({
@@ -21,8 +21,8 @@ const Home = () => {
   });
 
   useEffect(() => {
-    getUpcomingTwitchEvents().then((twithcEvents) => {
-      setTwitchEvents({ events: twithcEvents, loading: false });
+    getUpcomingTwitchEvents().then((twitchEvents) => {
+      setTwitchEvents({ events: twitchEvents, loading: false });
     });
   }, []);
 
@@ -74,16 +74,16 @@ const Home = () => {
   return (
     <div
       style={{
-        minHeight: "100%",
-        position: "absolute",
-        width: "100%",
+        minHeight: '100%',
+        position: 'absolute',
+        width: '100%',
       }}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{siteTitle}.com</title>
+        <title>{siteTitle}</title>
         <meta
           name="Description"
-          content={description.replace("<br/>", " ")}></meta>
+          content={description.replace('<br/>', ' ')}></meta>
         <meta property="og:title" content={siteTitle}></meta>
         <meta property="og:url" content={url}></meta>
         <meta property="og:image" content={`${url}/twitchsocal.gif`}></meta>
@@ -91,7 +91,7 @@ const Home = () => {
         <meta property="og:image:height" content="800"></meta>
         <meta
           property="og:description"
-          content={description.replace("<br/>", " ")}></meta>
+          content={description.replace('<br/>', ' ')}></meta>
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_US" />
       </Head>
@@ -113,18 +113,6 @@ const Home = () => {
       </div>
 
       <style jsx>{`
-        :global(html, body) {
-          height: 100%;
-          margin: 0;
-          padding: 0;
-        }
-        :global(body) {
-          background-color: #9146ff;
-          background-image: url("/funky-lines.png");
-          background-size: 600px;
-          font-family: "Kanit", sans-serif, Avenir Next, Avenir, Helvetica,
-            sans-serif;
-        }
         .hero {
           width: 100%;
           color: #fff;
@@ -135,17 +123,17 @@ const Home = () => {
           margin-top: 50px;
           line-height: 1.15;
           font-size: 48px;
-          font-family: "Knewave", sans-serif;
+          font-family: 'Knewave', sans-serif;
           animation: colorwipe 6s infinite;
           background: rgb(255, 255, 255);
           background: linear-gradient(
-            15deg,
+            40deg,
             rgba(255, 255, 255, 1) 0%,
-            rgba(255, 255, 255, 1) 15%,
-            rgba(131, 58, 180, 1) 25%,
-            rgba(253, 29, 29, 1) 50%,
-            rgba(252, 176, 69, 1) 75%,
-            rgba(255, 255, 255, 1) 80%,
+            rgba(255, 255, 255, 1) 25%,
+            rgba(131, 58, 180, 1) 30%,
+            rgba(253, 29, 29, 1) 55%,
+            rgba(252, 176, 69, 1) 70%,
+            rgba(255, 255, 255, 1) 75%,
             rgba(255, 255, 255, 1) 100%
           );
           background-size: 2400px;
@@ -156,7 +144,7 @@ const Home = () => {
         .title-wrapper {
           filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.4));
           display: block;
-          width: 270px;
+          width: 300px;
           margin: 0 auto;
         }
         .title,
@@ -166,7 +154,7 @@ const Home = () => {
         .description {
           font-size: 22px;
           font-weight: 300;
-          font-family: "Kanit", sans-serif;
+          font-family: 'Kanit', sans-serif;
         }
         .row {
           max-width: 1000px;
@@ -226,8 +214,7 @@ async function getUpcomingMeetupEvents() {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
   // TODO remove hardcoded group name, dynamically get from groups.json
   let meetupUrl = `https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`;
-  console.log(process.env);
-  if (process.env.ENV !== "development")
+  if (process.env.ENV !== 'development')
     meetupUrl = `https://lym20nhb8j.execute-api.us-west-2.amazonaws.com/dev?url=${meetupUrl}`;
   const meetupComReq = await fetch(meetupUrl).catch((err) => {
     console.log(err);
@@ -244,7 +231,7 @@ async function getUpcomingMeetupEvents() {
 
 function convertMeetupToTwitch(meetup) {
   const meetupList = meetup.map((event) => {
-    const city = event.group.localized_location.split(",")[0];
+    const city = event.group.localized_location.split(',')[0];
     const startDate = moment
       .utc(event.time)
       .utcOffset(event.utc_offset / 3600000)
