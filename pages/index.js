@@ -8,7 +8,7 @@ let groups = require('../groups.json');
 const siteTitle = 'Cali Creators MeetUps';
 const description =
   "We're the meetup groups for Twitch, Mixer, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
-const url = 'https://cacreators.com';
+const url = 'https://calicreators.com';
 
 const Home = () => {
   const [upcomingTwitchEvents, setTwitchEvents] = useState({

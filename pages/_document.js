@@ -12,8 +12,9 @@ class MyDocument extends Document {
         <Head>
           <link
             rel="preconnect"
-            href="https://shielded-plateau-06167.herokuapp.com"
+            href="https://lym20nhb8j.execute-api.us-west-2.amazonaws.com"
           />
+          <link rel="preconnect" href="https://meetups.twitch.tv" />
           <link rel="preconnect" href="https://stats.g.doubleclick.net" />
           <link rel="preconnect" href="https://meetups.twitch.tv" />
           {/* Global Site Tag (gtag.js) - Google Analytics */}
