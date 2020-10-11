@@ -120,6 +120,7 @@ const Home = () => {
         .title {
           margin: 0;
           width: 100%;
+          min-height: 120px;
           margin-top: 50px;
           line-height: 1.15;
           font-size: 48px;
