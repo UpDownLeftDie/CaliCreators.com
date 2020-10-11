@@ -5,7 +5,7 @@
   "scripts": {
     "build": "next build",
     "dev": "cross-env NODE_ENV=development next dev",
-    "export": "npm run build && next export -o docs/ && touch docs/.nojekyll && touch docs/CNAME && echo calicreators.com >> docs/CNAME",
+    "export": "npm run build && next export -o docs/ && touch docs/.nojekyll && touch docs/CNAME && echo calicreators.com>> docs/CNAME",
     "start": "next start"
   },
   "dependencies": {
