@@ -1,10 +1,11 @@
 module.exports = {
-  exportPathMap: function() {
+  exportPathMap: function () {
     return {
-      "/": { page: "/" }
+      '/': { page: '/' },
     };
   },
+  distDir: 'docs',
   env: {
-    ENV: process.env.NODE_ENV
-  }
+    ENV: process.env.NODE_ENV,
+  },
 };

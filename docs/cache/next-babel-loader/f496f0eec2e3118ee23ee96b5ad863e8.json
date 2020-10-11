@@ -1,0 +1,1 @@
+{"ast":null,"code":"import App from 'next/app';\nimport Router from 'next/router';\nimport * as gtag from '../lib/gtag';\nRouter.events.on('routeChangeComplete', function (url) {\n  return gtag.pageview(url);\n});\nexport default App;","map":null,"metadata":{},"sourceType":"module"}
