@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Card from '../components/card';
+import Card from '../components/organisms/card';
 import fetch from 'isomorphic-unfetch';
 import moment from 'moment';
 const data = require('./data.json');

@@ -1,24 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import fetch from 'isomorphic-unfetch';
 import Head from 'next/head';
-import Card from '../../components/card';
+import Card from '../../components/organisms/card';
+import LoadingIcon from '../../components/atoms/loading-icon';
 let data = require('./data.json');
 
-const siteTitle = 'Cali Creators MeetUps';
-const description =
-  "We're the meetup groups for Twitch, Mixer, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
-const url = 'https://calicreators.com';
+const API_BASE = 'https://www.extra-life.org/api';
 
-const Home = () => {
-  return (
-    <div
-      style={{
-        minHeight: '100%',
-        position: 'absolute',
-        width: '100%',
-      }}>
-      asdasdasdsad
-    </div>
-  );
+const ExtraLifeTeam = () => {
+  const router = useRouter();
+  const { group } = router.query;
+  const groupData = data[group];
+
+  const [team, setTeam] = useState({});
+  console.log(team);
+  useEffect(() => {
+    async function fetchTeam() {
+      const res = await fetch(`${API_BASE}/teams/${groupData.id}`);
+      const team = await res.json();
+      setTeam(team);
+    }
+    if (groupData?.id) fetchTeam();
+  }, [groupData]);
+
+  if (!team?.teamID) return <LoadingIcon />;
+
+  return <div>{team.name}</div>;
 };
 
-export default Home;
+export default ExtraLifeTeam;
