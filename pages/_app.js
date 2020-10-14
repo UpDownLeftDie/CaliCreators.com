@@ -11,22 +11,35 @@ class MyApp extends App {
 
     return (
       <>
-        <Component {...pageProps} />
+        <div className="container">
+          <Component {...pageProps} />
+          <div className="footer">
+            <p>
+              This site is not affiliated or endorsed by Twitch, Mixer, or
+              Meetup.
+            </p>
+          </div>
+        </div>
         <style jsx global>{`
+          html {
+            min-height: 100%;
+          }
           html,
           body {
-            height: 100%;
+            width: 100%;
             margin: 0;
             padding: 0;
           }
           body {
+            height: 100%;
             background-color: #7230d3;
+            color: #fff;
             font-family: 'Kanit', sans-serif, Avenir Next, Avenir, Helvetica,
               sans-serif;
-            overflow: hidden;
           }
-          body::before {
+          .container::before {
             content: '';
+            z-index: -999;
             background-image: url('/funky-lines.png');
             background-size: 700px;
             position: absolute;
@@ -35,6 +48,19 @@ class MyApp extends App {
             bottom: 0px;
             left: 0px;
             opacity: 0.25;
+          }
+          .container {
+            position: relative;
+            padding: 50px 16px 16px 16px;
+          }
+          .footer {
+            color: #fff;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-weight: 100;
+            font-style: italic;
+            font-family: sans-serif;
           }
         `}</style>
       </>

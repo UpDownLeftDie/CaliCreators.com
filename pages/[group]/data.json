@@ -1,14 +1,7 @@
 {
   "oc": {
     "url": "https://www.extra-life.org/team/ocstreamers2020",
-    "members": [
-      {
-        "name": "UpDownLeftDie"
-      },
-      {
-        "name": "Reizna"
-      }
-    ],
+    "id": "50385",
     "schedule": [
       {
         "streamer": "UpDownLeftDie",

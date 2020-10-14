@@ -72,12 +72,7 @@ const Home = () => {
   };
 
   return (
-    <div
-      style={{
-        minHeight: '100%',
-        position: 'absolute',
-        width: '100%',
-      }}>
+    <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{siteTitle}</title>
@@ -106,22 +101,17 @@ const Home = () => {
 
         <div className="row">{renderCards()}</div>
       </div>
-      <div className="footer">
-        <p>
-          This site is not affiliated or endorsed by Twitch, Mixer, or Meetup.
-        </p>
-      </div>
 
       <style jsx>{`
         .hero {
-          width: 100%;
           color: #fff;
+          min-height: 100%;
+          width: 100%;
         }
         .title {
           margin: 0;
           width: 100%;
           min-height: 120px;
-          margin-top: 50px;
           line-height: 1.15;
           font-size: 48px;
           font-family: 'Knewave', sans-serif;
@@ -163,16 +153,7 @@ const Home = () => {
           position: relative;
           min-height: 410px;
         }
-        .footer {
-          color: #fff;
-          position: absolute;
-          bottom: 0;
-          width: 100%;
-          text-align: center;
-          font-weight: 100;
-          font-style: italic;
-          font-family: sans-serif;
-        }
+
         @media (max-width: 900px) {
           .row {
             display: flex;
@@ -190,7 +171,7 @@ const Home = () => {
           }
         }
       `}</style>
-    </div>
+    </>
   );
 };
 
