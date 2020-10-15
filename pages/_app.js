@@ -10,28 +10,26 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <>
-        <div className="container">
-          <Component {...pageProps} />
-          <div className="footer">
-            <p>
-              This site is not affiliated or endorsed by Twitch, Mixer, or
-              Meetup.
-            </p>
-          </div>
+      <div className="container">
+        <Component {...pageProps} />
+        <div className="footer">
+          <p>
+            This site is not affiliated or endorsed by Twitch, Mixer, or Meetup.
+          </p>
         </div>
         <style jsx global>{`
           html {
             min-height: 100%;
           }
           html,
-          body {
+          body,
+          #__next {
+            height: 100%;
             width: 100%;
             margin: 0;
             padding: 0;
           }
           body {
-            height: 100%;
             background-color: #7230d3;
             color: #fff;
             font-family: 'Kanit', sans-serif, Avenir Next, Avenir, Helvetica,
@@ -52,6 +50,11 @@ class MyApp extends App {
           .container {
             position: relative;
             padding: 50px 16px 16px 16px;
+            height: 100%;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            justify-items: center;
           }
           .footer {
             color: #fff;
@@ -60,10 +63,13 @@ class MyApp extends App {
             text-align: center;
             font-weight: 100;
             font-style: italic;
-            font-family: sans-serif;
+            font-size: 14px;
+          }
+          .footer > p {
+            margin: 0;
           }
         `}</style>
-      </>
+      </div>
     );
   }
 }
