@@ -1,16 +1,19 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link';
 import { string, shape } from 'prop-types';
 
 const CharityBanner = ({ charity }) => {
   const { url, image } = charity;
   if (!url) return null;
-  const isInternalLink = url.toLowerCase().startsWith('http') ? false : true;
+  const isInternalLink = !url.toLowerCase().startsWith('http');
 
+  // eslint-disable-next-line react/prop-types
   let WrapperLink = ({ children }) => {
     return <>{children}</>;
   };
 
   if (isInternalLink) {
+    // eslint-disable-next-line react/prop-types
     WrapperLink = ({ children }) => {
       return <Link href={url}>{children}</Link>;
     };
@@ -21,8 +24,9 @@ const CharityBanner = ({ charity }) => {
       <WrapperLink>
         <a
           href={isInternalLink ? null : url}
-          target={isInternalLink ? null : '_blank'}>
-          <img src={image} />
+          target={isInternalLink ? null : '_blank'}
+        >
+          <img src={image} alt="Extra Life" />
           <span>Extra Life Team</span>
         </a>
       </WrapperLink>

@@ -1,37 +1,45 @@
 import { string, number, bool, shape } from 'prop-types';
-import ProgressBar from '../atoms/progress-bar';
+import ProgressBar from './progress-bar';
+
+const Wrapper = ({ children, links, streamIsLive, twitchUsername }) => {
+  if (links?.page) {
+    let href = links.page;
+    if (streamIsLive && twitchUsername) {
+      href = `https://www.twitch.tv/${twitchUsername}`;
+    }
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        style={{ display: 'grid' }}
+      >
+        {children}
+      </a>
+    );
+  }
+  return children;
+};
+
 const TeamMemberCard = ({
   avatarImageURL,
   displayName,
   fundraisingGoal,
-  isTeamCaptain,
+  // isTeamCaptain,
   links,
   streamIsLive,
   twitchUsername,
   sumDonations,
 }) => {
-  const Wrapper = ({ children, links, streamIsLive, twitchUsername }) => {
-    if (links?.page) {
-      let href = links.page;
-      if (streamIsLive && twitchUsername) {
-        href = `https://www.twitch.tv/${twitchUsername}`;
-      }
-      return (
-        <a href={href} target="_blank" style={{ display: 'grid' }}>
-          {children}
-        </a>
-      );
-    }
-    return children;
-  };
   return (
     <Wrapper
       links={links}
       streamIsLive={streamIsLive}
-      twitchUsername={twitchUsername}>
-      <div className={'team-member-card'}>
-        <img src={`https:${avatarImageURL}`} />
-        <div className={'name'}>{displayName}</div>
+      twitchUsername={twitchUsername}
+    >
+      <div className="team-member-card">
+        <img src={`https:${avatarImageURL}`} alt={`${displayName}'s profile`} />
+        <div className="name">{displayName}</div>
         <ProgressBar
           progress={sumDonations || 0}
           goal={fundraisingGoal}
@@ -74,7 +82,7 @@ const TeamMemberCard = ({
 };
 
 TeamMemberCard.defaultProps = {
-  isTeamCaptain: false,
+  // isTeamCaptain: false,
   links: {},
   streamIsLive: false,
   sumDonations: 0,
@@ -85,7 +93,7 @@ TeamMemberCard.propTypes = {
   avatarImageURL: string.isRequired,
   displayName: string.isRequired,
   fundraisingGoal: number.isRequired,
-  isTeamCaptain: bool,
+  // isTeamCaptain: bool,
   links: shape({
     donate: string,
     page: string,
