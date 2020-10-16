@@ -8,6 +8,9 @@ const Header = ({ title }) => (
       h1 {
         font-size: 38px;
         font-size: max(2.5em, 3vw);
+        padding: 0;
+        margin: 0;
+        line-height: 1;
       }
     `}</style>
   </Fragment>

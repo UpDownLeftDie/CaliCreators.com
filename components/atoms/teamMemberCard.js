@@ -7,10 +7,28 @@ const TeamMemberCard = ({
   isTeamCaptain,
   links,
   streamIsLive,
+  twitchUsername,
   sumDonations,
 }) => {
+  const Wrapper = ({ children, links, streamIsLive, twitchUsername }) => {
+    if (links?.page) {
+      let href = links.page;
+      if (streamIsLive && twitchUsername) {
+        href = `https://www.twitch.tv/${twitchUsername}`;
+      }
+      return (
+        <a href={href} target="_blank" style={{ display: 'grid' }}>
+          {children}
+        </a>
+      );
+    }
+    return children;
+  };
   return (
-    <>
+    <Wrapper
+      links={links}
+      streamIsLive={streamIsLive}
+      twitchUsername={twitchUsername}>
       <div className={'team-member-card'}>
         <img src={`https:${avatarImageURL}`} />
         <div className={'name'}>{displayName}</div>
@@ -19,36 +37,48 @@ const TeamMemberCard = ({
           goal={fundraisingGoal}
           height={20}
         />
-        <style jsx>
-          {`
-            :global(.team-member-card) {
-              width: 200px;
-              border-radius: 20px;
-              box-sizing: border-box;
-              padding: 10px;
-              color: #000;
-              background: #fff;
-              display: grid;
-              place-items: center;
-              margin: 10px;
-            }
-            img {
-              border-radius: 50%;
-              width: 100px;
-              height: 100px;
-              box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
-              margin: 10px;
-            }
-            .name {
-              font-size: 1.2rem;
-              line-height: 1;
-              text-align: center;
-            }
-          `}
-        </style>
       </div>
-    </>
+      <style jsx>
+        {`
+          a {
+            display: grid;
+          }
+          :global(.team-member-card) {
+            width: 200px;
+            min-height: 200px;
+            border-radius: 20px;
+            box-sizing: border-box;
+            color: #000;
+            background: #fff;
+            display: grid;
+            place-items: center;
+            padding: 10px 15px;
+            margin: 10px;
+          }
+          img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+            margin: 0 10px 10px;
+          }
+          .name {
+            font-size: 1.1rem;
+            line-height: 1;
+            text-align: center;
+          }
+        `}
+      </style>
+    </Wrapper>
   );
+};
+
+TeamMemberCard.defaultProps = {
+  isTeamCaptain: false,
+  links: {},
+  streamIsLive: false,
+  sumDonations: 0,
+  twitchUsername: null,
 };
 
 TeamMemberCard.propTypes = {
@@ -63,6 +93,7 @@ TeamMemberCard.propTypes = {
   }),
   streamIsLive: bool,
   sumDonations: number,
+  twitchUsername: string,
 };
 
 export default TeamMemberCard;

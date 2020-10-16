@@ -7,8 +7,8 @@ const ProgressBar = ({
   progressText,
   goalText,
   isMoney,
+  width,
 }) => {
-  console.log(progress);
   const percent = ((progress / goal) * 100).toFixed(1);
   let progressTextCombined = null;
   let goalTextCombined = null;
@@ -21,13 +21,18 @@ const ProgressBar = ({
   }
 
   return (
-    <>
+    <div className={'wrapper'}>
       <div className={'progressText'}>{progressTextCombined}</div>
       <div className={'goalText'}>{goalTextCombined}</div>
       <div className={'progressBar'}>
         <div className="progress" />
       </div>
       <style jsx>{`
+        .wrapper {
+          width: ${width}%;
+          max-width: 800px;
+          margin: 0 auto;
+        }
         .progressText {
           float: left;
           font-size: 1rem;
@@ -60,18 +65,18 @@ const ProgressBar = ({
             rgba(255, 255, 255, 0.17) 75%,
             transparent 75%
           );
-          background-size: 20px 20px;
+          background-size: ${height / 2}px ${height / 2}px;
           overflow: hidden;
-          animation: barberpole 10s linear infinite;
+          animation: barberpole 2s linear infinite;
         }
 
         @keyframes barberpole {
           100% {
-            background-position: 100% 100%;
+            background-position: ${height}px 0;
           }
         }
       `}</style>
-    </>
+    </div>
   );
 };
 
@@ -81,6 +86,7 @@ ProgressBar.defaultProps = {
   progressText: null,
   goalText: null,
   isMoney: false,
+  width: 100,
 };
 
 ProgressBar.propTypes = {
@@ -90,6 +96,7 @@ ProgressBar.propTypes = {
   progressText: string,
   goalText: string,
   isMoney: bool,
+  width: number,
 };
 
 export default ProgressBar;

@@ -14,6 +14,7 @@ const TeamMemberCards = ({ teamMembers }) => {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
+          margin: 40px 0;
         `}
       </style>
     </div>
@@ -21,7 +22,7 @@ const TeamMemberCards = ({ teamMembers }) => {
 };
 
 TeamMemberCard.propTypes = {
-  teamMembers: Array.isRequired,
+  teamMembers: array.isRequired,
 };
 
 export default TeamMemberCards;

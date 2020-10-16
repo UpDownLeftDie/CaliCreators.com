@@ -1,10 +1,12 @@
-const SoonBanner = () => {
+import { string } from 'prop-types';
+
+const Ribbon = ({ text, color }) => {
   return (
     <>
-      <div>Soon!</div>
+      <div>{text}</div>
       <style jsx>
         {`
-          background: #ec0000;
+          background: ${color};
           filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.6));
           transform: rotate(45deg);
           position: absolute;
@@ -19,4 +21,14 @@ const SoonBanner = () => {
     </>
   );
 };
-export default SoonBanner;
+
+Ribbon.defaultProps = {
+  color: '#ec0000',
+};
+
+Ribbon.propTypes = {
+  text: string.isRequired,
+  color: string,
+};
+
+export default Ribbon;

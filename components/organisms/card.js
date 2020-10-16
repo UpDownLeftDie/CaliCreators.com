@@ -3,7 +3,7 @@ import { arrayOf, bool, number, shape, string } from 'prop-types';
 import moment from 'moment';
 import SocialIcons from '../molecules/social-icons';
 import LoadingIcon from '../atoms/loading-icon';
-import SoonBanner from '../atoms/soon-banner';
+import Ribbon from '../atoms/ribbon';
 import CharityBanner from '../molecules/charity-banner';
 
 const Card = ({ group, loading, totalCards, position }) => {
@@ -113,8 +113,8 @@ const Card = ({ group, loading, totalCards, position }) => {
     );
   }
 
-  const renderSoonBanner = (startsSoon) => {
-    if (startsSoon) return <SoonBanner />;
+  const renderRibbon = (startsSoon) => {
+    if (startsSoon) return <Ribbon text="Soon!" />;
     return;
   };
 
@@ -126,7 +126,7 @@ const Card = ({ group, loading, totalCards, position }) => {
       {charityBanner}
       <a href={nextEvent.url} name={group.name}>
         <div className={`card ${startsInSevenDays ? 'glow' : ''}`}>
-          {renderSoonBanner(startsInSevenDays)}
+          {renderRibbon(startsInSevenDays)}
           {cardInfo} <span className="card-background"></span>
         </div>
       </a>
