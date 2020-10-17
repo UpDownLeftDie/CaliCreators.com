@@ -1,13 +1,10 @@
 import { arrayOf, shape, string, bool } from 'prop-types';
 import StreamCard from '../atoms/stream-card';
+import checkIfEventIsLive from '../../src/utils';
 
 const StreamerSchedule = ({ schedule, teamMembers }) => {
   if (!schedule) return null;
-  const sortedSchedule = schedule.sort(
-    (a, b) => new Date(a.timeStart).getTime() - new Date(b.timeStart).getTime()
-  );
-  console.log({ sortedSchedule });
-  const streams = sortedSchedule.map((stream) => {
+  const streams = schedule.map((stream) => {
     const teamMember =
       teamMembers.find((member) => {
         if (!member?.twitchUsername) return false;
@@ -16,14 +13,20 @@ const StreamerSchedule = ({ schedule, teamMembers }) => {
         );
       }) || {};
     const { timeStart, timeEnd, streamer } = stream;
-    const { twitchUsername, streamIsLive } = teamMember;
+    const { twitchUsername, avatarImageURL } = teamMember;
+    const streamIsLive = checkIfEventIsLive(timeStart, timeEnd);
+    console.log(streamer, streamIsLive, timeStart, timeEnd);
     return (
       <StreamCard
-        twitchUsername={twitchUsername}
-        timeStart={timeStart}
-        timeEnd={timeEnd}
-        streamIsLive={streamIsLive}
-        streamer={streamer}
+        key={streamer}
+        {...{
+          twitchUsername,
+          timeStart,
+          timeEnd,
+          streamIsLive,
+          streamer,
+          avatarImageURL,
+        }}
       />
     );
   });
@@ -33,8 +36,10 @@ const StreamerSchedule = ({ schedule, teamMembers }) => {
       <style jsx>
         {`
           display: grid;
-          grid-gap: 5px;
-          max-width: 800px;
+          grid-row-gap: 20px;
+          row-gap: 20px;
+          width: 100%;
+          justify-items: center;
         `}
       </style>
     </div>
@@ -53,7 +58,7 @@ StreamerSchedule.propTypes = {
     shape({
       twitchUsername: string,
       displayName: string.isRequired,
-      streamIsLive: bool,
+      avatarImageURL: string.isRequired,
     })
   ).isRequired,
 };

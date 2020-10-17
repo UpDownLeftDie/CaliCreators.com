@@ -1,5 +1,5 @@
 import { arrayOf, shape, string, number, bool } from 'prop-types';
-import TeamMemberCard from '../atoms/teamMemberCard';
+import TeamMemberCard from '../atoms/team-member-card';
 
 const TeamMemberCards = ({ teamMembers }) => {
   const cards =
@@ -39,7 +39,6 @@ const TeamMemberCards = ({ teamMembers }) => {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
-          margin: 40px 0;
         `}
       </style>
     </div>

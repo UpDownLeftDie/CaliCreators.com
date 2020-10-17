@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import fetch from 'isomorphic-unfetch';
 import moment from 'moment';
-import Card from '../components/organisms/card';
+import GroupCard from '../components/organisms/group-card';
 
 const data = require('./data.json');
 
 const siteTitle = 'Cali Creators MeetUps';
 const description =
-  "We're the meetup groups for Twitch, Mixer, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
+  "We're the meetup groups for Twitch, Facebook, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
 const url = 'https://calicreators.com';
 
 function convertMeetupToTwitch(meetup) {
@@ -118,7 +118,7 @@ const Home = () => {
       }
     );
     return groupsWithEvents.map((groupWithEvent, i) => (
-      <Card
+      <GroupCard
         key={groupWithEvent.name}
         group={groupWithEvent}
         loading={loading}

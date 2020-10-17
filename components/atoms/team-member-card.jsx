@@ -38,7 +38,7 @@ const TeamMemberCard = ({
       twitchUsername={twitchUsername}
     >
       <div className="team-member-card">
-        <img src={`https:${avatarImageURL}`} alt={`${displayName}'s profile`} />
+        <img src={avatarImageURL} alt={`${displayName}'s profile`} />
         <div className="name">{displayName}</div>
         <ProgressBar
           progress={sumDonations || 0}

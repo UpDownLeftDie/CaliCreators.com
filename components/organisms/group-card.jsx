@@ -6,7 +6,7 @@ import LoadingIcon from '../atoms/loading-icon';
 import Ribbon from '../atoms/ribbon';
 import CharityBanner from '../molecules/charity-banner';
 
-const Card = ({ group, loading, totalCards, position }) => {
+const GroupCard = ({ group, loading, totalCards, position }) => {
   const isFirst = !loading && position === 1;
   const isLast = !loading && position === totalCards;
   let backgroundImage = '';
@@ -256,7 +256,7 @@ const Card = ({ group, loading, totalCards, position }) => {
   );
 };
 
-Card.propTypes = {
+GroupCard.propTypes = {
   loading: bool.isRequired,
   totalCards: number.isRequired,
   position: number.isRequired,
@@ -282,4 +282,4 @@ Card.propTypes = {
   }).isRequired,
 };
 
-export default Card;
+export default GroupCard;

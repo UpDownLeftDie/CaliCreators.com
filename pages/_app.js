@@ -16,7 +16,8 @@ class MyApp extends App {
         <Component {...pageProps} />
         <div className="footer">
           <p>
-            This site is not affiliated or endorsed by Twitch, Mixer, or Meetup.
+            This site is not affiliated or endorsed by Twitch, Facebook, or
+            Meetup.
           </p>
         </div>
         <style jsx global>
