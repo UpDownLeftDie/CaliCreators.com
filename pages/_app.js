@@ -53,11 +53,14 @@ class MyApp extends App {
             }
             .container {
               position: relative;
+              min-height: 100%;
+              min-width: 480px;
               padding: 50px 16px 16px 16px;
               box-sizing: border-box;
               display: grid;
               grid-template-rows: 1fr auto;
               justify-items: center;
+              box-sizing: content-box;
             }
             .footer {
               color: #fff;
