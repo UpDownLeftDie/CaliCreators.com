@@ -142,7 +142,6 @@ const ExtraLifeTeam = () => {
             width: 100%;
             display: grid;
             justify-items: center;
-            min-width: 480px;
           }
           .teamLink {
             color: #fff;
