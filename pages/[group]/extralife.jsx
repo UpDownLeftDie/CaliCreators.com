@@ -167,3 +167,18 @@ const ExtraLifeTeam = () => {
 };
 
 export default ExtraLifeTeam;
+
+export async function getStaticPaths() {
+  return {
+    paths: [
+      { params: { group: 'oc' } }, // See the "paths" section below
+    ],
+    fallback: false,
+  };
+}
+
+export async function getStaticProps(context) {
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+}
