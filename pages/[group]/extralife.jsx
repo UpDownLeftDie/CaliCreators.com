@@ -140,8 +140,10 @@ const ExtraLifeTeam = () => {
         {`
           .page {
             width: 100%;
-            display: grid;
+            display: flex;
+            flex-direction: column;
             justify-items: center;
+            align-items: center;
           }
           .teamLink {
             color: #fff;
@@ -166,13 +168,12 @@ const ExtraLifeTeam = () => {
 };
 
 export default ExtraLifeTeam;
-<<<<<<< HEAD
-=======
 
 export async function getStaticPaths() {
   return {
     paths: [
-      { params: { group: 'oc' } }, // See the "paths" section below
+      { params: { group: 'oc' } },
+      { params: { group: 'sd' } }, // See the "paths" section below
     ],
     fallback: false,
   };
@@ -183,4 +184,3 @@ export async function getStaticProps(context) {
     props: {}, // will be passed to the page component as props
   };
 }
->>>>>>> master
