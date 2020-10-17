@@ -92,11 +92,14 @@ const ExtraLifeTeam = () => {
   }, [groupData]);
   if (!team?.participants) return <LoadingIcon />;
 
-  const scheduleTimeRange = getScheduleTimeRange(schedule);
-  const isEventLive = checkIfEventIsLive(
-    scheduleTimeRange.start,
-    scheduleTimeRange.end
-  );
+  let isEventLive = false;
+  if (schedule?.length) {
+    const scheduleTimeRange = getScheduleTimeRange(schedule) || {};
+    isEventLive = checkIfEventIsLive(
+      scheduleTimeRange.start,
+      scheduleTimeRange.end
+    );
+  }
   return (
     <div className="page">
       <Header title={team.name} />
@@ -111,7 +114,7 @@ const ExtraLifeTeam = () => {
         isMoney
         width={80}
       />
-      {schedule?.length && isEventLive && (
+      {schedule?.length > 0 && isEventLive && (
         <div className="streamerSchedule live">
           <h2>Live Schedule</h2>
           <StreamerSchedule
@@ -124,7 +127,7 @@ const ExtraLifeTeam = () => {
         <h2>Team Members</h2>
         <TeamMemberCards teamMembers={team.participants} />
       </div>
-      {schedule?.length && !isEventLive && (
+      {schedule?.length > 0 && !isEventLive && (
         <div className="streamerSchedule upcoming">
           <h2>Upcoming Event</h2>
           <StreamerSchedule
