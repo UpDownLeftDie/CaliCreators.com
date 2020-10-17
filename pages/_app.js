@@ -54,7 +54,6 @@ class MyApp extends App {
             .container {
               position: relative;
               padding: 50px 16px 16px 16px;
-              height: 100%;
               box-sizing: border-box;
               display: grid;
               grid-template-rows: 1fr auto;
@@ -68,6 +67,7 @@ class MyApp extends App {
               font-weight: 100;
               font-style: italic;
               font-size: 14px;
+              padding-top: 50px;
             }
             .footer > p {
               margin: 0;
