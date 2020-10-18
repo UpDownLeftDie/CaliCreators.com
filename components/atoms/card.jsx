@@ -28,8 +28,8 @@ const Card = ({ children, loading, backgroundImage, ribbon, isGlowing }) => {
     children
   );
 
-  const renderRibbon = ({ text, color }) => {
-    if (text) return <Ribbon text={text} color={color} />;
+  const renderRibbon = ({ text, color, leftSide = false }) => {
+    if (text) return <Ribbon text={text} color={color} leftSide={leftSide} />;
     return null;
   };
 

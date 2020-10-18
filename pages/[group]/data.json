@@ -4,19 +4,39 @@
     "id": "50385",
     "schedule": [
       {
-        "streamer": "Reizna",
-        "timeStart": "2020-10-16T23:16:58.857Z",
-        "timeEnd":   "2020-10-18T23:16:58.857Z"
+        "streamer": "UpDownLeftDie",
+        "timeStart": "2020-11-07T15:00:00.000Z",
+        "timeEnd":   "2020-11-08T15:00:00.000Z"
       },
       {
-        "streamer": "UpDownLeftDie",
-        "timeStart": "2020-10-18T23:16:58.857Z",
-        "timeEnd":   "2020-10-19T23:16:58.857Z"
+        "streamer": "Reizna",
+        "timeStart": "2020-11-07T15:00:00.000Z",
+        "timeEnd":   "2020-11-08T15:00:00.000Z"
+      },
+      {
+        "streamer": "Phunguy",
+        "timeStart": "2020-11-07T15:00:00.000Z",
+        "timeEnd":   "2020-11-08T15:00:00.000Z"
       },
       {
         "streamer": "Ganza",
-        "timeStart": "2020-10-19T23:16:58.857Z",
-        "timeEnd":   "2020-10-20T23:16:58.857Z"
+        "timeStart": "2020-11-07T15:00:00.000Z",
+        "timeEnd":   "2020-11-08T15:00:00.000Z"
+      },
+      {
+        "streamer": "Rawstarr",
+        "timeStart": "2020-11-07T15:00:00.000Z",
+        "timeEnd":   "2020-11-08T15:00:00.000Z"
+      },
+      {
+        "streamer": "that_guy_nibbs",
+        "timeStart": "2020-11-07T15:00:00.000Z",
+        "timeEnd":   "2020-11-08T15:00:00.000Z"
+      },
+      {
+        "streamer": "ThaRealMcCoy77",
+        "timeStart": "2020-11-07T15:00:00.000Z",
+        "timeEnd":   "2020-11-08T15:00:00.000Z"
       }
     ]
   },

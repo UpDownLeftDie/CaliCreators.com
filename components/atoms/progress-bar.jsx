@@ -6,6 +6,7 @@ const ProgressBar = ({
   height,
   progressText,
   goalText,
+  inlineText,
   isMoney,
   displayProgress,
   displayPercent,
@@ -15,10 +16,10 @@ const ProgressBar = ({
   let progressTextCombined = null;
   let goalTextCombined = null;
 
-  if (progressText) {
+  if (progressText || progressText === '') {
     progressTextCombined = `${progressText} ${isMoney ? '$' : ''}${progress}`;
   }
-  if (goalText) {
+  if (goalText || goalText === '') {
     goalTextCombined = `${goalText} ${isMoney ? '$' : ''}${goal}`;
   }
   let barProgressText = null;
@@ -26,26 +27,45 @@ const ProgressBar = ({
     let str = `${percent}%`;
     if (!displayPercent) str = `${isMoney ? '$' : ''}${progress}`;
     barProgressText = (
-      <span className="barProgressText">
+      <span>
         {str}
         <style jsx>
           {`
-            .barProgressText {
-              position: absolute;
-              font-size: 90%;
-              color: #fff;
-              text-shadow: 0 0 5px black;
-            }
+            position: absolute;
           `}
         </style>
       </span>
     );
   }
-  return (
-    <div className="wrapper">
+  const text = (
+    <>
       <div className="progressText">{progressTextCombined}</div>
       <div className="goalText">{goalTextCombined}</div>
+      <style jsx>
+        {`
+          .progressText {
+            position: ${inlineText ? 'absolute' : 'relative'};
+            font-size: 1rem;
+            margin-left: 10px;
+            z-index: 1;
+            justify-self: start;
+          }
+          .goalText {
+            position: ${inlineText ? 'absolute' : 'relative'};
+            font-size: 1rem;
+            margin-right: 10px;
+            z-index: 1;
+            justify-self: end;
+          }
+        `}
+      </style>
+    </>
+  );
+  return (
+    <div className={`wrapper ${inlineText ? 'inlineText' : ''}`}>
+      {inlineText ? null : text}
       <div className="progressBar">
+        {inlineText ? text : null}
         {barProgressText}
         <div className="progress" />
       </div>
@@ -54,19 +74,18 @@ const ProgressBar = ({
           .wrapper {
             width: ${width}%;
             max-width: 800px;
+            position: relative;
+            display: grid;
+            grid-template:
+              'a b'
+              'bar bar';
           }
-          .progressText {
-            float: left;
-            font-size: 1rem;
-            margin-left: 10px;
-          }
-          .goalText {
-            float: right;
-            font-size: 1rem;
-            margin-right: 10px;
+          .wrapper.inlineText {
+            display: block;
           }
           .progressBar {
             position: relative;
+            grid-area: bar;
             background: #1a4c6d;
             overflow: hidden;
             height: ${height}px;
@@ -74,6 +93,10 @@ const ProgressBar = ({
             width: 100%;
             display: grid;
             place-items: center;
+
+            font-size: 90%;
+            color: #fff;
+            text-shadow: 0 0 5px black;
           }
           .progress {
             width: ${percent}%;
@@ -111,6 +134,7 @@ ProgressBar.defaultProps = {
   height: 40,
   progressText: null,
   goalText: null,
+  inlineText: false,
   isMoney: false,
   width: 100,
   displayProgress: false,
@@ -123,6 +147,7 @@ ProgressBar.propTypes = {
   height: number,
   progressText: string,
   goalText: string,
+  inlineText: bool,
   isMoney: bool,
   width: number,
   displayProgress: bool,
