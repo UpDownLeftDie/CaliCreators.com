@@ -35,7 +35,9 @@ function sortParticipants(participants) {
     .sort((a, b) => {
       if (a.streamIsLive && !b.streamIsLive) return -1;
       if (b.streamIsLive && !a.streamIsLive) return 1;
-      return a.displayName.localeCompare(b.displayName);
+      const donations = b.sumDonations - a.sumDonations;
+      if (donations === 0) return a.displayName.localeCompare(b.displayName);
+      return donations;
     })
     .map((member) => {
       let newMember = {
@@ -171,15 +173,12 @@ export default ExtraLifeTeam;
 
 export async function getStaticPaths() {
   return {
-    paths: [
-      { params: { group: 'oc' } },
-      { params: { group: 'sd' } }, // See the "paths" section below
-    ],
+    paths: [{ params: { group: 'oc' } }, { params: { group: 'sd' } }],
     fallback: false,
   };
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
   return {
     props: {}, // will be passed to the page component as props
   };

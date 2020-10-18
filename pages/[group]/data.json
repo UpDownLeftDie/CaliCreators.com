@@ -3,7 +3,21 @@
     "url": "https://www.extra-life.org/team/ocstreamers2020",
     "id": "50385",
     "schedule": [
-
+      {
+        "streamer": "Reizna",
+        "timeStart": "2020-10-16T23:16:58.857Z",
+        "timeEnd":   "2020-10-18T23:16:58.857Z"
+      },
+      {
+        "streamer": "UpDownLeftDie",
+        "timeStart": "2020-10-18T23:16:58.857Z",
+        "timeEnd":   "2020-10-19T23:16:58.857Z"
+      },
+      {
+        "streamer": "Ganza",
+        "timeStart": "2020-10-19T23:16:58.857Z",
+        "timeEnd":   "2020-10-20T23:16:58.857Z"
+      }
     ]
   },
   "sd": {
