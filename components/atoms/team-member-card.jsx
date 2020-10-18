@@ -1,5 +1,6 @@
 import { string, number, bool, shape } from 'prop-types';
 import ProgressBar from './progress-bar';
+import Card from './card';
 
 const Wrapper = ({ children, links, streamIsLive, twitchUsername }) => {
   if (links?.page) {

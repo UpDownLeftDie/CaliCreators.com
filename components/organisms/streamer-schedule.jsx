@@ -1,4 +1,4 @@
-import { arrayOf, shape, string, bool } from 'prop-types';
+import { arrayOf, shape, string } from 'prop-types';
 import StreamCard from '../atoms/stream-card';
 import checkIfEventIsLive from '../../src/utils';
 

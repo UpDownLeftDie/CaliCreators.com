@@ -1,9 +1,13 @@
-import React, { Fragment } from 'react';
-import { string, bool } from 'prop-types';
+import React from 'react';
+import { string, bool, shape, element } from 'prop-types';
 import LoadingIcon from './loading-icon';
+import Ribbon from './ribbon';
 
-const Card = ({ loading, backgroundImage, ribbon }) => {
-  let cardInfo = (
+const Card = ({ children, loading, backgroundImage, ribbon, isGlowing }) => {
+  const bgImgStr = backgroundImage
+    ? `background-img: url(${backgroundImage});`
+    : '';
+  const cardInfo = loading ? (
     <>
       <span className="loadingIcon">
         <LoadingIcon />
@@ -20,101 +24,26 @@ const Card = ({ loading, backgroundImage, ribbon }) => {
         `}
       </style>
     </>
+  ) : (
+    children
   );
 
-  if (!loading) {
-    cardInfo = (
-      <>
-        <h4>Next Event</h4>
-        <h3>{group.name}</h3>
-        <h5 className="event-title">{nextEvent.title}</h5>
-        <span className="event-date">{nextEvent.date}</span>
-        <style jsx>
-          {`
-            h4 {
-              font-weight: 700;
-              font-size: 20px;
-              margin: 12px 0 0;
-            }
-            h3 {
-              margin: 0;
-              color: #fff;
-              font-size: 22px;
-              font-weight: 700;
-              position: absolute;
-              bottom: 10px;
-            }
-            .event-date {
-              font-size: 18px;
-              color: #fff;
-              font-weight: 400;
-              text-decoration: overline;
-              margin-top: 8px;
-              display: block;
-            }
-            .event-title {
-              font-weight: 700;
-              font-size: 2em;
-              margin: 12px 0 0;
-              overflow: hidden;
-              max-height: 180px;
-              line-height: 35px;
-            }
-            @media (max-width: 900px) {
-              h4 {
-                font-size: 28px;
-              }
-              h3 {
-                font-size: 30px;
-              }
-              .event-title {
-                max-height: 145px;
-              }
-            }
-          `}
-        </style>
-      </>
-    );
-  }
-
-  const renderRibbon = (startsSoon) => {
-    if (startsSoon) return <Ribbon text="Soon!" />;
+  const renderRibbon = ({ text, color }) => {
+    if (text) return <Ribbon text={text} color={color} />;
     return null;
   };
 
-  let firstLastClass = '';
-  if (isFirst) {
-    firstLastClass = 'first-card';
-  } else if (isLast) {
-    firstLastClass = 'last-card';
-  }
   return (
-    <span className={`card-container ${firstLastClass}`}>
-      {charityBanner}
-      <a href={nextEvent.url} name={group.name}>
-        <div className={`card ${startsInSevenDays ? 'glow' : ''}`}>
-          {renderRibbon(startsInSevenDays)}
-          {cardInfo}
-          <span className="card-background" />
-        </div>
-      </a>
-      {socialIcons}
+    <span className={`card${isGlowing ? ' glow' : ''}`}>
+      {renderRibbon(ribbon)}
+      {cardInfo}
+      <span className="card-background" />
       <style jsx>
         {`
-          .card-container {
-            position: absolute;
-            display: inline-block;
+          .card {
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateX(-50%);
             left: 50%;
-          }
-          .first-card {
-            transform: translateX(0%);
-            left: 0%;
-          }
-          .last-card {
-            transform: translateX(-100%);
-            left: 100%;
           }
 
           a:link {
@@ -122,8 +51,6 @@ const Card = ({ loading, backgroundImage, ribbon }) => {
           }
           .card {
             position: relative;
-            width: 250px;
-            height: 300px;
             padding: 18px;
             color: #fff;
             text-align: left;
@@ -168,8 +95,8 @@ const Card = ({ loading, backgroundImage, ribbon }) => {
             opacity: 1;
           }
           .card-background {
-            background: ${loading ? '#3d2769' : '#555'};
-            ${backgroundImage}
+            background: ${loading ? '#444' : '#fff'};
+            ${bgImgStr}
             background-size: cover;
             background-position: center;
             width: 100%;
@@ -186,28 +113,6 @@ const Card = ({ loading, backgroundImage, ribbon }) => {
             height: 100%;
             width: 100%;
             border-radius: 20px;
-            background-color: rgba(0, 0, 0, 0.4);
-          }
-
-          @media (max-width: 900px) {
-            .card-container {
-              position: relative;
-              margin: 0 auto;
-              width: 80%;
-              transform: translateX(0);
-              left: 0%;
-              margin-bottom: 75px;
-            }
-            .last-card {
-              margin-bottom: 15px;
-            }
-            .card {
-              width: auto;
-              margin-bottom: 15px;
-            }
-            .card p {
-              font-size: 26px;
-            }
           }
         `}
       </style>
@@ -218,13 +123,19 @@ const Card = ({ loading, backgroundImage, ribbon }) => {
 Card.defaultProps = {
   loading: false,
   backgroundImage: '',
-  ribbon: null,
+  ribbon: {},
+  isGlowing: false,
 };
 
 Card.propTypes = {
+  children: element.isRequired,
   loading: bool,
   backgroundImage: string,
-  ribbon: element,
+  ribbon: shape({
+    text: string,
+    color: string,
+  }),
+  isGlowing: bool,
 };
 
 export default Card;
