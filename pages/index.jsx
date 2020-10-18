@@ -78,13 +78,44 @@ const Home = () => {
   });
 
   useEffect(() => {
+    const cachedData = JSON.parse(localStorage.getItem('twitchEvents') || '{}');
+    if (cachedData?.updatedAt) {
+      const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
+      if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
+        setTwitchEvents({ events: cachedData.events, loading: false });
+        return;
+      }
+    }
     getUpcomingTwitchEvents().then((twitchEvents) => {
+      localStorage.setItem(
+        'twitchEvents',
+        JSON.stringify({
+          events: twitchEvents,
+          updatedAt: Date.now(),
+        })
+      );
       setTwitchEvents({ events: twitchEvents, loading: false });
     });
   }, []);
 
   useEffect(() => {
+    const cachedData = JSON.parse(localStorage.getItem('twitchEvents') || '{}');
+    if (cachedData?.updatedAt) {
+      const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
+      if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
+        setMeetupEvents({ events: cachedData.events, loading: false });
+        return;
+      }
+    }
+
     getUpcomingMeetupEvents().then((meetupEvents) => {
+      localStorage.setItem(
+        'meetupEvents',
+        JSON.stringify({
+          events: meetupEvents,
+          updatedAt: Date.now(),
+        })
+      );
       setMeetupEvents({ events: meetupEvents, loading: false });
     });
   }, []);

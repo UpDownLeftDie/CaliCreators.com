@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 // import Head from 'next/head';
 import TeamMemberCards from '../../components/molecules/team-member-cards';
@@ -35,7 +37,10 @@ function sortParticipants(participants) {
     .sort((a, b) => {
       if (a.streamIsLive && !b.streamIsLive) return -1;
       if (b.streamIsLive && !a.streamIsLive) return 1;
-      return a.displayName.localeCompare(b.displayName);
+      const donationsDiff = b.sumDonations - a.sumDonations;
+      if (donationsDiff === 0)
+        return a.displayName.localeCompare(b.displayName);
+      return donationsDiff;
     })
     .map((member) => {
       let newMember = {
@@ -75,22 +80,44 @@ const ExtraLifeTeam = () => {
       return fetchedTeamMembers;
     }
     async function getData() {
+      const storageKey = `${group}-extralife`;
+      const cachedData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+      if (cachedData?.updatedAt) {
+        const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
+        if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
+          setTeam(cachedData.team);
+          return;
+        }
+      }
       const results = await Promise.all([fetchTeam(), fetchTeamMembers()]);
-      //! TEST
-      // TODO REMOVE THIS
-      // results[1][11].streamIsLive = true;
-      //!
       const participants = sortParticipants(results[1]);
 
       const newTeam = {
         ...results[0],
         participants,
       };
+      const teamStorage = {
+        team: newTeam,
+        updatedAt: Date.now(),
+      };
+      localStorage.setItem(storageKey, JSON.stringify(teamStorage));
       setTeam(newTeam);
     }
     if (groupData?.id) getData();
-  }, [groupData]);
-  if (!team?.participants) return <LoadingIcon />;
+  }, [group, groupData]);
+  if (!team?.participants)
+    return (
+      <div>
+        <LoadingIcon />
+        <style jsx>
+          {`
+            display: grid;
+            place-items: center;
+            font-size: 10rem;
+          `}
+        </style>
+      </div>
+    );
 
   let isEventLive = false;
   if (schedule?.length) {
@@ -103,9 +130,10 @@ const ExtraLifeTeam = () => {
   return (
     <div className="page">
       <Header title={team.name} />
-      <a href={team.links.page} className="teamLink">
-        Join Team
-      </a>
+      <h2 className="subheader">Extra Life Team</h2>
+      <Link href="/">
+        <a className="homeLink">Home</a>
+      </Link>
       <ProgressBar
         progress={team.sumDonations}
         goal={team.fundraisingGoal}
@@ -113,6 +141,7 @@ const ExtraLifeTeam = () => {
         goalText="Goal"
         isMoney
         width={80}
+        displayProgress
       />
       {schedule?.length > 0 && isEventLive && (
         <div className="streamerSchedule live">
@@ -124,6 +153,9 @@ const ExtraLifeTeam = () => {
         </div>
       )}
       <div className="teamMembers">
+        <a href={team.links.page} className="teamLink">
+          Join Team
+        </a>
         <h2>Team Members</h2>
         <TeamMemberCards teamMembers={team.participants} />
       </div>
@@ -140,16 +172,35 @@ const ExtraLifeTeam = () => {
         {`
           .page {
             width: 100%;
-            display: grid;
+            display: flex;
+            flex-direction: column;
             justify-items: center;
+            align-items: center;
+          }
+          .subheader {
+            padding: 0;
+            margin: 0;
+          }
+          .homeLink {
+            color: #fff;
+            font-size: 18px;
           }
           .teamLink {
             color: #fff;
+            padding: 15px;
+            border-radius: 8px;
             font-size: 24px;
+            background: #26c2eb;
+            text-decoration: none;
+            font-weight: bold;
+          }
+          .teamLink:hover {
+            background: #13a2c8;
           }
           .teamMembers {
             margin-top: 40px;
             text-align: center;
+            position: relative;
           }
           .streamerSchedule {
             margin-top: 40px;
@@ -158,6 +209,11 @@ const ExtraLifeTeam = () => {
           }
           .streamerSchedule.upcoming h2 {
             margin-left: 10%;
+          }
+          @media (max-width: 600px) {
+            .streamerSchedule.upcoming h2 {
+              text-align: center;
+              margin-left: 0;
           }
         `}
       </style>
@@ -169,14 +225,12 @@ export default ExtraLifeTeam;
 
 export async function getStaticPaths() {
   return {
-    paths: [
-      { params: { group: 'oc' } }, // See the "paths" section below
-    ],
+    paths: [{ params: { group: 'oc' } }, { params: { group: 'sd' } }],
     fallback: false,
   };
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
   return {
     props: {}, // will be passed to the page component as props
   };

@@ -1,4 +1,4 @@
-import { arrayOf, shape, string, bool } from 'prop-types';
+import { arrayOf, number, shape, string } from 'prop-types';
 import StreamCard from '../atoms/stream-card';
 import checkIfEventIsLive from '../../src/utils';
 
@@ -9,13 +9,19 @@ const StreamerSchedule = ({ schedule, teamMembers }) => {
       teamMembers.find((member) => {
         if (!member?.twitchUsername) return false;
         return (
-          stream.streamer.toLowerCase() === member.twitchUsername.toLowerCase()
+          stream.streamer.trim().toLowerCase() ===
+          member.twitchUsername.toLowerCase()
         );
       }) || {};
     const { timeStart, timeEnd, streamer } = stream;
-    const { twitchUsername, avatarImageURL } = teamMember;
+    const {
+      twitchUsername,
+      avatarImageURL,
+      links,
+      sumDonations,
+      fundraisingGoal,
+    } = teamMember;
     const streamIsLive = checkIfEventIsLive(timeStart, timeEnd);
-    console.log(streamer, streamIsLive, timeStart, timeEnd);
     return (
       <StreamCard
         key={streamer}
@@ -26,6 +32,9 @@ const StreamerSchedule = ({ schedule, teamMembers }) => {
           streamIsLive,
           streamer,
           avatarImageURL,
+          links,
+          sumDonations,
+          fundraisingGoal,
         }}
       />
     );
@@ -36,8 +45,8 @@ const StreamerSchedule = ({ schedule, teamMembers }) => {
       <style jsx>
         {`
           display: grid;
-          grid-row-gap: 20px;
-          row-gap: 20px;
+          grid-row-gap: 10px;
+          row-gap: 10px;
           width: 100%;
           justify-items: center;
         `}
@@ -59,6 +68,12 @@ StreamerSchedule.propTypes = {
       twitchUsername: string,
       displayName: string.isRequired,
       avatarImageURL: string.isRequired,
+      sumDonations: number,
+      fundraisingGoal: number.isRequired,
+      links: shape({
+        donate: string,
+        stream: string,
+      }),
     })
   ).isRequired,
 };

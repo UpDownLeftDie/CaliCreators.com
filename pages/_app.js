@@ -44,7 +44,8 @@ class MyApp extends App {
               z-index: -999;
               background-image: url('/funky-lines.png');
               background-size: 700px;
-              position: absolute;
+              filter: blur(2px);
+              position: fixed;
               top: 0px;
               right: 0px;
               bottom: 0px;
@@ -60,6 +61,7 @@ class MyApp extends App {
               display: grid;
               grid-template-rows: 1fr auto;
               justify-items: center;
+              overflow: hidden;
             }
             .footer {
               color: #fff;

@@ -25,6 +25,7 @@ const CharityBanner = ({ charity }) => {
         <a
           href={isInternalLink ? null : url}
           target={isInternalLink ? null : '_blank'}
+          rel="noreferrer"
         >
           <img src={image} alt="Extra Life" />
           <span>Extra Life Team</span>
