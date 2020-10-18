@@ -40,26 +40,19 @@ const Card = ({ children, loading, backgroundImage, ribbon, isGlowing }) => {
       <span className="card-background" />
       <style jsx>
         {`
-          .card {
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(-50%);
-            left: 50%;
-          }
-
           a:link {
             text-decoration: none;
           }
           .card {
             position: relative;
-            padding: 18px;
+            padding: 15px;
+            margin: 10px;
             color: #fff;
-            text-align: left;
             text-decoration: none;
             transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
             filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.4))
               drop-shadow(0 -4px 3px rgba(0, 0, 0, 0.3));
-            border-radius: 20px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+            border-radius: 20px
             word-break: break-word;
           }
           .glow {

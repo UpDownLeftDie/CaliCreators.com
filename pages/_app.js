@@ -60,6 +60,7 @@ class MyApp extends App {
               display: grid;
               grid-template-rows: 1fr auto;
               justify-items: center;
+              overflow: hidden;
             }
             .footer {
               color: #fff;

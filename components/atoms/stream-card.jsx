@@ -1,4 +1,5 @@
 import { string, bool } from 'prop-types';
+// import Card from './card';
 
 const StreamCard = ({
   twitchUsername,
@@ -29,6 +30,7 @@ const StreamCard = ({
       rel="noreferrer"
       href={`https://www.twitch.tv/${twitchUsername || streamer}`}
     >
+      {/* <Card> */}
       <div className="streamCard">
         <img
           className="streamerAvatar"
@@ -49,16 +51,16 @@ const StreamCard = ({
           </div>
         </div>
       </div>
+      {/* </Card> */}
       <style jsx>
         {`
           & {
             width: ${streamIsLive ? '100%' : '80%'};
             box-sizing: border-box;
           }
-          text-decoration: none;
-          .streamCard {
-            background: #fff;
+          :global(.streamCard) {
             border-radius: 20px;
+            background: #fff;
             width: 100%;
             padding: 10px;
             display: grid;
@@ -69,10 +71,10 @@ const StreamCard = ({
             grid-column-gap: 20px;
             column-gap: 20px;
           }
-          .isLive {
+          :global(.isLive) {
             width: 100%;
           }
-          .streamerAvatar {
+          :global(.streamerAvatar) {
             border-radius: 50%;
             grid-column-start: 1;
             place-self: center;
@@ -80,7 +82,7 @@ const StreamCard = ({
             width: 100%;
             max-height: 100%;
           }
-          .right {
+          :global(.right) {
             grid-column-start: 2;
             display: flex;
             flex-direction: column;

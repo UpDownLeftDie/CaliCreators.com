@@ -33,11 +33,13 @@ function getScheduleTimeRange(schedule) {
 function sortParticipants(participants) {
   return participants
     .sort((a, b) => {
+      console.log(a.displayName, a.links);
       if (a.streamIsLive && !b.streamIsLive) return -1;
       if (b.streamIsLive && !a.streamIsLive) return 1;
-      const donations = b.sumDonations - a.sumDonations;
-      if (donations === 0) return a.displayName.localeCompare(b.displayName);
-      return donations;
+      const donationsDiff = b.sumDonations - a.sumDonations;
+      if (donationsDiff === 0)
+        return a.displayName.localeCompare(b.displayName);
+      return donationsDiff;
     })
     .map((member) => {
       let newMember = {
@@ -80,7 +82,7 @@ const ExtraLifeTeam = () => {
       const results = await Promise.all([fetchTeam(), fetchTeamMembers()]);
       //! TEST
       // TODO REMOVE THIS
-      // results[1][11].streamIsLive = true;
+      // results?.[1]?.[9] ? (results[1][9].streamIsLive = true) : null;
       //!
       const participants = sortParticipants(results[1]);
 
