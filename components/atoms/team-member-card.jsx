@@ -9,13 +9,17 @@ const Wrapper = ({ children, links, streamIsLive, twitchUsername }) => {
       href = `https://www.twitch.tv/${twitchUsername}`;
     }
     return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noreferrer"
-        style={{ display: 'grid', textDecoration: 'none' }}
-      >
+      <a href={href} target="_blank" rel="noreferrer">
         {children}
+        <style jsx>
+          {`
+            display: grid;
+            text-decoration: none;
+            place-items: center;
+            min-height: 200px;
+            color: #444;
+          `}
+        </style>
       </a>
     );
   }
@@ -124,35 +128,30 @@ const TeamMemberCard = ({
   }
   const buttons = getButtons(links, streamIsLive);
   return (
-    <Wrapper
-      links={links}
-      streamIsLive={streamIsLive}
-      twitchUsername={twitchUsername}
-    >
-      <Card ribbon={ribbon}>
-        <>
-          <div className="team-member-card">
-            <img src={avatarImageURL} alt={`${displayName}'s profile`} />
-            <div className="name">{displayName}</div>
-            <ProgressBar
-              progress={sumDonations || 0}
-              goal={fundraisingGoal}
-              height={20}
-            />
-          </div>
-          {buttons}
-        </>
-      </Card>
+    <Card ribbon={ribbon} isGlowing={streamIsLive}>
+      <div className="team-member-card">
+        <Wrapper
+          links={links}
+          streamIsLive={streamIsLive}
+          twitchUsername={twitchUsername}
+        >
+          <img src={avatarImageURL} alt={`${displayName}'s profile`} />
+          <div className="name">{displayName}</div>
+          <ProgressBar
+            progress={sumDonations || 0}
+            goal={fundraisingGoal}
+            height={20}
+          />
+        </Wrapper>
+        {buttons}
+      </div>
       <style jsx>
         {`
           :global(.team-member-card) {
             width: 200px;
-            min-height: 200px;
+
             box-sizing: border-box;
             color: #000;
-            display: grid;
-            place-items: center;
-            text-decoration: none;
           }
           img {
             border-radius: 50%;
@@ -166,10 +165,11 @@ const TeamMemberCard = ({
             line-height: 1;
             text-align: center;
             font-weight: bold;
+            align-self: baseline;
           }
         `}
       </style>
-    </Wrapper>
+    </Card>
   );
 };
 
