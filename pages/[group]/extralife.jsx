@@ -79,10 +79,19 @@ const ExtraLifeTeam = () => {
       return fetchedTeamMembers;
     }
     async function getData() {
+      const storageKey = `${group}-extralife`;
+      const cachedData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+      if (cachedData?.updatedAt) {
+        const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
+        if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
+          setTeam(cachedData.team);
+          return;
+        }
+      }
       const results = await Promise.all([fetchTeam(), fetchTeamMembers()]);
       //! TEST
       // TODO REMOVE THIS
-      // results?.[1]?.[9] ? (results[1][9].streamIsLive = true) : null;
+      results?.[1]?.[9] ? (results[1][9].streamIsLive = true) : null;
       //!
       const participants = sortParticipants(results[1]);
 
@@ -90,6 +99,11 @@ const ExtraLifeTeam = () => {
         ...results[0],
         participants,
       };
+      const teamStorage = {
+        team: newTeam,
+        updatedAt: Date.now(),
+      };
+      localStorage.setItem(storageKey, JSON.stringify(teamStorage));
       setTeam(newTeam);
     }
     if (groupData?.id) getData();
@@ -117,6 +131,7 @@ const ExtraLifeTeam = () => {
         goalText="Goal"
         isMoney
         width={80}
+        displayProgress
       />
       {schedule?.length > 0 && isEventLive && (
         <div className="streamerSchedule live">
