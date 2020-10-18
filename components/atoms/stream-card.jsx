@@ -154,10 +154,11 @@ const StreamCard = ({
             margin: 0;
           }
           @media (max-width: ${breakPoint}px) {
-            a, .streamCard {
+            a, .streamCard, .center {
               display: flex;
               flex-direction: column;
               place-items: center;
+              width: 100%;
           }
         `}
       </style>

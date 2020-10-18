@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 // import Head from 'next/head';
 import TeamMemberCards from '../../components/molecules/team-member-cards';
@@ -33,7 +35,6 @@ function getScheduleTimeRange(schedule) {
 function sortParticipants(participants) {
   return participants
     .sort((a, b) => {
-      console.log(a.displayName, a.links);
       if (a.streamIsLive && !b.streamIsLive) return -1;
       if (b.streamIsLive && !a.streamIsLive) return 1;
       const donationsDiff = b.sumDonations - a.sumDonations;
@@ -89,10 +90,6 @@ const ExtraLifeTeam = () => {
         }
       }
       const results = await Promise.all([fetchTeam(), fetchTeamMembers()]);
-      //! TEST
-      // TODO REMOVE THIS
-      results?.[1]?.[9] ? (results[1][9].streamIsLive = true) : null;
-      //!
       const participants = sortParticipants(results[1]);
 
       const newTeam = {
@@ -107,8 +104,20 @@ const ExtraLifeTeam = () => {
       setTeam(newTeam);
     }
     if (groupData?.id) getData();
-  }, [groupData]);
-  if (!team?.participants) return <LoadingIcon />;
+  }, [group, groupData]);
+  if (!team?.participants)
+    return (
+      <div>
+        <LoadingIcon />
+        <style jsx>
+          {`
+            display: grid;
+            place-items: center;
+            font-size: 10rem;
+          `}
+        </style>
+      </div>
+    );
 
   let isEventLive = false;
   if (schedule?.length) {
@@ -121,9 +130,10 @@ const ExtraLifeTeam = () => {
   return (
     <div className="page">
       <Header title={team.name} />
-      <a href={team.links.page} className="teamLink">
-        Join Team
-      </a>
+      <h2 className="subheader">Extra Life Team</h2>
+      <Link href="/">
+        <a className="homeLink">Home</a>
+      </Link>
       <ProgressBar
         progress={team.sumDonations}
         goal={team.fundraisingGoal}
@@ -143,6 +153,9 @@ const ExtraLifeTeam = () => {
         </div>
       )}
       <div className="teamMembers">
+        <a href={team.links.page} className="teamLink">
+          Join Team
+        </a>
         <h2>Team Members</h2>
         <TeamMemberCards teamMembers={team.participants} />
       </div>
@@ -164,13 +177,30 @@ const ExtraLifeTeam = () => {
             justify-items: center;
             align-items: center;
           }
+          .subheader {
+            padding: 0;
+            margin: 0;
+          }
+          .homeLink {
+            color: #fff;
+            font-size: 18px;
+          }
           .teamLink {
             color: #fff;
+            padding: 15px;
+            border-radius: 8px;
             font-size: 24px;
+            background: #26c2eb;
+            text-decoration: none;
+            font-weight: bold;
+          }
+          .teamLink:hover {
+            background: #13a2c8;
           }
           .teamMembers {
             margin-top: 40px;
             text-align: center;
+            position: relative;
           }
           .streamerSchedule {
             margin-top: 40px;
@@ -179,6 +209,11 @@ const ExtraLifeTeam = () => {
           }
           .streamerSchedule.upcoming h2 {
             margin-left: 10%;
+          }
+          @media (max-width: 600px) {
+            .streamerSchedule.upcoming h2 {
+              text-align: center;
+              margin-left: 0;
           }
         `}
       </style>

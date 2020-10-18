@@ -73,6 +73,7 @@ const ProgressBar = ({
         {`
           .wrapper {
             width: ${width}%;
+            min-width: 180px;
             max-width: 800px;
             position: relative;
             display: grid;
@@ -93,7 +94,6 @@ const ProgressBar = ({
             width: 100%;
             display: grid;
             place-items: center;
-
             font-size: 90%;
             color: #fff;
             text-shadow: 0 0 5px black;
