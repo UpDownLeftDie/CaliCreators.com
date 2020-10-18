@@ -141,6 +141,9 @@ const TeamMemberCard = ({
             progress={sumDonations || 0}
             goal={fundraisingGoal}
             height={20}
+            isMoney
+            displayProgress
+            displayPercent={false}
           />
         </Wrapper>
         {buttons}

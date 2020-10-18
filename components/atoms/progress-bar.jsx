@@ -7,6 +7,8 @@ const ProgressBar = ({
   progressText,
   goalText,
   isMoney,
+  displayProgress,
+  displayPercent,
   width,
 }) => {
   const percent = ((progress / goal) * 100).toFixed(1);
@@ -14,17 +16,37 @@ const ProgressBar = ({
   let goalTextCombined = null;
 
   if (progressText) {
-    progressTextCombined = `${progressText} ${isMoney ? '$' : null}${progress}`;
+    progressTextCombined = `${progressText} ${isMoney ? '$' : ''}${progress}`;
   }
   if (goalText) {
-    goalTextCombined = `${goalText} ${isMoney ? '$' : null}${goal}`;
+    goalTextCombined = `${goalText} ${isMoney ? '$' : ''}${goal}`;
   }
-
+  let barProgressText = null;
+  if (displayProgress) {
+    let str = `${percent}%`;
+    if (!displayPercent) str = `${isMoney ? '$' : ''}${progress}`;
+    barProgressText = (
+      <span className="barProgressText">
+        {str}
+        <style jsx>
+          {`
+            .barProgressText {
+              position: absolute;
+              font-size: 90%;
+              color: #fff;
+              text-shadow: 0 0 5px black;
+            }
+          `}
+        </style>
+      </span>
+    );
+  }
   return (
     <div className="wrapper">
       <div className="progressText">{progressTextCombined}</div>
       <div className="goalText">{goalTextCombined}</div>
       <div className="progressBar">
+        {barProgressText}
         <div className="progress" />
       </div>
       <style jsx>
@@ -50,12 +72,15 @@ const ProgressBar = ({
             height: ${height}px;
             border-radius: 300px;
             width: 100%;
+            display: grid;
+            place-items: center;
           }
           .progress {
             width: ${percent}%;
             background: #26c2eb;
             height: 100%;
             text-align: right;
+            justify-self: start;
             background-image: linear-gradient(
               -45deg,
               rgba(255, 255, 255, 0.17) 25%,
@@ -88,6 +113,8 @@ ProgressBar.defaultProps = {
   goalText: null,
   isMoney: false,
   width: 100,
+  displayProgress: false,
+  displayPercent: true,
 };
 
 ProgressBar.propTypes = {
@@ -98,6 +125,8 @@ ProgressBar.propTypes = {
   goalText: string,
   isMoney: bool,
   width: number,
+  displayProgress: bool,
+  displayPercent: bool,
 };
 
 export default ProgressBar;
