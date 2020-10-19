@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
+import { string } from 'prop-types';
 import TeamMemberCards from '../../components/molecules/team-member-cards';
 import Header from '../../components/atoms/header';
 import LoadingIcon from '../../components/atoms/loading-icon';
@@ -60,14 +61,14 @@ function sortParticipants(participants) {
     });
 }
 
-const ExtraLifeTeam = () => {
+const ExtraLifeTeam = ({ name }) => {
   const router = useRouter();
   const { group } = router.query;
   const groupData = data[group];
   const schedule = groupData?.schedule?.length
     ? sortSchedule(groupData.schedule)
     : [];
-  const [team, setTeam] = useState({});
+  const [team, setTeam] = useState({ name });
 
   useEffect(() => {
     async function fetchTeam() {
@@ -107,12 +108,8 @@ const ExtraLifeTeam = () => {
     if (groupData?.id) getData();
   }, [group, groupData]);
 
-  const siteTitle = `${
-    team?.name ? `${team.name} ` : ''
-  }Extra Life Team | Cali Creators`;
-  const description = `${
-    team?.name ? `${team.name} ` : ''
-  }Extra Life Team Page`;
+  const siteTitle = `${team.name} Extra Life Team | Cali Creators`;
+  const description = `${team.name} Extra Life Team Page. We're raising money to help our local children's hospital!`;
   const url = 'https://calicreators.com';
   const pageUrl = `${url}${router.asPath}`;
   const head = (
@@ -141,22 +138,22 @@ const ExtraLifeTeam = () => {
     </Head>
   );
 
-  if (!team?.participants)
-    return (
-      <>
-        {head}
-        <div>
-          <LoadingIcon />
-          <style jsx>
-            {`
-              display: grid;
-              place-items: center;
-              font-size: 10rem;
-            `}
-          </style>
-        </div>
-      </>
-    );
+  let pageContents = (
+    <div>
+      <LoadingIcon />
+      <style jsx>
+        {`
+          margin-top: 0px;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          display: grid;
+          place-items: center;
+          font-size: 10rem;
+        `}
+      </style>
+    </div>
+  );
   let isEventLive = false;
   if (schedule?.length) {
     const scheduleTimeRange = getScheduleTimeRange(schedule) || {};
@@ -165,16 +162,9 @@ const ExtraLifeTeam = () => {
       scheduleTimeRange.end
     );
   }
-
-  return (
-    <>
-      {head}
-      <div className="page">
-        <Header title={team.name} />
-        <h2 className="subheader">Extra Life Team</h2>
-        <Link href="/">
-          <a className="homeLink">Home</a>
-        </Link>
+  if (team?.participants)
+    pageContents = (
+      <>
         <ProgressBar
           progress={team.sumDonations}
           goal={team.fundraisingGoal}
@@ -210,23 +200,7 @@ const ExtraLifeTeam = () => {
           </div>
         )}
         <style jsx>
-          {`
-          .page {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-items: center;
-            align-items: center;
-          }
-          .subheader {
-            padding: 0;
-            margin: 0;
-          }
-          .homeLink {
-            color: #fff;
-            font-size: 18px;
-          }
-          .teamLink {
+          {`.teamLink {
             color: #fff;
             padding: 15px;
             border-radius: 8px;
@@ -255,8 +229,39 @@ const ExtraLifeTeam = () => {
             .streamerSchedule.upcoming h2 {
               text-align: center;
               margin-left: 0;
-          }
-        `}
+          }`}
+        </style>
+      </>
+    );
+
+  return (
+    <>
+      {head}
+      <div className="page">
+        <Header title={team.name || name} />
+        <h2 className="subheader">Extra Life Team</h2>
+        <Link href="/">
+          <a className="homeLink">Home</a>
+        </Link>
+        {pageContents}
+        <style jsx>
+          {`
+            .page {
+              width: 100%;
+              display: flex;
+              flex-direction: column;
+              justify-items: center;
+              align-items: center;
+            }
+            .subheader {
+              padding: 0;
+              margin: 0;
+            }
+            .homeLink {
+              color: #fff;
+              font-size: 18px;
+            }
+          `}
         </style>
       </div>
     </>
@@ -265,6 +270,10 @@ const ExtraLifeTeam = () => {
 
 export default ExtraLifeTeam;
 
+ExtraLifeTeam.propTypes = {
+  name: string.isRequired,
+};
+
 export async function getStaticPaths() {
   return {
     paths: [{ params: { group: 'oc' } }, { params: { group: 'sd' } }],
@@ -272,8 +281,13 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ params }) {
+  const groups = {
+    oc: { name: 'OC Streamers' },
+    sd: { name: 'Twitch San Diego' },
+  };
+
   return {
-    props: {}, // will be passed to the page component as props
+    props: { ...(groups[params.group] || {}) }, // will be passed to the page component as props
   };
 }
