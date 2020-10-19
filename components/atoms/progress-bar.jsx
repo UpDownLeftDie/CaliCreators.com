@@ -1,4 +1,5 @@
 import { number, string, bool } from 'prop-types';
+import { useRef, useEffect } from 'react';
 
 const ProgressBar = ({
   progress,
@@ -11,31 +12,39 @@ const ProgressBar = ({
   displayProgress,
   displayPercent,
   width,
+  loading,
 }) => {
-  const percent = ((progress / goal) * 100).toFixed(1);
+  const percent = Number(((progress / goal) * 100).toFixed(1)) || 0;
+  const isLoading = loading || progress === null || goal === null;
+  const showProgressText = progressText || progressText === '';
+  const showGoalText = goalText || goalText === '';
   let progressTextCombined = null;
   let goalTextCombined = null;
 
-  if (progressText || progressText === '') {
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current.animate([{ width: '0%' }, { width: `${percent}%` }], {
+      duration: 1000,
+    });
+  }, [percent]);
+
+  if (showProgressText) {
     progressTextCombined = `${progressText} ${isMoney ? '$' : ''}${progress}`;
   }
-  if (goalText || goalText === '') {
+  if (showGoalText) {
     goalTextCombined = `${goalText} ${isMoney ? '$' : ''}${goal}`;
   }
   let barProgressText = null;
   if (displayProgress) {
-    let str = `${percent}%`;
-    if (!displayPercent) str = `${isMoney ? '$' : ''}${progress}`;
-    barProgressText = (
-      <span>
-        {str}
-        <style jsx>
-          {`
-            position: absolute;
-          `}
-        </style>
-      </span>
-    );
+    barProgressText = `${percent}%`;
+    if (!displayPercent) barProgressText = `${isMoney ? '$' : ''}${progress}`;
+  }
+
+  if (isLoading) {
+    if (showProgressText) progressTextCombined = <>&nbsp;</>;
+    if (showGoalText) goalTextCombined = <>&nbsp;</>;
+    if (displayProgress) barProgressText = '??';
   }
   const text = (
     <>
@@ -66,8 +75,10 @@ const ProgressBar = ({
       {inlineText ? null : text}
       <div className="progressBar">
         {inlineText ? text : null}
-        {barProgressText}
-        <div className="progress" />
+        {displayProgress && (
+          <span style={{ position: 'absolute' }}>{barProgressText}</span>
+        )}
+        <div ref={ref} className="progress" />
       </div>
       <style jsx>
         {`
@@ -130,7 +141,8 @@ const ProgressBar = ({
 };
 
 ProgressBar.defaultProps = {
-  progress: 0,
+  progress: null,
+  goal: null,
   height: 40,
   progressText: null,
   goalText: null,
@@ -139,11 +151,12 @@ ProgressBar.defaultProps = {
   width: 100,
   displayProgress: false,
   displayPercent: true,
+  loading: false,
 };
 
 ProgressBar.propTypes = {
   progress: number,
-  goal: number.isRequired,
+  goal: number,
   height: number,
   progressText: string,
   goalText: string,
@@ -152,6 +165,7 @@ ProgressBar.propTypes = {
   width: number,
   displayProgress: bool,
   displayPercent: bool,
+  loading: bool,
 };
 
 export default ProgressBar;

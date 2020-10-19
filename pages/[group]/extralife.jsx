@@ -69,6 +69,7 @@ const ExtraLifeTeam = ({ name }) => {
     ? sortSchedule(groupData.schedule)
     : [];
   const [team, setTeam] = useState({ name });
+  const [isLoading, setIsLoading] = useState(!team?.participants);
 
   useEffect(() => {
     async function fetchTeam() {
@@ -88,6 +89,7 @@ const ExtraLifeTeam = ({ name }) => {
         const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
         if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
           setTeam(cachedData.team);
+          setIsLoading(false);
           return;
         }
       }
@@ -104,6 +106,7 @@ const ExtraLifeTeam = ({ name }) => {
       };
       localStorage.setItem(storageKey, JSON.stringify(teamStorage));
       setTeam(newTeam);
+      setIsLoading(false);
     }
     if (groupData?.id) getData();
   }, [group, groupData]);
@@ -132,8 +135,8 @@ const ExtraLifeTeam = ({ name }) => {
         key="og:image"
         content={`${url}/extralife-icon.png`}
       />
-      <meta property="og:image:width" key="og:image:width" content="254" />
-      <meta property="og:image:height" key="og:image:height" content="213" />
+      <meta property="og:image:width" key="og:image:width" content="255" />
+      <meta property="og:image:height" key="og:image:height" content="255" />
       <link rel="preconnect" href={EXTRA_LIFE_ORG} />
     </Head>
   );
@@ -162,18 +165,9 @@ const ExtraLifeTeam = ({ name }) => {
       scheduleTimeRange.end
     );
   }
-  if (team?.participants)
+  if (!isLoading)
     pageContents = (
       <>
-        <ProgressBar
-          progress={team.sumDonations}
-          goal={team.fundraisingGoal}
-          progressText="Raised"
-          goalText="Goal"
-          isMoney
-          width={80}
-          displayProgress
-        />
         {schedule?.length > 0 && isEventLive && (
           <div className="streamerSchedule live">
             <h2>Live Schedule</h2>
@@ -243,6 +237,16 @@ const ExtraLifeTeam = ({ name }) => {
         <Link href="/">
           <a className="homeLink">Home</a>
         </Link>
+        <ProgressBar
+          progress={team.sumDonations}
+          goal={team.fundraisingGoal}
+          progressText="Raised"
+          goalText="Goal"
+          isMoney
+          width={80}
+          displayProgress
+          isLoading
+        />
         {pageContents}
         <style jsx>
           {`
