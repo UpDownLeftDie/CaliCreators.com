@@ -113,7 +113,8 @@ const ExtraLifeTeam = () => {
   const description = `${
     team?.name ? `${team.name} ` : ''
   }Extra Life Team Page`;
-  const url = `https://calicreators.com${router.asPath}`;
+  const url = 'https://calicreators.com';
+  const pageUrl = `${url}${router.asPath}`;
   const head = (
     <Head>
       <title key="title">{siteTitle}</title>
@@ -128,7 +129,7 @@ const ExtraLifeTeam = () => {
         key="description"
         content={`${team.name} ${description}`}
       />
-      <meta property="og:url" key="og:url" content={url} />
+      <meta property="og:url" key="og:url" content={pageUrl} />
       <meta
         property="og:image"
         key="og:image"
