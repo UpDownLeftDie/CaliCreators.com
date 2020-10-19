@@ -25,20 +25,33 @@ const ProgressBar = ({
 
   useEffect(() => {
     ref.current.animate([{ width: '0%' }, { width: `${percent}%` }], {
-      duration: 1000,
+      duration: 1500,
     });
   }, [percent]);
 
   if (showProgressText) {
-    progressTextCombined = `${progressText} ${isMoney ? '$' : ''}${progress}`;
+    progressTextCombined = `${progressText} `;
+    if (isMoney) {
+      progressTextCombined += `$${Math.floor(progress)}`;
+    } else {
+      progressTextCombined += progress;
+    }
   }
   if (showGoalText) {
-    goalTextCombined = `${goalText} ${isMoney ? '$' : ''}${goal}`;
+    goalTextCombined = `${goalText} `;
+    if (isMoney) {
+      goalTextCombined += `$${Math.floor(goal)}`;
+    } else {
+      goalTextCombined += goal;
+    }
   }
   let barProgressText = null;
   if (displayProgress) {
     barProgressText = `${percent}%`;
-    if (!displayPercent) barProgressText = `${isMoney ? '$' : ''}${progress}`;
+    if (!displayPercent) {
+      barProgressText = progress;
+      if (isMoney) barProgressText = `$${Math.floor(progress)}`;
+    }
   }
 
   if (isLoading) {
