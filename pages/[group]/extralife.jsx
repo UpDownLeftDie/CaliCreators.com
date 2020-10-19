@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
-// import Head from 'next/head';
 import TeamMemberCards from '../../components/molecules/team-member-cards';
 import Header from '../../components/atoms/header';
 import LoadingIcon from '../../components/atoms/loading-icon';
@@ -13,7 +13,8 @@ import checkIfEventIsLive from '../../src/utils';
 
 const data = require('./data.json');
 
-const API_BASE = 'https://www.extra-life.org/api';
+const EXTRA_LIFE_ORG = 'https://www.extra-life.org';
+const API_BASE = `${EXTRA_LIFE_ORG}/api`;
 
 function sortSchedule(schedule) {
   return schedule
@@ -105,20 +106,57 @@ const ExtraLifeTeam = () => {
     }
     if (groupData?.id) getData();
   }, [group, groupData]);
+
+  const siteTitle = 'Extra Life Team | Cali Creators';
+  const description = "Extra Life's Team Page";
+  const url = 'https://calicreators.com';
+  const head = (
+    <Head>
+      <title key="title">{`${team.name} ${siteTitle}`}</title>
+      <meta
+        property="og:title"
+        key="og:title"
+        content={`${team.name} ${siteTitle}`}
+      />
+      <meta
+        property="og:description"
+        key="og:description"
+        content={`${team.name} ${description}`}
+      />
+      <meta
+        name="Description"
+        key="description"
+        content={`${team.name} ${description}`}
+      />
+      <meta property="og:url" key="og:url" content={`${url}${router.asPath}`} />
+      <meta property="og:url" key="ogurl" content={url} />
+      <meta
+        property="og:image"
+        key="og:image"
+        content={`${url}/extralife-icon.png`}
+      />
+      <meta property="og:image:width" key="og:image:width" content="254" />
+      <meta property="og:image:height" key="og:image:height" content="213" />
+      <link rel="preconnect" href={EXTRA_LIFE_ORG} />
+    </Head>
+  );
+
   if (!team?.participants)
     return (
-      <div>
-        <LoadingIcon />
-        <style jsx>
-          {`
-            display: grid;
-            place-items: center;
-            font-size: 10rem;
-          `}
-        </style>
-      </div>
+      <>
+        {head}
+        <div>
+          <LoadingIcon />
+          <style jsx>
+            {`
+              display: grid;
+              place-items: center;
+              font-size: 10rem;
+            `}
+          </style>
+        </div>
+      </>
     );
-
   let isEventLive = false;
   if (schedule?.length) {
     const scheduleTimeRange = getScheduleTimeRange(schedule) || {};
@@ -127,49 +165,52 @@ const ExtraLifeTeam = () => {
       scheduleTimeRange.end
     );
   }
+
   return (
-    <div className="page">
-      <Header title={team.name} />
-      <h2 className="subheader">Extra Life Team</h2>
-      <Link href="/">
-        <a className="homeLink">Home</a>
-      </Link>
-      <ProgressBar
-        progress={team.sumDonations}
-        goal={team.fundraisingGoal}
-        progressText="Raised"
-        goalText="Goal"
-        isMoney
-        width={80}
-        displayProgress
-      />
-      {schedule?.length > 0 && isEventLive && (
-        <div className="streamerSchedule live">
-          <h2>Live Schedule</h2>
-          <StreamerSchedule
-            schedule={schedule}
-            teamMembers={team.participants}
-          />
+    <>
+      {head}
+      <div className="page">
+        <Header title={team.name} />
+        <h2 className="subheader">Extra Life Team</h2>
+        <Link href="/">
+          <a className="homeLink">Home</a>
+        </Link>
+        <ProgressBar
+          progress={team.sumDonations}
+          goal={team.fundraisingGoal}
+          progressText="Raised"
+          goalText="Goal"
+          isMoney
+          width={80}
+          displayProgress
+        />
+        {schedule?.length > 0 && isEventLive && (
+          <div className="streamerSchedule live">
+            <h2>Live Schedule</h2>
+            <StreamerSchedule
+              schedule={schedule}
+              teamMembers={team.participants}
+            />
+          </div>
+        )}
+        <div className="teamMembers">
+          <a href={team.links.page} className="teamLink">
+            Join Team
+          </a>
+          <h2>Team Members</h2>
+          <TeamMemberCards teamMembers={team.participants} />
         </div>
-      )}
-      <div className="teamMembers">
-        <a href={team.links.page} className="teamLink">
-          Join Team
-        </a>
-        <h2>Team Members</h2>
-        <TeamMemberCards teamMembers={team.participants} />
-      </div>
-      {schedule?.length > 0 && !isEventLive && (
-        <div className="streamerSchedule upcoming">
-          <h2>Upcoming Event</h2>
-          <StreamerSchedule
-            schedule={schedule}
-            teamMembers={team.participants}
-          />
-        </div>
-      )}
-      <style jsx>
-        {`
+        {schedule?.length > 0 && !isEventLive && (
+          <div className="streamerSchedule upcoming">
+            <h2>Upcoming Event</h2>
+            <StreamerSchedule
+              schedule={schedule}
+              teamMembers={team.participants}
+            />
+          </div>
+        )}
+        <style jsx>
+          {`
           .page {
             width: 100%;
             display: flex;
@@ -216,8 +257,9 @@ const ExtraLifeTeam = () => {
               margin-left: 0;
           }
         `}
-      </style>
-    </div>
+        </style>
+      </div>
+    </>
   );
 };
 

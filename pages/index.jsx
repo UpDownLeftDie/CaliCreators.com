@@ -9,7 +9,6 @@ const data = require('./data.json');
 const siteTitle = 'Cali Creators MeetUps';
 const description =
   "We're the meetup groups for Twitch, Facebook, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
-const url = 'https://calicreators.com';
 
 function convertMeetupToTwitch(meetup) {
   const meetupList = meetup.map((event) => {
@@ -162,22 +161,24 @@ const Home = () => {
   return (
     <>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>{siteTitle}</title>
-        <meta name="Description" content={description.replace('<br/>', ' ')} />
-        <meta property="og:title" content={siteTitle} />
-        <meta property="og:url" content={url} />
-        <meta property="og:image" content={`${url}/twitchsocal.gif`} />
-        <meta property="og:image:width" content="800" />
-        <meta property="og:image:height" content="800" />
+        <title key="title">{siteTitle}</title>
+        <meta property="og:title" key="og:title" content={siteTitle} />
         <meta
           property="og:description"
+          key="og:description"
           content={description.replace('<br/>', ' ')}
         />
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="en_US" />
+        <meta
+          name="Description"
+          key="description"
+          content={description.replace('<br/>', ' ')}
+        />
+        <link
+          rel="preconnect"
+          href="https://lym20nhb8j.execute-api.us-west-2.amazonaws.com"
+        />
+        <link rel="preconnect" href="https://meetups.twitch.tv" />
       </Head>
-
       <div className="hero">
         <span className="title-wrapper">
           <h1 className="title">{siteTitle}</h1>
@@ -186,10 +187,8 @@ const Home = () => {
           className="description"
           dangerouslySetInnerHTML={{ __html: description }}
         />
-
         <div className="row">{renderCards()}</div>
       </div>
-
       <style jsx>
         {`
           .hero {
