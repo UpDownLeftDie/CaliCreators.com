@@ -107,29 +107,28 @@ const ExtraLifeTeam = () => {
     if (groupData?.id) getData();
   }, [group, groupData]);
 
-  const siteTitle = 'Extra Life Team | Cali Creators';
-  const description = "Extra Life's Team Page";
-  const url = 'https://calicreators.com';
+  const siteTitle = `${
+    team?.name ? `${team.name} ` : ''
+  }Extra Life Team | Cali Creators`;
+  const description = `${
+    team?.name ? `${team.name} ` : ''
+  }Extra Life Team Page`;
+  const url = `https://calicreators.com${router.asPath}`;
   const head = (
     <Head>
-      <title key="title">{`${team.name} ${siteTitle}`}</title>
-      <meta
-        property="og:title"
-        key="og:title"
-        content={`${team.name} ${siteTitle}`}
-      />
+      <title key="title">{siteTitle}</title>
+      <meta property="og:title" key="og:title" content={siteTitle} />
       <meta
         property="og:description"
         key="og:description"
-        content={`${team.name} ${description}`}
+        content={description}
       />
       <meta
         name="Description"
         key="description"
         content={`${team.name} ${description}`}
       />
-      <meta property="og:url" key="og:url" content={`${url}${router.asPath}`} />
-      <meta property="og:url" key="ogurl" content={url} />
+      <meta property="og:url" key="og:url" content={url} />
       <meta
         property="og:image"
         key="og:image"
