@@ -10,6 +10,8 @@ import Header from '../../components/atoms/header';
 import LoadingIcon from '../../components/atoms/loading-icon';
 import ProgressBar from '../../components/atoms/progress-bar';
 import StreamerSchedule from '../../components/organisms/streamer-schedule';
+import Collapsible from '../../components/molecules/collapsible';
+import CollapseArrow from '../../components/atoms/collapse-arrow';
 import checkIfEventIsLive from '../../src/utils';
 
 const data = require('./data.json');
@@ -70,6 +72,16 @@ const ExtraLifeTeam = ({ name }) => {
     : [];
   const [team, setTeam] = useState({ name });
   const [isLoading, setIsLoading] = useState(!team?.participants);
+  const [isTeamCollapsed, setIsTeamCollapsed] = useState(false);
+  const [isScheduleCollapsed, setIsScheduleCollapsed] = useState(false);
+  const handleTeamCollapse = () => {
+    setIsTeamCollapsed(!isTeamCollapsed);
+    setIsScheduleCollapsed(false);
+  };
+  const handleScheduleCollapse = () => {
+    setIsScheduleCollapsed(!isScheduleCollapsed);
+    setIsTeamCollapsed(false);
+  };
 
   useEffect(() => {
     async function fetchTeam() {
@@ -85,26 +97,28 @@ const ExtraLifeTeam = ({ name }) => {
     async function getData() {
       const storageKey = `${group}-extralife`;
       const cachedData = JSON.parse(localStorage.getItem(storageKey) || '{}');
-      if (cachedData?.updatedAt) {
-        const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
-        if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
-          setTeam(cachedData.team);
-          setIsLoading(false);
-          return;
-        }
-      }
-      const results = await Promise.all([fetchTeam(), fetchTeamMembers()]);
-      const participants = sortParticipants(results[1]);
+      const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
+      let newTeam = {};
+      if (
+        cachedData?.updatedAt &&
+        new Date(cachedData.updatedAt) > fiveMinsAgo
+      ) {
+        newTeam = cachedData.team;
+      } else {
+        const results = await Promise.all([fetchTeam(), fetchTeamMembers()]);
+        const participants = sortParticipants(results[1]);
 
-      const newTeam = {
-        ...results[0],
-        participants,
-      };
-      const teamStorage = {
-        team: newTeam,
-        updatedAt: Date.now(),
-      };
-      localStorage.setItem(storageKey, JSON.stringify(teamStorage));
+        newTeam = {
+          ...results[0],
+          participants,
+        };
+        const teamStorage = {
+          team: newTeam,
+          updatedAt: Date.now(),
+        };
+        localStorage.setItem(storageKey, JSON.stringify(teamStorage));
+      }
+      console.log(newTeam);
       setTeam(newTeam);
       setIsLoading(false);
     }
@@ -165,65 +179,101 @@ const ExtraLifeTeam = ({ name }) => {
       scheduleTimeRange.end
     );
   }
+  const scheduleContent = () => {
+    let cssClass = 'upcoming';
+    let title = 'Upcoming Schedule ';
+    if (isEventLive) {
+      cssClass = 'live';
+      title = 'Live Schedule ';
+    }
+    return (
+      <div className={`streamerSchedule ${cssClass}`}>
+        <h2>
+          <button type="button" onClick={handleScheduleCollapse}>
+            {title}
+            <CollapseArrow isCollapsed={isScheduleCollapsed} />
+          </button>
+        </h2>
+        <Collapsible isCollapsed={isScheduleCollapsed}>
+          <StreamerSchedule
+            schedule={schedule}
+            teamMembers={team.participants}
+          />
+        </Collapsible>
+        <style jsx>
+          {`
+            .streamerSchedule {
+              margin-top: 40px;
+              width: 100%;
+              max-width: 800px;
+            }
+            .streamerSchedule.upcoming h2 {
+              margin-left: 10%;
+            }
+            :global(h2 button) {
+              font-family: inherit;
+              font-size: inherit;
+              line-height: inherit;
+              margin: 0;
+              font-weight: inherit;
+              background: inherit;
+              border: inherit;
+              color: inherit;
+            }
+            :global(h2 button:focus:not(:focus-visible)) {
+              outline: none;
+            }
+
+            @media (max-width: 600px) {
+              .streamerSchedule.upcoming h2 {
+                text-align: center;
+                margin-left: 0;
+              }
+            }
+          `}
+        </style>
+      </div>
+    );
+  };
   if (!isLoading)
     pageContents = (
       <>
-        {schedule?.length > 0 && isEventLive && (
-          <div className="streamerSchedule live">
-            <h2>Live Schedule</h2>
-            <StreamerSchedule
-              schedule={schedule}
-              teamMembers={team.participants}
-            />
-          </div>
-        )}
+        {schedule?.length > 0 && isEventLive && scheduleContent()}
         <div className="teamMembers">
           <a href={team.links.page} className="teamLink">
             Join Team
           </a>
-          <h2>Team Members</h2>
-          <TeamMemberCards teamMembers={team.participants} />
+          <h2>
+            <button type="button" onClick={handleTeamCollapse}>
+              Team Members&nbsp;
+              <CollapseArrow isCollapsed={isTeamCollapsed} />
+            </button>
+          </h2>
+          <Collapsible isCollapsed={isTeamCollapsed}>
+            <TeamMemberCards teamMembers={team.participants} />
+          </Collapsible>
         </div>
-        {schedule?.length > 0 && !isEventLive && (
-          <div className="streamerSchedule upcoming">
-            <h2>Upcoming Event</h2>
-            <StreamerSchedule
-              schedule={schedule}
-              teamMembers={team.participants}
-            />
-          </div>
-        )}
+        {schedule?.length > 0 && !isEventLive && scheduleContent()}
         <style jsx>
-          {`.teamLink {
-            color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 24px;
-            background: #26c2eb;
-            text-decoration: none;
-            font-weight: bold;
-          }
-          .teamLink:hover {
-            background: #13a2c8;
-          }
-          .teamMembers {
-            margin-top: 40px;
-            text-align: center;
-            position: relative;
-          }
-          .streamerSchedule {
-            margin-top: 40px;
-            width: 100%;
-            max-width: 800px;
-          }
-          .streamerSchedule.upcoming h2 {
-            margin-left: 10%;
-          }
-          @media (max-width: 600px) {
-            .streamerSchedule.upcoming h2 {
+          {`
+            .teamLink {
+              color: #fff;
+              padding: 15px;
+              border-radius: 8px;
+              font-size: 24px;
+              background: #26c2eb;
+              text-decoration: none;
+              font-weight: bold;
+            }
+            .teamLink:hover {
+              background: #13a2c8;
+            }
+            .teamMembers {
+              margin-top: 40px;
               text-align: center;
-              margin-left: 0;
-          }`}
+              position: relative;
+            }
+          `}
         </style>
       </>
     );
