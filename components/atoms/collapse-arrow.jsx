@@ -25,6 +25,7 @@ const CollapseArrow = ({ isCollapsed }) => {
         ],
         {
           duration: 300,
+          easing: 'linear',
         }
       );
     }
@@ -32,7 +33,7 @@ const CollapseArrow = ({ isCollapsed }) => {
 
   return (
     <span ref={ref}>
-      ⯆
+      <i className="fas fa-angle-down" />
       <style jsx>
         {`
           display: inline-block;
