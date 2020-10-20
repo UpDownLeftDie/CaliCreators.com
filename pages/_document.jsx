@@ -29,7 +29,10 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap"
             rel="stylesheet"
           />
-          <script src="https://kit.fontawesome.com/d03f0d01ad.js" />
+          <script
+            src="https://kit.fontawesome.com/d03f0d01ad.js"
+            crossOrigin="anonymous"
+          />
           <link
             rel="apple-touch-icon"
             sizes="180x180"

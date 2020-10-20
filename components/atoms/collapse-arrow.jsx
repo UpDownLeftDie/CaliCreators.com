@@ -33,7 +33,7 @@ const CollapseArrow = ({ isCollapsed }) => {
 
   return (
     <span ref={ref}>
-      <i className="fas fa-angle-down" />
+      <i className="fas fa-angle-down" title="Collapse/Expand" />
       <style jsx>
         {`
           display: inline-block;
