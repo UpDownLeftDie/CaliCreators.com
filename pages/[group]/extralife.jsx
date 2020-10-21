@@ -118,7 +118,6 @@ const ExtraLifeTeam = ({ name }) => {
         };
         localStorage.setItem(storageKey, JSON.stringify(teamStorage));
       }
-      console.log(newTeam);
       setTeam(newTeam);
       setIsLoading(false);
     }

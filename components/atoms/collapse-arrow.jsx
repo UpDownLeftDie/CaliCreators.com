@@ -29,6 +29,7 @@ const CollapseArrow = ({ isCollapsed }) => {
         }
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCollapsed]);
 
   return (

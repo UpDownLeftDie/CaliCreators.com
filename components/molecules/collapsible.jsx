@@ -1,18 +1,19 @@
 import { useRef, useEffect, useState } from 'react';
 import { element, bool } from 'prop-types';
+import useElementSize from '../../src/hooks';
 
 const Collapsible = ({ children, isCollapsed }) => {
   const growRef = useRef();
   const measureRef = useRef();
   const [height, setHeight] = useState(0);
+  const windowSize = useElementSize();
 
   useEffect(() => {
     if (measureRef.current) {
       const measureHeight = measureRef.current.offsetHeight;
-      // let width  = measureRef.current.offsetWidth;
       setHeight(measureHeight);
     }
-  }, [growRef]);
+  }, [windowSize.width]);
   return (
     <div ref={growRef} className="collapsible">
       <div ref={measureRef} className="measure">

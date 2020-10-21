@@ -1,21 +1,9 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React from 'react';
 import { string, bool, shape, number } from 'prop-types';
 import Card from './card';
 import ExtraLifeMemberButtons from './extralife-member-buttons';
 import ProgressBar from './progress-bar';
-
-function useWindowWidth() {
-  const [windowWidth, setWindowWidth] = useState(0);
-  useLayoutEffect(() => {
-    function updateWidth() {
-      setWindowWidth(window.innerWidth);
-    }
-    window.addEventListener('resize', updateWidth);
-    updateWidth();
-    return () => window.removeEventListener('resize', updateWidth);
-  }, []);
-  return windowWidth;
-}
+import useElementSize from '../../src/hooks';
 
 const StreamCard = ({
   twitchUsername,
@@ -28,9 +16,9 @@ const StreamCard = ({
   fundraisingGoal,
   sumDonations,
 }) => {
-  const windowWidth = useWindowWidth();
+  const windowSize = useElementSize(window);
   const breakPoint = 600;
-  const pastBreakPoint = windowWidth < breakPoint;
+  const pastBreakPoint = windowSize.width < breakPoint;
   const options = {
     hour: 'numeric',
     weekday: 'short',
