@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { arrayOf, bool, number, shape, string } from 'prop-types';
 import moment from 'moment';
 import SocialIcons from '../molecules/social-icons';

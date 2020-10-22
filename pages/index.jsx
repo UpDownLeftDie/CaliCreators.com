@@ -138,15 +138,16 @@ const Home = () => {
     );
     const loading =
       upcomingTwitchEvents.loading || upcomingMeetupEvents.loading;
-    const groupsWithEvents = findNextEvent(data.groups, upcomingEvents).sort(
-      (a, b) => {
-        if (!a.nextEvent.start_date) return 1;
-        if (!b.nextEvent.start_date) return -1;
-        return (
-          new Date(a.nextEvent.start_date) - new Date(b.nextEvent.start_date)
-        );
-      }
-    );
+    const groupsWithEvents = findNextEvent(
+      Object.values(data.groups),
+      upcomingEvents
+    ).sort((a, b) => {
+      if (!a.nextEvent.start_date) return 1;
+      if (!b.nextEvent.start_date) return -1;
+      return (
+        new Date(a.nextEvent.start_date) - new Date(b.nextEvent.start_date)
+      );
+    });
     return groupsWithEvents.map((groupWithEvent, i) => (
       <GroupCard
         key={groupWithEvent.name}

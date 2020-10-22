@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
-import { string } from 'prop-types';
+import { string, shape, arrayOf } from 'prop-types';
 import TeamMemberCards from '../../components/molecules/team-member-cards';
 import Header from '../../components/atoms/header';
 import LoadingIcon from '../../components/atoms/loading-icon';
@@ -13,6 +13,7 @@ import StreamerSchedule from '../../components/organisms/streamer-schedule';
 import Collapsible from '../../components/molecules/collapsible';
 import CollapseArrow from '../../components/atoms/collapse-arrow';
 import checkIfEventIsLive from '../../src/utils';
+import SocialIcons from '../../components/molecules/social-icons';
 
 const data = require('./data.json');
 
@@ -63,7 +64,7 @@ function sortParticipants(participants) {
     });
 }
 
-const ExtraLifeTeam = ({ name }) => {
+const ExtraLifeTeam = ({ name, groupInfo }) => {
   const router = useRouter();
   const { group } = router.query;
   const groupData = data[group];
@@ -285,8 +286,11 @@ const ExtraLifeTeam = ({ name }) => {
       <div className="page">
         <Header title={team.name || name} />
         <h2 className="subheader">Extra Life Team</h2>
+        <div style={{ width: '200px' }}>
+          <SocialIcons groupName={groupInfo.name} links={groupInfo.links} />
+        </div>
         <Link href="/">
-          <a className="homeLink">Home</a>
+          <a className="homeLink">Cali Creators Home</a>
         </Link>
         <ProgressBar
           progress={team.sumDonations}
@@ -327,6 +331,14 @@ export default ExtraLifeTeam;
 
 ExtraLifeTeam.propTypes = {
   name: string.isRequired,
+  groupInfo: shape({
+    links: arrayOf(
+      shape({
+        site: string.isRequired,
+        url: string.isRequired,
+      }).isRequired
+    ),
+  }).isRequired,
 };
 
 export async function getStaticPaths() {
@@ -341,8 +353,14 @@ export async function getStaticProps({ params }) {
     oc: { name: 'OC Streamers' },
     sd: { name: 'Twitch San Diego' },
   };
+  // eslint-disable-next-line global-require
+  const groupsData = require('../data.json');
+  const groupKey = params.group;
 
   return {
-    props: { ...(groups[params.group] || {}) }, // will be passed to the page component as props
+    props: {
+      ...(groups[groupKey] || {}),
+      groupInfo: groupsData.groups[groupKey],
+    }, // will be passed to the page component as props
   };
 }
