@@ -151,6 +151,7 @@ const ExtraLifeTeam = ({ name }) => {
       <meta property="og:image:width" key="og:image:width" content="255" />
       <meta property="og:image:height" key="og:image:height" content="255" />
       <link rel="preconnect" href={EXTRA_LIFE_ORG} />
+      <script src="https://embed.twitch.tv/embed/v1.js" />
     </Head>
   );
 
@@ -238,6 +239,7 @@ const ExtraLifeTeam = ({ name }) => {
     pageContents = (
       <>
         {schedule?.length > 0 && isEventLive && scheduleContent()}
+        <div id="twitchPlayer" />
         <div className="teamMembers">
           <a href={team.links.page} className="teamLink">
             Join Team

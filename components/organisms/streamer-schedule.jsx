@@ -39,6 +39,7 @@ const StreamerSchedule = ({ schedule, teamMembers }) => {
       />
     );
   });
+
   return (
     <div>
       {streams}
@@ -47,6 +48,8 @@ const StreamerSchedule = ({ schedule, teamMembers }) => {
           display: grid;
           grid-row-gap: 10px;
           row-gap: 10px;
+          padding: 10px;
+          box-sizing: border-box;
           width: 100%;
           justify-items: center;
         `}

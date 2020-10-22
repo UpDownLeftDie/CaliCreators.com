@@ -5,6 +5,16 @@ import ExtraLifeMemberButtons from './extralife-member-buttons';
 import ProgressBar from './progress-bar';
 import useElementSize from '../../src/hooks';
 
+// const loadTwitchPlayer = (twitchUsername) => {
+//   new window.Twitch.Embed('twitchPlayer', {
+//     width: 854,
+//     height: 480,
+//     channel: twitchUsername,
+//     // only needed if your site is also embedded on embed.example.com and othersite.example.com
+//     parent: ['calicreators.com', 'localhost'],
+//   });
+// };
+
 const StreamCard = ({
   twitchUsername,
   timeStart,
@@ -34,15 +44,18 @@ const StreamCard = ({
     endDate = tempEnd.toLocaleDateString(undefined, options);
   }
   let ribbon = {};
-  if (streamIsLive && pastBreakPoint) {
-    ribbon = {
-      ...ribbon,
-      text: 'Live now!',
-    };
+  if (streamIsLive) {
+    // loadTwitchPlayer(twitchUsername || streamer);
+    if (pastBreakPoint) {
+      ribbon = {
+        ...ribbon,
+        text: 'Live now!',
+      };
+    }
   }
   return (
-    <div className={`cardWrapper  ${streamIsLive ? 'isLive' : ''}`}>
-      <Card isGlowing={streamIsLive} ribbon={ribbon}>
+    <div className={`cardWrapper${streamIsLive ? ' isLive' : ''}`}>
+      <Card isPulsing={streamIsLive} ribbon={ribbon}>
         <div className="streamCard">
           <a
             target="_blank"
@@ -96,6 +109,8 @@ const StreamCard = ({
             display: grid;
             width: 80%;
             min-width: 280px;
+            padding: 0 20px;
+            box-sizing: border-box;
           }
           .streamCard {
             border-radius: 20px;

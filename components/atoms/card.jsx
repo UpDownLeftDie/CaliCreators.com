@@ -3,7 +3,14 @@ import { string, bool, shape, element } from 'prop-types';
 import LoadingIcon from './loading-icon';
 import Ribbon from './ribbon';
 
-const Card = ({ children, loading, backgroundImage, ribbon, isGlowing }) => {
+const Card = ({
+  children,
+  loading,
+  backgroundImage,
+  ribbon,
+  isGlowing,
+  isPulsing,
+}) => {
   const bgImgStr = backgroundImage
     ? `background-img: url(${backgroundImage});`
     : '';
@@ -32,9 +39,14 @@ const Card = ({ children, loading, backgroundImage, ribbon, isGlowing }) => {
     if (text) return <Ribbon text={text} color={color} leftSide={leftSide} />;
     return null;
   };
-
+  let className = 'card';
+  if (isGlowing) {
+    className = `${className} glow`;
+  } else if (isPulsing) {
+    className = `${className} pulse`;
+  }
   return (
-    <span className={`card${isGlowing ? ' glow' : ''}`}>
+    <span className={className}>
       {renderRibbon(ribbon)}
       {cardInfo}
       <span className="card-background" />
@@ -58,6 +70,9 @@ const Card = ({ children, loading, backgroundImage, ribbon, isGlowing }) => {
           .glow {
             animation: fadein 1.5s ease-out infinite alternate;
           }
+          .pulse {
+            animation: pulse 2s infinite;
+          }
           @keyframes fadein {
             from {
               filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
@@ -66,6 +81,23 @@ const Card = ({ children, loading, backgroundImage, ribbon, isGlowing }) => {
               filter: drop-shadow(0 0 25px rgba(255, 255, 255, 1));
             }
           }
+          @keyframes pulse {
+            0% {
+                filter: drop-shadow(0 0 0 rgba(255, 0, 0, 1));
+            }
+
+            50% {
+              filter: drop-shadow(0 0 14px rgba(255, 0, 0, 0.5));
+            }
+
+            70% {
+                filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0));
+            }
+
+            100% {
+                filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0));
+            }
+        }
           .card::after {
             content: '';
             border-radius: 20px;
@@ -118,6 +150,7 @@ Card.defaultProps = {
   backgroundImage: '',
   ribbon: {},
   isGlowing: false,
+  isPulsing: false,
 };
 
 Card.propTypes = {
@@ -129,6 +162,7 @@ Card.propTypes = {
     color: string,
   }),
   isGlowing: bool,
+  isPulsing: bool,
 };
 
 export default Card;
