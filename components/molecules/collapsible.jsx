@@ -1,30 +1,33 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useState, useLayoutEffect } from 'react';
 import { element, bool } from 'prop-types';
 import useElementSize from '../../src/hooks';
 
 const Collapsible = ({ children, isCollapsed }) => {
-  const growRef = useRef();
   const measureRef = useRef();
-  const [height, setHeight] = useState(0);
-  const windowSize = useElementSize();
+  const [height, setHeight] = useState('auto');
+  const windowSize = useElementSize(window);
 
-  useEffect(() => {
-    if (measureRef.current) {
+  useLayoutEffect(() => {
+    if (measureRef.current?.offsetHeight) {
       const measureHeight = measureRef.current.offsetHeight;
-      setHeight(measureHeight);
+      // stupid hack to fix race condition(?) on getting offsetHeight correctly
+      // without it, measureHeight was short by 126px on initial render
+      setTimeout(() => setHeight(`${measureHeight}px`), 50);
     }
-  }, [windowSize.width]);
+  }, [windowSize.width, measureRef.current?.offsetHeight]);
+
   return (
-    <div ref={growRef} className="collapsible">
+    <div className="collapsible">
       <div ref={measureRef} className="measure">
         {children}
       </div>
       <style jsx>
         {`
           .collapsible {
-            transition: height 300ms;
+            transition: height 350ms;
             overflow: hidden;
-            height: ${isCollapsed ? '0' : height}px;
+            box-sizing: border-box;
+            height: ${isCollapsed ? '0px' : height};
           }
         `}
       </style>

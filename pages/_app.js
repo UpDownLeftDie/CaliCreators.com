@@ -19,7 +19,7 @@ class MyApp extends App {
         <Head>
           <meta
             name="viewport"
-            content="width=device-width, initial-scale=1.0"
+            content="width=device-width, minimum-scale=1.0"
           />
           <meta property="og:url" key="og:url" content={url} />
           <meta

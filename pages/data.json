@@ -1,6 +1,6 @@
 {
-    "groups": [
-        {
+    "groups": {
+        "la":{
             "city": "Los Angeles",
             "name": "Twitch LA",
             "path": "la.jpg",
@@ -20,7 +20,7 @@
                 }
             ]
         },
-        {
+        "oc": {
             "city": "Orange",
             "name": "OC Streamers",
             "path": "oc.jpg",
@@ -45,7 +45,7 @@
                 "image": "/extralife-icon.png"
             }
         },
-        {
+        "sd": {
             "city": "San Diego",
             "name": "Twitch SD",
             "path": "sd.jpg",
@@ -69,5 +69,5 @@
                 "image": "/extralife-icon.png"
             }
         }
-    ]
+    }
 }

@@ -9,6 +9,6 @@ export default function useElementSize(element = window) {
     element.addEventListener('resize', updateSize);
     updateSize();
     return () => element.removeEventListener('resize', updateSize);
-  }, []);
+  }, [element]);
   return elementSize;
 }

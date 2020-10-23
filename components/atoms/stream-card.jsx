@@ -5,16 +5,6 @@ import ExtraLifeMemberButtons from './extralife-member-buttons';
 import ProgressBar from './progress-bar';
 import useElementSize from '../../src/hooks';
 
-// const loadTwitchPlayer = (twitchUsername) => {
-//   new window.Twitch.Embed('twitchPlayer', {
-//     width: 854,
-//     height: 480,
-//     channel: twitchUsername,
-//     // only needed if your site is also embedded on embed.example.com and othersite.example.com
-//     parent: ['calicreators.com', 'localhost'],
-//   });
-// };
-
 const StreamCard = ({
   twitchUsername,
   timeStart,
@@ -45,7 +35,6 @@ const StreamCard = ({
   }
   let ribbon = {};
   if (streamIsLive) {
-    // loadTwitchPlayer(twitchUsername || streamer);
     if (pastBreakPoint) {
       ribbon = {
         ...ribbon,
@@ -107,9 +96,9 @@ const StreamCard = ({
           }
           .cardWrapper {
             display: grid;
-            width: 80%;
+            position: relative;
+            width: 85%;
             min-width: 280px;
-            padding: 0 20px;
             box-sizing: border-box;
           }
           .streamCard {

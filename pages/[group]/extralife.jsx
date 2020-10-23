@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 import { string, shape, arrayOf } from 'prop-types';
+import { TwitchEmbed } from 'react-twitch-embed';
 import TeamMemberCards from '../../components/molecules/team-member-cards';
 import Header from '../../components/atoms/header';
 import LoadingIcon from '../../components/atoms/loading-icon';
@@ -183,28 +184,81 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
   const scheduleContent = () => {
     let cssClass = 'upcoming';
     let title = 'Upcoming Schedule ';
+    let twitchEmbed = null;
     if (isEventLive) {
       cssClass = 'live';
       title = 'Live Schedule ';
+      twitchEmbed = (
+        <div className="twitchWrapper">
+          <h2>LIVE NOW:</h2>
+          {'  '}
+          <h3>
+            <a
+              href={`https://www.twitch.tv/${schedule[0].streamer}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {schedule[0].streamer}
+            </a>
+          </h3>
+          <div className="twitchEmbedWrapper">
+            <TwitchEmbed
+              channel={schedule[0].streamer}
+              theme="dark"
+              width="100%"
+              height="100%"
+              withChat={false}
+            />
+          </div>
+          <style jsx>
+            {`
+              h2,
+              h3 {
+                display: inline-block;
+                vertical-align: middle;
+              }
+              a {
+                color: white;
+              }
+              .twitchWrapper {
+                margin: 40px 0 0 0;
+                width: 100%;
+                max-width: 622px;
+              }
+              .twitchEmbedWrapper {
+                height: 100%;
+                width: 100%;
+                height: 350px;
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 8px 10px rgba(0, 0, 0, 0.7);
+              }
+            `}
+          </style>
+        </div>
+      );
     }
     return (
-      <div className={`streamerSchedule ${cssClass}`}>
-        <h2>
-          <button type="button" onClick={handleScheduleCollapse}>
-            {title}
-            <CollapseArrow isCollapsed={isScheduleCollapsed} />
-          </button>
-        </h2>
-        <Collapsible isCollapsed={isScheduleCollapsed}>
-          <StreamerSchedule
-            schedule={schedule}
-            teamMembers={team.participants}
-          />
-        </Collapsible>
+      <>
+        {twitchEmbed}
+        <div className={`streamerSchedule ${cssClass}`}>
+          <h2>
+            <button type="button" onClick={handleScheduleCollapse}>
+              {title}
+              <CollapseArrow isCollapsed={isScheduleCollapsed} />
+            </button>
+          </h2>
+          <Collapsible isCollapsed={isScheduleCollapsed}>
+            <StreamerSchedule
+              schedule={schedule}
+              teamMembers={team.participants}
+            />
+          </Collapsible>
+        </div>
         <style jsx>
           {`
             .streamerSchedule {
-              margin-top: 40px;
+              margin-top: 20px;
               width: 100%;
               max-width: 800px;
             }
@@ -233,14 +287,13 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
             }
           `}
         </style>
-      </div>
+      </>
     );
   };
-  if (!isLoading)
+  if (!isLoading) {
     pageContents = (
       <>
         {schedule?.length > 0 && isEventLive && scheduleContent()}
-        <div id="twitchPlayer" />
         <div className="teamMembers">
           <a href={team.links.page} className="teamLink">
             Join Team
@@ -279,6 +332,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
         </style>
       </>
     );
+  }
 
   return (
     <>

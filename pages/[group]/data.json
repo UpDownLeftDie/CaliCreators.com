@@ -5,7 +5,7 @@
     "schedule": [
       {
         "streamer": "UpDownLeftDie",
-        "timeStart": "2020-10-07T15:00:00.000Z",
+        "timeStart": "2020-11-07T15:00:00.000Z",
         "timeEnd":   "2020-11-08T15:00:00.000Z"
       },
       {

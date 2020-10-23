@@ -136,7 +136,7 @@ const GroupCard = ({ group, loading, totalCards, position }) => {
         <div className={`card ${startsInSevenDays ? 'glow' : ''}`}>
           {renderRibbon(startsInSevenDays)}
           {cardInfo}
-          <span className="card-background" />
+          <span className="cardBackground" />
         </div>
       </a>
       {socialIcons}
@@ -208,7 +208,7 @@ const GroupCard = ({ group, loading, totalCards, position }) => {
           .card:hover::after {
             opacity: 1;
           }
-          .card-background {
+          .cardBackground {
             background: ${loading ? '#3d2769' : '#555'};
             ${backgroundImage}
             background-size: cover;
@@ -221,7 +221,7 @@ const GroupCard = ({ group, loading, totalCards, position }) => {
             z-index: -100;
             top: 0;
           }
-          .card-background:before {
+          .cardBackground:before {
             content: '';
             position: absolute;
             height: 100%;

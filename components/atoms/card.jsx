@@ -41,15 +41,17 @@ const Card = ({
   };
   let className = 'card';
   if (isGlowing) {
-    className = `${className} glow`;
+    className += ' glow';
   } else if (isPulsing) {
-    className = `${className} pulse`;
+    className += ' pulse';
   }
   return (
     <span className={className}>
-      {renderRibbon(ribbon)}
-      {cardInfo}
-      <span className="card-background" />
+      <span>
+        {renderRibbon(ribbon)}
+        {cardInfo}
+        <span className="cardBackground" />
+      </span>
       <style jsx>
         {`
           a:link {
@@ -60,6 +62,7 @@ const Card = ({
             padding: 15px;
             margin: 10px;
             color: #fff;
+            z-index: 1;
             text-decoration: none;
             transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
             filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.4))
@@ -70,8 +73,18 @@ const Card = ({
           .glow {
             animation: fadein 1.5s ease-out infinite alternate;
           }
-          .pulse {
+          .pulse::before {
+            content: " ";
+            position: absolute;
+            width: 100%;
+            height: 100%;
             animation: pulse 2s infinite;
+            box-sizing: border-box;
+            top: 0;
+            left: 0;
+            border: 15px solid red;
+            z-index: -300;
+            border-radius: 20px;
           }
           @keyframes fadein {
             from {
@@ -83,19 +96,22 @@ const Card = ({
           }
           @keyframes pulse {
             0% {
-                filter: drop-shadow(0 0 0 rgba(255, 0, 0, 1));
+              transform: scale(0.5, 0.5);
+              opacity: 0;
             }
 
             50% {
-              filter: drop-shadow(0 0 14px rgba(255, 0, 0, 0.5));
+              transform: scale(1.03, 1.12);
+              opacity: 1;
             }
 
-            70% {
-                filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0));
+            90% {
+              opacity: 0;
             }
 
             100% {
-                filter: drop-shadow(0 0 0 rgba(255, 0, 0, 0));
+              transform: scale(1.08, 1.22);
+              opacity: 0;
             }
         }
           .card::after {
@@ -119,7 +135,7 @@ const Card = ({
           .card:hover::after {
             opacity: 1;
           }
-          .card-background {
+          .cardBackground {
             background: ${loading ? '#444' : '#fff'};
             ${bgImgStr}
             background-size: cover;
@@ -132,7 +148,7 @@ const Card = ({
             z-index: -100;
             top: 0;
           }
-          .card-background:before {
+          .cardBackground::before {
             content: '';
             position: absolute;
             height: 100%;
