@@ -81,7 +81,7 @@ class MyApp extends App {
                 position: relative;
                 min-height: 100%;
                 min-width: 350px;
-                padding: 50px 16px 16px 16px;
+                padding-bottom: 20px;
                 box-sizing: border-box;
                 display: grid;
                 grid-template-rows: 1fr auto;

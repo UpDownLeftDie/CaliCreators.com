@@ -50,10 +50,9 @@ async function getUpcomingTwitchEvents() {
 async function getUpcomingMeetupEvents() {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
   // TODO remove hardcoded group name, dynamically get from data.json
-  let meetupUrl = `https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`;
-  if (process.env.ENV !== 'development')
-    meetupUrl = `https://lym20nhb8j.execute-api.us-west-2.amazonaws.com/dev?url=${meetupUrl}`;
-  const meetupComReq = await fetch(meetupUrl).catch((err) => {
+  const meetupUrl = `https://api.meetup.com/ocstreamers/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`;
+  const meetupUrlProxy = `https://lym20nhb8j.execute-api.us-west-2.amazonaws.com/dev?url=${meetupUrl}`;
+  const meetupComReq = await fetch(meetupUrlProxy).catch((err) => {
     console.log(err);
   });
 
@@ -61,8 +60,6 @@ async function getUpcomingMeetupEvents() {
     const meetupComJson = await meetupComReq.json();
     return convertMeetupToTwitch(meetupComJson);
   }
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-
   return [];
 }
 

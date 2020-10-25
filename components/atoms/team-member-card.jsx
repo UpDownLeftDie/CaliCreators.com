@@ -48,6 +48,7 @@ const TeamMemberCard = ({
   if (streamIsLive) {
     ribbon = {
       ...ribbon,
+      color: undefined,
       text: 'Live now!',
       leftSide: true,
     };

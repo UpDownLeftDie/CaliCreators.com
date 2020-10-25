@@ -3,6 +3,7 @@ import { element, bool } from 'prop-types';
 import useElementSize from '../../src/hooks';
 
 const Collapsible = ({ children, isCollapsed }) => {
+  const collapseRef = useRef();
   const measureRef = useRef();
   const [height, setHeight] = useState('auto');
   const windowSize = useElementSize(window);
@@ -12,12 +13,15 @@ const Collapsible = ({ children, isCollapsed }) => {
       const measureHeight = measureRef.current.offsetHeight;
       // stupid hack to fix race condition(?) on getting offsetHeight correctly
       // without it, measureHeight was short by 126px on initial render
-      setTimeout(() => setHeight(`${measureHeight}px`), 50);
+      setTimeout(() => setHeight(`${measureHeight}px`), 100);
     }
   }, [windowSize.width, measureRef.current?.offsetHeight]);
 
   return (
-    <div className="collapsible">
+    <div
+      ref={collapseRef}
+      className={`collapsible ${isCollapsed ? 'collapsed' : ''}`}
+    >
       <div ref={measureRef} className="measure">
         {children}
       </div>
@@ -27,7 +31,10 @@ const Collapsible = ({ children, isCollapsed }) => {
             transition: height 350ms;
             overflow: hidden;
             box-sizing: border-box;
-            height: ${isCollapsed ? '0px' : height};
+            height: ${height};
+          }
+          .collapsed {
+            height: 0px;
           }
         `}
       </style>

@@ -39,6 +39,7 @@ const TeamMemberCards = ({ teamMembers }) => {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
+          padding-top: 40px;
         `}
       </style>
     </div>

@@ -298,7 +298,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
           <a href={team.links.page} className="teamLink">
             Join Team
           </a>
-          <h2>
+          <h2 className="sectionHeader">
             <button type="button" onClick={handleTeamCollapse}>
               Team Members&nbsp;
               <CollapseArrow isCollapsed={isTeamCollapsed} />
@@ -327,6 +327,9 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
               margin-top: 40px;
               text-align: center;
               position: relative;
+            }
+            .sectionHeader {
+              margin-bottom: -30px;
             }
           `}
         </style>
@@ -365,6 +368,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
               flex-direction: column;
               justify-items: center;
               align-items: center;
+              padding: 50px 16px 0 16px;
             }
             .subheader {
               padding: 0;
