@@ -21,6 +21,7 @@ const StreamCard = ({
   const pastBreakPoint = windowSize.width < breakPoint;
   const options = {
     hour: 'numeric',
+    minute: 'numeric',
     weekday: 'short',
     month: 'short',
     day: 'numeric',
