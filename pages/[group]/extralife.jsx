@@ -100,29 +100,28 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
       const storageKey = `${group}-extralife`;
       const cachedData = JSON.parse(localStorage.getItem(storageKey) || '{}');
       const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
-      let newTeam = {};
-      if (
-        cachedData?.updatedAt &&
-        new Date(cachedData.updatedAt) > fiveMinsAgo
-      ) {
-        newTeam = cachedData.team;
+      const updatedAt = cachedData?.updatedAt;
+      let teamData = {};
+      if (updatedAt && new Date(updatedAt) > fiveMinsAgo) {
+        teamData = cachedData.team;
       } else {
         const results = await Promise.all([fetchTeam(), fetchTeamMembers()]);
         const participants = sortParticipants(results[1]);
 
-        newTeam = {
+        teamData = {
           ...results[0],
           participants,
         };
         const teamStorage = {
-          team: newTeam,
+          team: teamData,
           updatedAt: Date.now(),
         };
         localStorage.setItem(storageKey, JSON.stringify(teamStorage));
       }
-      setTeam(newTeam);
+      setTeam(teamData);
       setIsLoading(false);
     }
+
     if (groupData?.id) getData();
   }, [group, groupData]);
 
@@ -265,19 +264,6 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
             .streamerSchedule.upcoming h2 {
               margin-left: 10%;
             }
-            :global(h2 button) {
-              font-family: inherit;
-              font-size: inherit;
-              line-height: inherit;
-              margin: 0;
-              font-weight: inherit;
-              background: inherit;
-              border: inherit;
-              color: inherit;
-            }
-            :global(h2 button:focus:not(:focus-visible)) {
-              outline: none;
-            }
 
             @media (max-width: 600px) {
               .streamerSchedule.upcoming h2 {
@@ -330,6 +316,19 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
             }
             .sectionHeader {
               margin-bottom: -30px;
+            }
+            :global(h2 button) {
+              font-family: inherit;
+              font-size: inherit;
+              line-height: inherit;
+              margin: 0;
+              font-weight: inherit;
+              background: inherit;
+              border: inherit;
+              color: inherit;
+            }
+            :global(h2 button:focus:not(:focus-visible)) {
+              outline: none;
             }
           `}
         </style>

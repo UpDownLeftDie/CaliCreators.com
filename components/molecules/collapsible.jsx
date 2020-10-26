@@ -13,7 +13,7 @@ const Collapsible = ({ children, isCollapsed }) => {
       const measureHeight = measureRef.current.offsetHeight;
       // stupid hack to fix race condition(?) on getting offsetHeight correctly
       // without it, measureHeight was short by 126px on initial render
-      setTimeout(() => setHeight(`${measureHeight}px`), 100);
+      setTimeout(() => setHeight(`${measureHeight}px`), 250);
     }
   }, [windowSize.width, measureRef.current?.offsetHeight]);
 
