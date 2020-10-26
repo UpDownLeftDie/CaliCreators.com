@@ -26,6 +26,16 @@ class MyDocument extends Document {
             }}
           />
           <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com/"
+            crossOrigin
+          />
+          <link
+            rel="preload"
+            as="style"
+            href="https://fonts.googleapis.com/css?family=Kanit:300,400,700&display=swap"
+          />
+          <link
             href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap"
             rel="stylesheet"
           />

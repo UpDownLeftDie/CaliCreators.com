@@ -176,6 +176,12 @@ const Home = () => {
           href="https://lym20nhb8j.execute-api.us-west-2.amazonaws.com"
         />
         <link rel="preconnect" href="https://meetups.twitch.tv" />
+        <link
+          rel="preload"
+          as="style"
+          href="https://fonts.googleapis.com/css?family=Knewave&display=swap"
+          crossOrigin
+        />
       </Head>
       <div className="hero">
         <span className="title-wrapper">
@@ -193,6 +199,7 @@ const Home = () => {
             color: #fff;
             min-height: 100%;
             width: 100%;
+            padding: 50px 16px 0 16px;
           }
           .title {
             margin: 0;
