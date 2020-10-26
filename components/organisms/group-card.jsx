@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import { arrayOf, bool, number, shape, string } from 'prop-types';
 import moment from 'moment';
 import SocialIcons from '../molecules/social-icons';
@@ -130,129 +131,134 @@ const GroupCard = ({ group, loading, totalCards, position }) => {
     firstLastClass = 'last-card';
   }
   return (
-    <span className={`card-container ${firstLastClass}`}>
-      {charityBanner}
-      <a href={nextEvent.url} name={group.name}>
-        <div className={`card ${startsInSevenDays ? 'glow' : ''}`}>
-          {renderRibbon(startsInSevenDays)}
-          {cardInfo}
-          <span className="cardBackground" />
-        </div>
-      </a>
-      {socialIcons}
-      <style jsx>
-        {`
-          .card-container {
-            position: absolute;
-            display: inline-block;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(-50%);
-            left: 50%;
-          }
-          .first-card {
-            transform: translateX(0%);
-            left: 0%;
-          }
-          .last-card {
-            transform: translateX(-100%);
-            left: 100%;
-          }
-
-          a:link {
-            text-decoration: none;
-          }
-          .card {
-            position: relative;
-            width: 250px;
-            height: 300px;
-            padding: 18px;
-            color: #fff;
-            text-align: left;
-            text-decoration: none;
-            transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
-            filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.4))
-              drop-shadow(0 -4px 3px rgba(0, 0, 0, 0.3));
-            border-radius: 20px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-            word-break: break-word;
-          }
-          .glow {
-            animation: fadein 1.5s ease-out infinite alternate;
-          }
-          @keyframes fadein {
-            from {
-              filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
-            }
-            to {
-              filter: drop-shadow(0 0 25px rgba(255, 255, 255, 1));
-            }
-          }
-          .card::after {
-            content: '';
-            border-radius: 20px;
-            position: absolute;
-            z-index: -1;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.3))
-              drop-shadow(0 0px 6px rgba(0, 0, 0, 0.2));
-            opacity: 0;
-            transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
-          }
-          .card:hover {
-            transform: scale(1.06);
-            -webkit-font-smoothing: subpixel-antialiased;
-          }
-          .card:hover::after {
-            opacity: 1;
-          }
-          .cardBackground {
-            background: ${loading ? '#3d2769' : '#555'};
-            ${backgroundImage}
-            background-size: cover;
-            background-position: center;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0;
-            border-radius: 20px;
-            z-index: -100;
-            top: 0;
-          }
-          .cardBackground:before {
-            content: '';
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            border-radius: 20px;
-            background-color: rgba(0, 0, 0, 0.4);
-          }
-
-          @media (max-width: 900px) {
+    <>
+      <Head>
+        <link rel="preload" href={group.path} as="image" />
+      </Head>
+      <span className={`card-container ${firstLastClass}`}>
+        {charityBanner}
+        <a href={nextEvent.url} name={group.name}>
+          <div className={`card ${startsInSevenDays ? 'glow' : ''}`}>
+            {renderRibbon(startsInSevenDays)}
+            {cardInfo}
+            <span className="cardBackground" />
+          </div>
+        </a>
+        {socialIcons}
+        <style jsx>
+          {`
             .card-container {
-              position: relative;
-              margin: 0 auto;
-              width: 80%;
-              transform: translateX(0);
+              position: absolute;
+              display: inline-block;
+              transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+              transform: translateX(-50%);
+              left: 50%;
+            }
+            .first-card {
+              transform: translateX(0%);
               left: 0%;
-              margin-bottom: 75px;
             }
             .last-card {
-              margin-bottom: 15px;
+              transform: translateX(-100%);
+              left: 100%;
+            }
+
+            a:link {
+              text-decoration: none;
             }
             .card {
-              width: auto;
-              margin-bottom: 15px;
+              position: relative;
+              width: 250px;
+              height: 300px;
+              padding: 18px;
+              color: #fff;
+              text-align: left;
+              text-decoration: none;
+              transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
+              filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.4))
+                drop-shadow(0 -4px 3px rgba(0, 0, 0, 0.3));
+              border-radius: 20px;
+              text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+              word-break: break-word;
             }
-            .card p {
-              font-size: 26px;
+            .glow {
+              animation: fadein 1.5s ease-out infinite alternate;
             }
-          }
-        `}
-      </style>
-    </span>
+            @keyframes fadein {
+              from {
+                filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+              }
+              to {
+                filter: drop-shadow(0 0 25px rgba(255, 255, 255, 1));
+              }
+            }
+            .card::after {
+              content: '';
+              border-radius: 20px;
+              position: absolute;
+              z-index: -1;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.3))
+                drop-shadow(0 0px 6px rgba(0, 0, 0, 0.2));
+              opacity: 0;
+              transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
+            }
+            .card:hover {
+              transform: scale(1.06);
+              -webkit-font-smoothing: subpixel-antialiased;
+            }
+            .card:hover::after {
+              opacity: 1;
+            }
+            .cardBackground {
+              background: ${loading ? '#3d2769' : '#555'};
+              ${backgroundImage}
+              background-size: cover;
+              background-position: center;
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              left: 0;
+              border-radius: 20px;
+              z-index: -100;
+              top: 0;
+            }
+            .cardBackground:before {
+              content: '';
+              position: absolute;
+              height: 100%;
+              width: 100%;
+              border-radius: 20px;
+              background-color: rgba(0, 0, 0, 0.4);
+            }
+
+            @media (max-width: 900px) {
+              .card-container {
+                position: relative;
+                margin: 0 auto;
+                width: 80%;
+                transform: translateX(0);
+                left: 0%;
+                margin-bottom: 75px;
+              }
+              .last-card {
+                margin-bottom: 15px;
+              }
+              .card {
+                width: auto;
+                margin-bottom: 15px;
+              }
+              .card p {
+                font-size: 26px;
+              }
+            }
+          `}
+        </style>
+      </span>
+    </>
   );
 };
 
