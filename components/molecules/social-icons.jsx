@@ -1,17 +1,24 @@
 import React from 'react';
-import { arrayOf, shape, string } from 'prop-types';
+import { shape, string } from 'prop-types';
+
+const siteUrls = {
+  twitter: 'https://www.twitter.com',
+  twitch: 'https://www.twitch.tv',
+  discord: 'https://discord.gg',
+  instagram: 'https://www.instagram.com',
+};
 
 const SocialIcons = ({ links, groupName }) => {
-  const icons = links.map((link) => {
+  const icons = Object.entries(links).map((link) => {
     return (
       <a
-        href={link.url}
-        key={link.site}
-        aria-label={`${groupName}'s ${link.site}`}
+        href={`${siteUrls[link[0]]}/${link[1]}`}
+        key={link[0]}
+        aria-label={`${groupName}'s ${link[0]}`}
         target="_blank"
         rel="noopener noreferrer"
       >
-        <i className={`fab fa-${link.site}`} />
+        <i className={`fab fa-${link[0]}`} />
       </a>
     );
   });
@@ -50,12 +57,12 @@ const SocialIcons = ({ links, groupName }) => {
 };
 
 SocialIcons.propTypes = {
-  links: arrayOf(
-    shape({
-      url: string.isRequired,
-      site: string.isRequired,
-    })
-  ).isRequired,
+  links: shape({
+    twitter: string.isRequired,
+    instagram: string,
+    discord: string,
+    twitch: string,
+  }).isRequired,
   groupName: string.isRequired,
 };
 

@@ -65,6 +65,7 @@ StreamerSchedule.propTypes = {
   schedule: arrayOf(
     shape({
       streamer: string.isRequired,
+      twitter: string,
       timeStart: string.isRequired,
       timeEnd: string.isRequired,
     })

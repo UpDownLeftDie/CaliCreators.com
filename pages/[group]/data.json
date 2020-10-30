@@ -2,19 +2,23 @@
   "oc": {
     "url": "https://www.extra-life.org/team/ocstreamers2020",
     "id": "50385",
+    "hashtags": ["OCStreamersForChoc", "ExtraLife4Kids"],
     "schedule": [
       {
         "streamer": "PhunGuy",
+        "twitter": "phunguy8624",
         "timeStart": "2020-11-07T12:00:00.000Z",
         "timeEnd":   "2020-11-07T15:30:00.000Z"
       },
       {
         "streamer": "that_guy_nibbs",
+        "twitter": "That_Guy_Nibbs",
         "timeStart": "2020-11-07T15:30:00.000Z",
         "timeEnd":   "2020-11-07T19:00:00.000Z"
       },
       {
         "streamer": "Reizna",
+        "twitter": "reiznacosplay",
         "timeStart": "2020-11-07T19:00:00.000Z",
         "timeEnd":   "2020-11-07T22:30:00.000Z"
       },
@@ -25,31 +29,37 @@
       },
       {
         "streamer": "gongjulee",
+        "twitter": "lunar_reim",
         "timeStart": "2020-11-08T02:00:00.000Z",
         "timeEnd":   "2020-11-08T05:30:00.000Z"
       },
       {
         "streamer": "UpDownLeftDie",
+        "twitter": "UpDownLeftDie",
         "timeStart": "2020-11-08T05:30:00.000Z",
         "timeEnd":   "2020-11-08T09:00:00.000Z"
       },
       {
         "streamer": "Rawstarr",
+        "rawstarr": "rawstarr",
         "timeStart": "2020-11-08T09:00:00.000Z",
         "timeEnd":   "2020-11-08T12:30:00.000Z"
       },
       {
         "streamer": "BillySundown",
+        "twitter": "BillySundown",
         "timeStart": "2020-11-08T12:30:00.000Z",
         "timeEnd":   "2020-11-08T15:00:00.000Z"
       },
       {
         "streamer": "Ganza",
+        "twitter": "Ganza731",
         "timeStart": "2020-11-08T15:00:00.000Z",
         "timeEnd":   "2020-11-08T18:30:00.000Z"
       },
       {
         "streamer": "SituaShaun",
+        "twitter": "SituaShaun_",
         "timeStart": "2020-11-08T18:30:00.000Z",
         "timeEnd":   "2020-11-08T22:00:00.000Z"
       }
@@ -58,8 +68,6 @@
   "sd": {
     "url": "https://www.extra-life.org/team/TwitchSanDiego",
     "id": "50770",
-    "schedule": [
-
-    ]
+    "schedule": []
   }
 }

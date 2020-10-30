@@ -5,7 +5,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 import { string, shape, arrayOf } from 'prop-types';
-import { TwitchEmbed } from 'react-twitch-embed';
 import TeamMemberCards from '../../components/molecules/team-member-cards';
 import Header from '../../components/atoms/header';
 import LoadingIcon from '../../components/atoms/loading-icon';
@@ -15,6 +14,7 @@ import Collapsible from '../../components/molecules/collapsible';
 import CollapseArrow from '../../components/atoms/collapse-arrow';
 import checkIfEventIsLive from '../../src/utils';
 import SocialIcons from '../../components/molecules/social-icons';
+import TwitchEmbed from '../../components/molecules/TwitchEmbed';
 
 const data = require('./data.json');
 
@@ -153,6 +153,26 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
       <meta property="og:image:height" key="og:image:height" content="255" />
       <link rel="preconnect" href={EXTRA_LIFE_ORG} />
       <script src="https://embed.twitch.tv/embed/v1.js" />
+      <script>
+        {`
+            window.twttr = (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+              if (d.getElementById(id)) return t;
+              js = d.createElement(s);
+              js.id = id;
+              js.src = "https://platform.twitter.com/widgets.js";
+              fjs.parentNode.insertBefore(js, fjs);
+
+              t._e = [];
+              t.ready = function(f) {
+                t._e.push(f);
+              };
+
+              return t;
+            }(document, "script", "twitter-wjs"));
+          `}
+      </script>
     </Head>
   );
 
@@ -188,53 +208,12 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
       cssClass = 'live';
       title = 'Live Schedule ';
       twitchEmbed = (
-        <div className="twitchWrapper">
-          <h2>LIVE NOW:</h2>
-          {'  '}
-          <h3>
-            <a
-              href={`https://www.twitch.tv/${schedule[0].streamer}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {schedule[0].streamer}
-            </a>
-          </h3>
-          <div className="twitchEmbedWrapper">
-            <TwitchEmbed
-              channel={schedule[0].streamer}
-              theme="dark"
-              width="100%"
-              height="100%"
-              withChat={false}
-            />
-          </div>
-          <style jsx>
-            {`
-              h2,
-              h3 {
-                display: inline-block;
-                vertical-align: middle;
-              }
-              a {
-                color: white;
-              }
-              .twitchWrapper {
-                margin: 40px 0 0 0;
-                width: 100%;
-                max-width: 622px;
-              }
-              .twitchEmbedWrapper {
-                height: 100%;
-                width: 100%;
-                height: 350px;
-                border-radius: 20px;
-                overflow: hidden;
-                box-shadow: 0 8px 10px rgba(0, 0, 0, 0.7);
-              }
-            `}
-          </style>
-        </div>
+        <TwitchEmbed
+          twitchUsername={schedule[0].streamer}
+          twitter={schedule[0].twitter}
+          groupTwitter={groupInfo.links.twitter}
+          hashtags={groupData.hashtags}
+        />
       );
     }
     return (
@@ -389,12 +368,12 @@ export default ExtraLifeTeam;
 ExtraLifeTeam.propTypes = {
   name: string.isRequired,
   groupInfo: shape({
-    links: arrayOf(
-      shape({
-        site: string.isRequired,
-        url: string.isRequired,
-      }).isRequired
-    ),
+    links: shape({
+      twitter: string.isRequired,
+      discord: string,
+      instagram: string,
+      twitch: string,
+    }).isRequired,
   }).isRequired,
 };
 

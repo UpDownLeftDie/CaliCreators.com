@@ -269,12 +269,12 @@ GroupCard.propTypes = {
   group: shape({
     url: string.isRequired,
     path: string.isRequired,
-    links: arrayOf(
-      shape({
-        url: string.isRequired,
-        site: string.isRequired,
-      })
-    ),
+    links: shape({
+      twitter: string.isRequired,
+      discord: string,
+      instagram: string,
+      twitch: string,
+    }).isRequired,
     name: string.isRequired,
     nextEvent: shape({
       url: string,
