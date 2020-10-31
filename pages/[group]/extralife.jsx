@@ -212,6 +212,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
     minute: 'numeric',
     month: 'numeric',
     day: 'numeric',
+    timeZoneName: 'short',
   };
   const startDate = scheduleTimeRange?.start?.toLocaleDateString(
     undefined,
@@ -246,7 +247,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
         <div className="shareContainer">
           Share and support:&nbsp;
           <TweetButton
-            text={`Check out the upcoming ExtraLife #charity event for @${groupInfo.links.twitter} on ${startDate}`}
+            text={`Check out the upcoming ExtraLife charity event for @${groupInfo.links.twitter} on ${startDate}`}
             hashtags={groupData.hashtags}
             url={`https://calicreators.com/${group}/extralife`}
           />
