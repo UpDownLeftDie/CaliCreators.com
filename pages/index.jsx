@@ -176,12 +176,6 @@ const Home = () => {
           href="https://lym20nhb8j.execute-api.us-west-2.amazonaws.com"
         />
         <link rel="preconnect" href="https://meetups.twitch.tv" />
-        <link
-          rel="preload"
-          as="style"
-          href="https://fonts.googleapis.com/css?family=Knewave&display=swap"
-          crossOrigin
-        />
       </Head>
       <div className="hero">
         <span className="title-wrapper">
