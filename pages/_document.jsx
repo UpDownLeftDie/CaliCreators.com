@@ -28,7 +28,7 @@ class MyDocument extends Document {
           <link
             rel="preconnect"
             href="https://fonts.gstatic.com/"
-            crossOrigin
+            crossOrigin="true"
           />
           <link
             href="https://fonts.googleapis.com/css?family=Kanit:300,400,700|Knewave&display=swap"

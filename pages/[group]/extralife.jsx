@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
-import { string, shape, arrayOf } from 'prop-types';
+import { string, shape } from 'prop-types';
 import TeamMemberCards from '../../components/molecules/team-member-cards';
 import Header from '../../components/atoms/header';
 import LoadingIcon from '../../components/atoms/loading-icon';
@@ -15,6 +15,7 @@ import CollapseArrow from '../../components/atoms/collapse-arrow';
 import checkIfEventIsLive from '../../src/utils';
 import SocialIcons from '../../components/molecules/social-icons';
 import TwitchEmbed from '../../components/molecules/TwitchEmbed';
+import TweetButton from '../../components/molecules/TweetButton';
 
 const data = require('./data.json');
 
@@ -33,6 +34,7 @@ function sortSchedule(schedule) {
 }
 
 function getScheduleTimeRange(schedule) {
+  if (!schedule || !schedule.length) return {};
   const start = new Date(schedule[0].timeStart);
   const end = new Date(schedule[schedule.length - 1].timeEnd);
   return { start, end };
@@ -193,33 +195,70 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
     </div>
   );
   let isEventLive = false;
+  let promoteSchedule = false;
+  const scheduleTimeRange = getScheduleTimeRange(schedule) || {};
   if (schedule?.length) {
-    const scheduleTimeRange = getScheduleTimeRange(schedule) || {};
+    const hours = 60000 * 60;
+    const twentyFourHours = new Date(scheduleTimeRange.start - 24 * hours);
     isEventLive = checkIfEventIsLive(
       scheduleTimeRange.start,
       scheduleTimeRange.end
     );
+    promoteSchedule = isEventLive || Date.now() > twentyFourHours;
   }
+
+  const options = {
+    hour: 'numeric',
+    minute: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  };
+  const startDate = scheduleTimeRange?.start?.toLocaleDateString(
+    undefined,
+    options
+  );
+  const endDate = scheduleTimeRange?.end?.toLocaleDateString(
+    undefined,
+    options
+  );
   const scheduleContent = () => {
+    const rangeText = `${startDate} to ${endDate}`;
     let cssClass = 'upcoming';
-    let title = 'Upcoming Schedule ';
+    let title = `Upcoming Schedule - ${rangeText} `;
     let twitchEmbed = null;
-    if (isEventLive) {
-      cssClass = 'live';
-      title = 'Live Schedule ';
-      twitchEmbed = (
-        <TwitchEmbed
-          twitchUsername={schedule[0].streamer}
-          twitter={schedule[0].twitter}
-          groupTwitter={groupInfo.links.twitter}
-          hashtags={groupData.hashtags}
-        />
+    let shareButton = null;
+    if (promoteSchedule) {
+      if (isEventLive) {
+        cssClass = 'live';
+        title = 'Live Schedule ';
+        twitchEmbed = (
+          <TwitchEmbed
+            twitchUsername={schedule[0].streamer}
+            twitter={schedule[0].twitter}
+            groupTwitter={groupInfo.links.twitter}
+            hashtags={groupData.hashtags}
+          />
+        );
+      }
+    }
+    if (!isEventLive) {
+      shareButton = (
+        <div className="shareContainer">
+          Share and support:&nbsp;
+          <TweetButton
+            text={`Check out the upcoming ExtraLife #charity event for @${groupInfo.links.twitter} on ${startDate}`}
+            hashtags={groupData.hashtags}
+            url={`https://calicreators.com/${group}/extralife`}
+          />
+        </div>
       );
     }
+
     return (
       <>
         {twitchEmbed}
         <div className={`streamerSchedule ${cssClass}`}>
+          {shareButton}
           <h2>
             <button type="button" onClick={handleScheduleCollapse}>
               {title}
@@ -240,8 +279,14 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
               width: 100%;
               max-width: 800px;
             }
-            .streamerSchedule.upcoming h2 {
-              margin-left: 10%;
+            .upcoming {
+              text-align: center;
+            }
+            .upcoming h2 {
+              margin-top: 0;
+            }
+            .shareContainer {
+              justify-self: center;
             }
 
             @media (max-width: 600px) {
@@ -258,7 +303,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
   if (!isLoading) {
     pageContents = (
       <>
-        {schedule?.length > 0 && isEventLive && scheduleContent()}
+        {schedule?.length > 0 && promoteSchedule && scheduleContent()}
         <div className="teamMembers">
           <a href={team.links.page} className="teamLink">
             Join Team
@@ -273,7 +318,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
             <TeamMemberCards teamMembers={team.participants} />
           </Collapsible>
         </div>
-        {schedule?.length > 0 && !isEventLive && scheduleContent()}
+        {schedule?.length > 0 && !promoteSchedule && scheduleContent()}
         <style jsx>
           {`
             .teamLink {
