@@ -52,7 +52,10 @@ const ExtraLifeMemberButtons = ({ links, streamIsLive, columnLayout }) => {
   const donateButton = links?.donate ? getDonateButton(links.donate) : null;
   let twitchButton = null;
   if (!streamIsLive && links?.stream) {
-    twitchButton = getTwitchButton(links.stream);
+    const regex = links.stream.match(/channel=(.*)/);
+    if (regex?.[1]) {
+      twitchButton = getTwitchButton(`https://www.twitch.tv/${regex[1]}`);
+    }
   }
   return (
     <div className={`buttonContainer ${columnLayout ? 'column' : ''}`}>
