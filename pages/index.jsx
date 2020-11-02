@@ -95,7 +95,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    const cachedData = JSON.parse(localStorage.getItem('twitchEvents') || '{}');
+    const cachedData = JSON.parse(localStorage.getItem('meetupEvents') || '{}');
     if (cachedData?.updatedAt) {
       const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
       if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
