@@ -89,14 +89,28 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
 
   useEffect(() => {
     async function fetchTeam() {
-      const res = await fetch(`${API_BASE}/teams/${groupData.id}`);
-      const fetchedTeam = await res.json();
-      return fetchedTeam;
+      try {
+        const res = await fetch(`${API_BASE}/teams/${groupData.id}`);
+        if (res.status < 200 || res.status > 299) return {};
+        const fetchedTeam = await res.json();
+        return fetchedTeam;
+      } catch (err) {
+        console.log('Error fetching team');
+        return {};
+      }
     }
     async function fetchTeamMembers() {
-      const res = await fetch(`${API_BASE}/teams/${groupData.id}/participants`);
-      const fetchedTeamMembers = await res.json();
-      return fetchedTeamMembers;
+      try {
+        const res = await fetch(
+          `${API_BASE}/teams/${groupData.id}/participants`
+        );
+        if (res.status < 200 || res.status > 299) return [];
+        const fetchedTeamMembers = await res.json();
+        return fetchedTeamMembers;
+      } catch (err) {
+        console.log('Error fetching fetchTeamMembers');
+        return [];
+      }
     }
     async function getData() {
       const storageKey = `${group}-extralife`;
@@ -133,6 +147,11 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
   const pageUrl = `${url}${router.asPath}`;
   const head = (
     <Head>
+      <script
+        async
+        src="https://platform.twitter.com/widgets.js"
+        charSet="utf-8"
+      />
       <title key="title">{siteTitle}</title>
       <meta property="og:title" key="og:title" content={siteTitle} />
       <meta
@@ -155,26 +174,6 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
       <meta property="og:image:height" key="og:image:height" content="255" />
       <link rel="preconnect" href={EXTRA_LIFE_ORG} />
       <script src="https://embed.twitch.tv/embed/v1.js" />
-      <script>
-        {`
-            window.twttr = (function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0],
-                t = window.twttr || {};
-              if (d.getElementById(id)) return t;
-              js = d.createElement(s);
-              js.id = id;
-              js.src = "https://platform.twitter.com/widgets.js";
-              fjs.parentNode.insertBefore(js, fjs);
-
-              t._e = [];
-              t.ready = function(f) {
-                t._e.push(f);
-              };
-
-              return t;
-            }(document, "script", "twitter-wjs"));
-          `}
-      </script>
     </Head>
   );
 
@@ -305,20 +304,22 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
     pageContents = (
       <>
         {schedule?.length > 0 && promoteSchedule && scheduleContent()}
-        <div className="teamMembers">
-          <a href={team.links.page} className="teamLink">
-            Join Team
-          </a>
-          <h2 className="sectionHeader">
-            <button type="button" onClick={handleTeamCollapse}>
-              Team Members&nbsp;
-              <CollapseArrow isCollapsed={isTeamCollapsed} />
-            </button>
-          </h2>
-          <Collapsible isCollapsed={isTeamCollapsed}>
-            <TeamMemberCards teamMembers={team.participants} />
-          </Collapsible>
-        </div>
+        {team?.links?.page ? (
+          <div className="teamMembers">
+            <a href={team.links.page} className="teamLink">
+              Join Team
+            </a>
+            <h2 className="sectionHeader">
+              <button type="button" onClick={handleTeamCollapse}>
+                Team Members&nbsp;
+                <CollapseArrow isCollapsed={isTeamCollapsed} />
+              </button>
+            </h2>
+            <Collapsible isCollapsed={isTeamCollapsed}>
+              <TeamMemberCards teamMembers={team.participants} />
+            </Collapsible>
+          </div>
+        ) : null}
         {schedule?.length > 0 && !promoteSchedule && scheduleContent()}
         <style jsx>
           {`

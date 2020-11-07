@@ -4,17 +4,18 @@ import checkIfEventIsLive from '../../src/utils';
 
 const StreamerSchedule = ({ schedule, teamMembers }) => {
   if (!schedule) return null;
-  const teamMembersWithTwitch = teamMembers.filter(
-    (member) => !!member?.twitchUsername
-  );
+  // const teamMembersWithTwitch = teamMembers.filter(
+  //   (member) => !!member?.twitchUsername
+  // );
   const streams = schedule.reduce((acc, stream) => {
-    const teamMember = teamMembersWithTwitch.find((member) => {
-      return (
-        stream.streamer.trim().toLowerCase() ===
-        member.twitchUsername.toLowerCase()
-      );
-    });
-    if (!teamMember) return acc;
+    const teamMember =
+      teamMembers.find((member) => {
+        return (
+          stream.streamer.trim().toLowerCase() ===
+          member.twitchUsername.toLowerCase()
+        );
+      }) || {};
+    // if (!teamMember) return acc;
     const { timeStart, timeEnd, streamer } = stream;
     const {
       twitchUsername,
@@ -28,7 +29,7 @@ const StreamerSchedule = ({ schedule, teamMembers }) => {
       <StreamCard
         key={streamer}
         {...{
-          twitchUsername,
+          twitchUsername: twitchUsername || streamer,
           timeStart,
           timeEnd,
           streamIsLive,

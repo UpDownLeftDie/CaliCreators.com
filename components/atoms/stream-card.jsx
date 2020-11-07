@@ -6,15 +6,15 @@ import ProgressBar from './progress-bar';
 import useElementSize from '../../src/hooks';
 
 const StreamCard = ({
-  twitchUsername,
-  timeStart,
-  timeEnd,
-  streamIsLive,
-  streamer,
   avatarImageURL,
-  links,
   fundraisingGoal,
+  links,
+  streamer,
+  streamIsLive,
   sumDonations,
+  timeEnd,
+  timeStart,
+  twitchUsername,
 }) => {
   const windowSize = useElementSize(window);
   const breakPoint = 600;
@@ -50,7 +50,7 @@ const StreamCard = ({
           <a
             target="_blank"
             rel="noreferrer"
-            href={`https://www.twitch.tv/${twitchUsername || streamer}`}
+            href={`https://www.twitch.tv/${twitchUsername}`}
           >
             <img
               className="streamerAvatar"
@@ -69,17 +69,19 @@ const StreamCard = ({
                   <u>{endDate}</u>
                 </div>
               </div>
-              <ProgressBar
-                progress={sumDonations}
-                goal={fundraisingGoal}
-                goalText=""
-                progressText=""
-                inlineText
-                isMoney
-                width={75}
-                height={30}
-                displayProgress
-              />
+              {fundraisingGoal ? (
+                <ProgressBar
+                  progress={sumDonations}
+                  goal={fundraisingGoal}
+                  goalText=""
+                  progressText=""
+                  inlineText
+                  isMoney
+                  width={75}
+                  height={30}
+                  displayProgress
+                />
+              ) : null}
             </div>
           </a>
           <ExtraLifeMemberButtons
@@ -160,26 +162,27 @@ const StreamCard = ({
 };
 
 StreamCard.defaultProps = {
-  twitchUsername: null,
   streamIsLive: false,
   sumDonations: 0,
   avatarImageURL:
     'https://assets.donordrive.com/clients/extralife/img/avatar-constituent-default.gif',
+  fundraisingGoal: 0,
+  links: {},
 };
 
 StreamCard.propTypes = {
-  twitchUsername: string,
-  timeStart: string.isRequired,
-  timeEnd: string.isRequired,
-  streamIsLive: bool,
-  streamer: string.isRequired,
   avatarImageURL: string,
-  fundraisingGoal: number.isRequired,
-  sumDonations: number,
+  fundraisingGoal: number,
   links: shape({
-    donate: string.isRequired,
+    donate: string,
     // stream: string.isRequired,
-  }).isRequired,
+  }),
+  streamer: string.isRequired,
+  streamIsLive: bool,
+  sumDonations: number,
+  timeEnd: string.isRequired,
+  timeStart: string.isRequired,
+  twitchUsername: string.isRequired,
 };
 
 export default StreamCard;
