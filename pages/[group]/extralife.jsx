@@ -78,6 +78,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
   const [isLoading, setIsLoading] = useState(!team?.participants);
   const [isTeamCollapsed, setIsTeamCollapsed] = useState(false);
   const [isScheduleCollapsed, setIsScheduleCollapsed] = useState(false);
+  const teamName = team?.name || name;
   const handleTeamCollapse = () => {
     setIsTeamCollapsed(!isTeamCollapsed);
     setIsScheduleCollapsed(false);
@@ -141,8 +142,8 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
     if (groupData?.id) getData();
   }, [group, groupData]);
 
-  const siteTitle = `${team.name} Extra Life Team | Cali Creators`;
-  const description = `${team.name} Extra Life Team Page. We're raising money to help our local children's hospital!`;
+  const siteTitle = `${teamName} Extra Life Team | Cali Creators`;
+  const description = `${teamName} Extra Life Team Page. We're raising money to help our local children's hospital!`;
   const url = 'https://calicreators.com';
   const pageUrl = `${url}${router.asPath}`;
   const head = (
@@ -162,7 +163,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
       <meta
         name="Description"
         key="description"
-        content={`${team.name} ${description}`}
+        content={`${teamName} ${description}`}
       />
       <meta property="og:url" key="og:url" content={pageUrl} />
       <meta
@@ -366,7 +367,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
     <>
       {head}
       <div className="page">
-        <Header title={team.name || name} />
+        <Header title={teamName} />
         <h2 className="subheader">Extra Life Team</h2>
         <div style={{ width: '200px' }}>
           <SocialIcons groupName={groupInfo.name} links={groupInfo.links} />
@@ -374,16 +375,18 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
         <Link href="/">
           <a className="homeLink">Cali Creators Home</a>
         </Link>
-        <ProgressBar
-          progress={team.sumDonations}
-          goal={team.fundraisingGoal}
-          progressText="Raised"
-          goalText="Goal"
-          isMoney
-          width={80}
-          displayProgress
-          isLoading
-        />
+        {team?.fundraisingGoal ? (
+          <ProgressBar
+            progress={team.sumDonations}
+            goal={team.fundraisingGoal}
+            progressText="Raised"
+            goalText="Goal"
+            isMoney
+            width={80}
+            displayProgress
+            isLoading
+          />
+        ) : null}
         {pageContents}
         <style jsx>
           {`
