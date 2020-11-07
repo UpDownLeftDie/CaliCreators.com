@@ -4,18 +4,14 @@ import checkIfEventIsLive from '../../src/utils';
 
 const StreamerSchedule = ({ schedule, teamMembers }) => {
   if (!schedule) return null;
-  // const teamMembersWithTwitch = teamMembers.filter(
-  //   (member) => !!member?.twitchUsername
-  // );
   const streams = schedule.reduce((acc, stream) => {
     const teamMember =
       teamMembers.find((member) => {
         return (
           stream.streamer.trim().toLowerCase() ===
-          member.twitchUsername.toLowerCase()
+          member?.twitchUsername?.toLowerCase()
         );
       }) || {};
-    // if (!teamMember) return acc;
     const { timeStart, timeEnd, streamer } = stream;
     const {
       twitchUsername,

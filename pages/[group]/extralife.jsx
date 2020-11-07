@@ -118,17 +118,24 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
       const cachedData = JSON.parse(localStorage.getItem(storageKey) || '{}');
       const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
       const updatedAt = cachedData?.updatedAt;
-      let teamData = {};
-      if (updatedAt && new Date(updatedAt) > fiveMinsAgo) {
-        teamData = cachedData.team;
-      } else {
-        const results = await Promise.all([fetchTeam(), fetchTeamMembers()]);
-        const participants = sortParticipants(results[1]);
-
-        teamData = {
-          ...results[0],
-          participants,
-        };
+      let teamData = cachedData.team;
+      if (!updatedAt || new Date(updatedAt) < fiveMinsAgo) {
+        const [fetchedTeam, fetchedTeamMembers] = await Promise.all([
+          fetchTeam(),
+          fetchTeamMembers(),
+        ]);
+        const participants = sortParticipants(fetchedTeamMembers);
+        // if empty try to use whatever is cached
+        if (
+          Object.keys(fetchedTeam).length > 0 &&
+          fetchedTeam.constructor === Object &&
+          fetchedTeamMembers.length > 0
+        ) {
+          teamData = {
+            ...fetchedTeam,
+            participants,
+          };
+        }
         const teamStorage = {
           team: teamData,
           updatedAt: Date.now(),
