@@ -24,9 +24,7 @@ const API_BASE = `${EXTRA_LIFE_ORG}/api`;
 
 function sortSchedule(schedule) {
   return schedule
-    .filter((stream) => {
-      return new Date() < new Date(stream.timeEnd);
-    })
+    .filter((stream) => new Date() < new Date(stream.timeEnd))
     .sort(
       (a, b) =>
         new Date(a.timeStart).getTime() - new Date(b.timeStart).getTime()
