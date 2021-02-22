@@ -191,7 +191,6 @@ const Home = () => {
         {`
           .hero {
             color: #fff;
-            min-height: 100%;
             width: 100%;
             padding: 50px 16px 0 16px;
           }
