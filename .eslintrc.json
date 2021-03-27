@@ -6,7 +6,7 @@
     "extends": [
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
-        "nextjs",
+        "@ijsto",
         "airbnb",
         "prettier"
     ],
