@@ -167,10 +167,12 @@ const Home = () => {
     loading: true,
   });
 
+  const fiveMinsBefore = (date) => new Date(date - 5 * 60000);
+
   useEffect(() => {
     const cachedData = JSON.parse(localStorage.getItem('twitchEvents') || '{}');
     if (cachedData?.updatedAt) {
-      const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
+      const fiveMinsAgo = fiveMinsBefore(Date.now());
       if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
         setTwitchEvents({ events: cachedData.events, loading: false });
         return;
@@ -191,7 +193,7 @@ const Home = () => {
   useEffect(() => {
     const cachedData = JSON.parse(localStorage.getItem('meetupEvents') || '{}');
     if (cachedData?.updatedAt) {
-      const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
+      const fiveMinsAgo = fiveMinsBefore(Date.now());
       if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
         setMeetupEvents({ events: cachedData.events, loading: false });
         return;
@@ -215,7 +217,7 @@ const Home = () => {
       localStorage.getItem('guildedEvents') || '{}'
     );
     if (cachedData?.updatedAt) {
-      const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
+      const fiveMinsAgo = fiveMinsBefore(Date.now());
       if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
         setGuildedEvents({ events: cachedData.events, loading: false });
         return;
@@ -230,7 +232,7 @@ const Home = () => {
           updatedAt: Date.now(),
         })
       );
-      setMeetupEvents({ events: guildedEvents, loading: false });
+      setGuildedEvents({ events: guildedEvents, loading: false });
     });
   }, []);
 
@@ -251,6 +253,11 @@ const Home = () => {
       upcomingMeetupEvents.events,
       upcomingGuildedEvents.events
     );
+    console.log({
+      upcomingTwitchEvents: upcomingTwitchEvents.loading,
+      upcomingMeetupEvents: upcomingMeetupEvents.loading,
+      upcomingGuildedEvents: upcomingGuildedEvents.loading,
+    });
     const loading =
       upcomingTwitchEvents.loading ||
       upcomingMeetupEvents.loading ||
