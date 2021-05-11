@@ -70,11 +70,16 @@ function convertGuildedToTwitch(guildedGroupsEvents) {
         .utc(event.happensAt)
         // .utcOffset(event.utc_offset / 3600000)
         .format();
+      const group = Object.entries(data.groups).find(
+        ([, groupData]) =>
+          groupData.city.toLowerCase() === event.city.toLowerCase()
+      )[1];
+      const guildedUrl = group?.guildedURLKey;
       return {
         chapter: {
           city: event.city,
         },
-        url: `https://www.guilded.gg/${event.guildedUrl}/groups/${event.groupId}/channels/${event.channelId}/calendar/${event.eventId}`,
+        url: `https://www.guilded.gg/${guildedUrl}/groups/${event.groupId}/channels/${event.channelId}/calendar/${event.eventId}`,
         start_date: startDate,
         title: event.name,
       };
@@ -298,6 +303,7 @@ const Home = () => {
           href="https://lym20nhb8j.execute-api.us-west-2.amazonaws.com"
         />
         <link rel="preconnect" href="https://meetups.twitch.tv" />
+        <link rel="preconnect" href="https://www.guilded.gg" />
       </Head>
       <div className="hero">
         <span className="title-wrapper">
