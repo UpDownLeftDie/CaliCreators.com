@@ -51,7 +51,6 @@ function sortParticipants(participants) {
     .map((member) => {
       let newMember = {
         ...member,
-        avatarImageURL: `https:${member.avatarImageURL}`,
       };
       if (member?.links?.stream) {
         const { stream } = member.links;
