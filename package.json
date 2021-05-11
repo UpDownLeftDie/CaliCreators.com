@@ -1,7 +1,10 @@
 {
   "name": "cali-creators",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "build": "next build",
     "dev": "cross-env NODE_ENV=development next dev",
