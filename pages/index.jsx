@@ -253,11 +253,6 @@ const Home = () => {
       upcomingMeetupEvents.events,
       upcomingGuildedEvents.events
     );
-    console.log({
-      upcomingTwitchEvents: upcomingTwitchEvents.loading,
-      upcomingMeetupEvents: upcomingMeetupEvents.loading,
-      upcomingGuildedEvents: upcomingGuildedEvents.loading,
-    });
     const loading =
       upcomingTwitchEvents.loading ||
       upcomingMeetupEvents.loading ||
