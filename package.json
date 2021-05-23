@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=14.17.0"
   },
   "author": {
     "name" : "Jared Kotoff",
@@ -13,7 +13,7 @@
   "scripts": {
     "build": "next build",
     "dev": "cross-env NODE_ENV=development next dev",
-    "export": "yarn run build && next export -o build/ && touch build/.nojekyll && touch build/CNAME && echo calicreators.com>> docs/CNAME",
+    "export": "yarn run build && next export -o build/ && touch build/.nojekyll && touch build/CNAME && echo calicreators.com>> build/CNAME",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
