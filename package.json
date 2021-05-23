@@ -5,10 +5,15 @@
   "engines": {
     "node": ">=16.0.0"
   },
+  "author": {
+    "name" : "Jared Kotoff",
+    "email" : "jared@updownleftdie.com",
+    "url" : "https://www.updownleftdie.com/"
+  },
   "scripts": {
     "build": "next build",
     "dev": "cross-env NODE_ENV=development next dev",
-    "export": "rm -rf .next docs && npm run build && next export -o docs/ && touch docs/.nojekyll && touch docs/CNAME && echo calicreators.com>> docs/CNAME",
+    "export": "yarn run build && next export -o build/ && touch build/.nojekyll && touch build/CNAME && echo calicreators.com>> docs/CNAME",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
