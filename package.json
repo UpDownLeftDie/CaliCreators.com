@@ -6,9 +6,9 @@
     "node": ">=14.17.0"
   },
   "author": {
-    "name" : "Jared Kotoff",
-    "email" : "jared@updownleftdie.com",
-    "url" : "https://www.updownleftdie.com/"
+    "name": "Jared Kotoff",
+    "email": "jared@updownleftdie.com",
+    "url": "https://www.updownleftdie.com/"
   },
   "scripts": {
     "build": "next build",
@@ -21,7 +21,7 @@
   "dependencies": {
     "isomorphic-unfetch": "^3.1.0",
     "moment": "^2.29.1",
-    "next": "10.2.0",
+    "next": "10.2.3",
     "prop-types": "^15.7.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -29,21 +29,22 @@
   },
   "devDependencies": {
     "@ijsto/eslint-config": "^4.1.6",
-    "@types/node": "^15.0.2",
-    "@types/react": "^17.0.5",
+    "@types/gtag.js": "^0.0.4",
+    "@types/node": "^15.6.1",
+    "@types/react": "^17.0.8",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
-    "eslint": "^7.26.0",
+    "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-html": "^6.1.2",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^6.0.0",
     "prettier": "^2.3.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.2"
   }
 }
