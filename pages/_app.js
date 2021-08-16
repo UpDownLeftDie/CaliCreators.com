@@ -4,7 +4,7 @@ import App from 'next/app';
 import Router from 'next/router';
 import Head from 'next/head';
 
-import * as gtag from '../lib/gtag';
+import * as gtag from '../lib/gtag.ts';
 
 Router.events.on('routeChangeComplete', (url) => gtag.pageview(url));
 
