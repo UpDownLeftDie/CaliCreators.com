@@ -1,4 +1,4 @@
-import { string, number, bool, shape } from 'prop-types';
+import { string, number, bool, shape, node } from 'prop-types';
 import ProgressBar from './progress-bar';
 import Card from './card';
 import ExtraLifeMemberButtons from './extralife-member-buttons';
@@ -25,6 +25,21 @@ const LinkWrapper = ({ children, links, streamIsLive, twitchUsername }) => {
     );
   }
   return children;
+};
+
+LinkWrapper.defaultProps = {
+  links: {},
+  streamIsLive: false,
+  twitchUsername: '',
+};
+
+LinkWrapper.propTypes = {
+  children: node.isRequired,
+  links: shape({
+    page: string,
+  }),
+  streamIsLive: bool,
+  twitchUsername: string,
 };
 
 const TeamMemberCard = ({

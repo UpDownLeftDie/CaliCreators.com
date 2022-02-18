@@ -10,20 +10,18 @@ const siteUrls = {
 };
 
 const SocialIcons = ({ links, groupName }) => {
-  const icons = Object.entries(links).map((link) => {
-    return (
-      <a
-        href={`${siteUrls[link[0]]}/${link[1]}`}
-        key={link[0]}
-        aria-label={`${groupName}'s ${link[0]}`}
-        title={link[0].charAt(0).toUpperCase() + link[0].slice(1)}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <i className={`fab fa-${link[0]}`} />
-      </a>
-    );
-  });
+  const icons = Object.entries(links).map((link) => (
+    <a
+      href={`${siteUrls[link[0]]}/${link[1]}`}
+      key={link[0]}
+      aria-label={`${groupName}'s ${link[0]}`}
+      title={link[0].charAt(0).toUpperCase() + link[0].slice(1)}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <i className={`fab fa-${link[0]}`} />
+    </a>
+  ));
   return (
     <div className="socialicons">
       {icons}
@@ -64,7 +62,7 @@ SocialIcons.propTypes = {
     instagram: string,
     discord: string,
     twitch: string,
-    guilded: string
+    guilded: string,
   }).isRequired,
   groupName: string.isRequired,
 };

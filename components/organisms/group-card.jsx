@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import { arrayOf, bool, number, shape, string } from 'prop-types';
+import { bool, number, shape, string } from 'prop-types';
 import moment from 'moment';
 import SocialIcons from '../molecules/social-icons';
 import LoadingIcon from '../atoms/loading-icon';

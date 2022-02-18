@@ -1,48 +1,46 @@
 import { bool, string, shape } from 'prop-types';
 
-const getButton = (link, text) => {
-  return (
-    <a
-      href={link}
-      className={`memberButton ${text}`}
-      target="_blank"
-      rel="noreferrer"
-    >
-      {text}
-      <style jsx>
-        {`
-          .memberButton {
-            width: 100%;
-            height: 100%;
-            padding: 5px;
-            border-radius: 8px;
-            box-sizing: border-box;
-            min-height: 40px;
-            place-items: center;
-            font-weight: bold;
-            display: grid;
-            background: #26c2eb;
-            color: #ffffff;
-            text-decoration: none !important;
-          }
-          .Twitch {
-            background: #772ce8;
-          }
-          .Twitch:hover,
-          .Twitch:focus {
-            background: #541da5;
-          }
-          .Donate {
-            background: #7fd836;
-          }
-          .Donate:hover {
-            background: #47b200;
-          }
-        `}
-      </style>
-    </a>
-  );
-};
+const getButton = (link, text) => (
+  <a
+    href={link}
+    className={`memberButton ${text}`}
+    target="_blank"
+    rel="noreferrer"
+  >
+    {text}
+    <style jsx>
+      {`
+        .memberButton {
+          width: 100%;
+          height: 100%;
+          padding: 5px;
+          border-radius: 8px;
+          box-sizing: border-box;
+          min-height: 40px;
+          place-items: center;
+          font-weight: bold;
+          display: grid;
+          background: #26c2eb;
+          color: #ffffff;
+          text-decoration: none !important;
+        }
+        .Twitch {
+          background: #772ce8;
+        }
+        .Twitch:hover,
+        .Twitch:focus {
+          background: #541da5;
+        }
+        .Donate {
+          background: #7fd836;
+        }
+        .Donate:hover {
+          background: #47b200;
+        }
+      `}
+    </style>
+  </a>
+);
 
 const getTwitchButton = (link) => getButton(link, 'Twitch');
 const getDonateButton = (link) => getButton(link, 'Donate');

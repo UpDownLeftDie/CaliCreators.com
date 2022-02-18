@@ -6,12 +6,11 @@ const StreamerSchedule = ({ schedule, teamMembers }) => {
   if (!schedule) return null;
   const streams = schedule.reduce((acc, stream) => {
     const teamMember =
-      teamMembers.find((member) => {
-        return (
+      teamMembers.find(
+        (member) =>
           stream.streamer.trim().toLowerCase() ===
           member?.twitchUsername?.toLowerCase()
-        );
-      }) || {};
+      ) || {};
     const { timeStart, timeEnd, streamer } = stream;
     const {
       twitchUsername,

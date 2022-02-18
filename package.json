@@ -16,7 +16,7 @@
     "export": "yarn run build && next export -o build/ && touch build/.nojekyll && touch build/CNAME && echo calicreators.com>> build/CNAME",
     "start": "next start",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint \"{,!(node_modules)/**/}*.{js,jsx}\" --fix"
   },
   "dependencies": {
     "isomorphic-unfetch": "^3.1.0",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@ijsto/eslint-config": "^4.1.6",
+    "@next/eslint-plugin-next": "^12.1.0",
     "@types/gtag.js": "^0.0.7",
     "@types/node": "^16.6.1",
     "@types/react": "^17.0.18",
