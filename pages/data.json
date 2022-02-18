@@ -21,7 +21,6 @@
             "links": {
                 "twitter": "OCStreamers",
                 "guilded": "3E0GJaZp",
-                "discord": "a5SUFUK",
                 "instagram": "ocstreamers"
             },
             "charity": {
@@ -39,10 +38,6 @@
                 "twitch": "twitch_sandiego",
                 "twitter": "TwitchSanDiego",
                 "discord": "twitchsandiego"
-            },
-            "charity": {
-                "url": "/sd/extralife",
-                "image": "/extralife-icon.png"
             }
         }
     }
