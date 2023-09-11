@@ -1,4 +1,3 @@
-import React from 'react';
 import Head from 'next/head';
 import { bool, number, shape, string } from 'prop-types';
 import moment from 'moment';
@@ -7,7 +6,7 @@ import LoadingIcon from '../atoms/loading-icon';
 import Ribbon from '../atoms/ribbon';
 import CharityBanner from '../molecules/charity-banner';
 
-const GroupCard = ({ group, loading, totalCards, position }) => {
+function GroupCard({ group, loading, totalCards, position }) {
   const isFirst = !loading && position === 1;
   const isLast = !loading && position === totalCards;
   let backgroundImage = '';
@@ -260,7 +259,7 @@ const GroupCard = ({ group, loading, totalCards, position }) => {
       </span>
     </>
   );
-};
+}
 
 GroupCard.propTypes = {
   loading: bool.isRequired,

@@ -1,19 +1,17 @@
-/* eslint-disable react/no-unstable-nested-components */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import Link from 'next/link';
 import { string, shape } from 'prop-types';
 
-const CharityBanner = ({ charity }) => {
+function CharityBanner({ charity }) {
   const { url, image } = charity;
   if (!url) return null;
   const isInternalLink = !url.toLowerCase().startsWith('http');
 
   // eslint-disable-next-line react/prop-types
-  let WrapperLink = ({ children }) => <>{children}</>;
-
-  if (isInternalLink) {
-    // eslint-disable-next-line react/prop-types
-    WrapperLink = ({ children }) => <Link href={url}>{children}</Link>;
+  function WrapperLink({ children }) {
+    if (isInternalLink) {
+      return <Link href={url}>{children}</Link>;
+    }
+    return children;
   }
 
   return (
@@ -66,7 +64,7 @@ const CharityBanner = ({ charity }) => {
       </style>
     </>
   );
-};
+}
 
 CharityBanner.propTypes = {
   charity: shape({

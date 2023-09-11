@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { bool } from 'prop-types';
 
-const CollapseArrow = ({ isCollapsed }) => {
+function CollapseArrow({ isCollapsed }) {
   const initialDeg = 0;
   const rotatedDeg = -90;
   const [deg, setDeg] = useState(initialDeg);
@@ -26,7 +26,7 @@ const CollapseArrow = ({ isCollapsed }) => {
         {
           duration: 300,
           easing: 'linear',
-        }
+        },
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,7 +43,7 @@ const CollapseArrow = ({ isCollapsed }) => {
       </style>
     </span>
   );
-};
+}
 
 CollapseArrow.defaultProps = {
   isCollapsed: false,

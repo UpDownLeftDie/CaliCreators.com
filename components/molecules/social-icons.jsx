@@ -1,4 +1,3 @@
-import React from 'react';
 import { shape, string } from 'prop-types';
 
 const siteUrls = {
@@ -8,7 +7,7 @@ const siteUrls = {
   instagram: 'https://www.instagram.com',
 };
 
-const SocialIcons = ({ links, groupName }) => {
+function SocialIcons({ links, groupName }) {
   const icons = Object.entries(links).map((link) => (
     <a
       href={`${siteUrls[link[0]]}/${link[1]}`}
@@ -16,7 +15,8 @@ const SocialIcons = ({ links, groupName }) => {
       aria-label={`${groupName}'s ${link[0]}`}
       title={link[0].charAt(0).toUpperCase() + link[0].slice(1)}
       target="_blank"
-      rel="noopener noreferrer">
+      rel="noopener noreferrer"
+    >
       <i className={`fab fa-${link[0]}`} />
     </a>
   ));
@@ -52,7 +52,7 @@ const SocialIcons = ({ links, groupName }) => {
       </style>
     </div>
   );
-};
+}
 
 SocialIcons.propTypes = {
   links: shape({

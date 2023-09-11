@@ -3,13 +3,16 @@
     "browser": true,
     "es2021": true
   },
+  "plugins": ["react", "@typescript-eslint", "eslint-plugin-prettier"],
   "extends": [
-    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
     "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
-    "airbnb",
-    "eslint-config-prettier",
-    "plugin:@next/next/recommended"
+    "plugin:@next/next/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "eslint-config-prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -19,20 +22,35 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react", "eslint-plugin-prettier"],
+  "root": true,
   "rules": {
-    "react/react-in-jsx-scope": "off",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": "error",
     "prettier/prettier": [
       "error",
       {
         "endOfLine": "lf",
         "singleQuote": true,
-        "bracketSameLine": false
+        "bracketSameLine": false,
+        "trailingComma": "all"
+      }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "react/no-unknown-property": [
+      2,
+      {
+        "ignore": ["jsx", "global"]
       }
     ]
   },
   "globals": {
     "React": "writable",
     "prop-types": "writable"
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
   }
 }

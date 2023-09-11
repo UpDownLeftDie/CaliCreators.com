@@ -1,11 +1,10 @@
-import React from 'react';
 import { string, bool, shape, number } from 'prop-types';
 import Card from './card';
 import ExtraLifeMemberButtons from './extralife-member-buttons';
 import ProgressBar from './progress-bar';
 import useElementSize from '../../src/hooks';
 
-const StreamCard = ({
+function StreamCard({
   avatarImageURL,
   fundraisingGoal,
   links,
@@ -15,7 +14,7 @@ const StreamCard = ({
   timeEnd,
   timeStart,
   twitchUsername,
-}) => {
+}) {
   const windowSize = useElementSize(window);
   const breakPoint = 600;
   const pastBreakPoint = windowSize.width < breakPoint;
@@ -159,7 +158,7 @@ const StreamCard = ({
       </style>
     </div>
   );
-};
+}
 
 StreamCard.defaultProps = {
   streamIsLive: false,

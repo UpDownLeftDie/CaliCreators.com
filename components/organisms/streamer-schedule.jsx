@@ -2,14 +2,14 @@ import { arrayOf, number, shape, string } from 'prop-types';
 import StreamCard from '../atoms/stream-card';
 import checkIfEventIsLive from '../../src/utils';
 
-const StreamerSchedule = ({ schedule, teamMembers }) => {
+function StreamerSchedule({ schedule, teamMembers }) {
   if (!schedule) return null;
   const streams = schedule.reduce((acc, stream) => {
     const teamMember =
       teamMembers.find(
         (member) =>
           stream.streamer.trim().toLowerCase() ===
-          member?.twitchUsername?.toLowerCase()
+          member?.twitchUsername?.toLowerCase(),
       ) || {};
     const { timeStart, timeEnd, streamer } = stream;
     const {
@@ -34,7 +34,7 @@ const StreamerSchedule = ({ schedule, teamMembers }) => {
           sumDonations,
           fundraisingGoal,
         }}
-      />
+      />,
     );
     return acc;
   }, []);
@@ -55,7 +55,7 @@ const StreamerSchedule = ({ schedule, teamMembers }) => {
       </style>
     </div>
   );
-};
+}
 
 StreamerSchedule.propTypes = {
   schedule: arrayOf(
@@ -64,7 +64,7 @@ StreamerSchedule.propTypes = {
       twitter: string,
       timeStart: string.isRequired,
       timeEnd: string.isRequired,
-    })
+    }),
   ).isRequired,
   teamMembers: arrayOf(
     shape({
@@ -77,7 +77,7 @@ StreamerSchedule.propTypes = {
         donate: string,
         stream: string,
       }),
-    })
+    }),
   ).isRequired,
 };
 

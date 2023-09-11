@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import fetch from 'isomorphic-unfetch';
 import moment from 'moment';
 import GroupCard from '../components/organisms/group-card';
 
-const data = require('./data.json');
+import data from './data.json';
 
 const meetupUrlIds = [];
 const twitchUrlIds = [];
 Object.values(data.groups).forEach((group) => {
   const url = new URL(group.url);
   const urlPaths = url.pathname.split('/');
-  const cid = url.searchParams.get('cid');
+  // const cid = url.searchParams.get('cid');
   switch (true) {
     case group.url.indexOf('meetups.twitch.tv') > -1:
       // Not needed at the moment
@@ -84,7 +84,7 @@ async function getUpcomingMeetupEvents() {
   return convertMeetupToTwitch(meetupResJsons);
 }
 
-const Home = () => {
+function Home() {
   const [upcomingTwitchEvents, setTwitchEvents] = useState({
     events: [],
     loading: true,
@@ -283,6 +283,6 @@ const Home = () => {
       </style>
     </>
   );
-};
+}
 
 export default Home;

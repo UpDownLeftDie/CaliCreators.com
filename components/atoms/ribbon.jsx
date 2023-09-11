@@ -1,6 +1,6 @@
 import { string, bool } from 'prop-types';
 
-const Ribbon = ({ text, color, leftSide }) => {
+function Ribbon({ text, color, leftSide }) {
   const leftOrRight = leftSide ? 'left' : 'right';
   return (
     <>
@@ -21,7 +21,7 @@ const Ribbon = ({ text, color, leftSide }) => {
       </style>
     </>
   );
-};
+}
 
 Ribbon.defaultProps = {
   color: '#ec0000',

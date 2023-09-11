@@ -45,7 +45,7 @@ const getButton = (link, text) => (
 const getTwitchButton = (link) => getButton(link, 'Twitch');
 const getDonateButton = (link) => getButton(link, 'Donate');
 
-const ExtraLifeMemberButtons = ({ links, streamIsLive, columnLayout }) => {
+function ExtraLifeMemberButtons({ links, streamIsLive, columnLayout }) {
   if (!links?.donate && !links?.stream) return null;
   const donateButton = links?.donate ? getDonateButton(links.donate) : null;
   let twitchButton = null;
@@ -80,7 +80,7 @@ const ExtraLifeMemberButtons = ({ links, streamIsLive, columnLayout }) => {
       </style>
     </div>
   );
-};
+}
 
 ExtraLifeMemberButtons.defaultProps = {
   links: {},

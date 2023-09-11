@@ -1,7 +1,7 @@
 import { arrayOf, shape, string, number, bool } from 'prop-types';
 import TeamMemberCard from '../atoms/team-member-card';
 
-const TeamMemberCards = ({ teamMembers }) => {
+function TeamMemberCards({ teamMembers }) {
   const cards =
     teamMembers.map((teamMember) => {
       const {
@@ -44,7 +44,7 @@ const TeamMemberCards = ({ teamMembers }) => {
       </style>
     </div>
   );
-};
+}
 
 TeamMemberCards.propTypes = {
   teamMembers: arrayOf(
@@ -61,7 +61,7 @@ TeamMemberCards.propTypes = {
       streamIsLive: bool,
       sumDonations: number,
       twitchUsername: string,
-    })
+    }),
   ).isRequired,
 };
 

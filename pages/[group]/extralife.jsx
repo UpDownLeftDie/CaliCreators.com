@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -17,7 +16,8 @@ import SocialIcons from '../../components/molecules/social-icons';
 import TwitchEmbed from '../../components/molecules/TwitchEmbed';
 import TweetButton from '../../components/molecules/TweetButton';
 
-const data = require('./data.json');
+import data from './data.json';
+import groupsData from '../data.json';
 
 const EXTRA_LIFE_ORG = 'https://www.extra-life.org';
 const API_BASE = `${EXTRA_LIFE_ORG}/api`;
@@ -27,7 +27,7 @@ function sortSchedule(schedule) {
     .filter((stream) => new Date() < new Date(stream.timeEnd))
     .sort(
       (a, b) =>
-        new Date(a.timeStart).getTime() - new Date(b.timeStart).getTime()
+        new Date(a.timeStart).getTime() - new Date(b.timeStart).getTime(),
     );
 }
 
@@ -64,7 +64,7 @@ function sortParticipants(participants) {
     });
 }
 
-const ExtraLifeTeam = ({ name, groupInfo }) => {
+function ExtraLifeTeam({ name, groupInfo }) {
   const router = useRouter();
   const { group } = router.query;
   const groupData = data[group];
@@ -100,7 +100,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
     async function fetchTeamMembers() {
       try {
         const res = await fetch(
-          `${API_BASE}/teams/${groupData.id}/participants`
+          `${API_BASE}/teams/${groupData.id}/participants`,
         );
         if (res.status < 200 || res.status > 299) return [];
         const fetchedTeamMembers = await res.json();
@@ -152,11 +152,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
   const pageUrl = `${url}${router.asPath}`;
   const head = (
     <Head>
-      <script
-        async
-        src="https://platform.twitter.com/widgets.js"
-        charSet="utf-8"
-      />
+      <script async src="https://platform.twitter.com/widgets.js" />
       <title key="title">{siteTitle}</title>
       <meta property="og:title" key="og:title" content={siteTitle} />
       <meta
@@ -178,7 +174,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
       <meta property="og:image:width" key="og:image:width" content="255" />
       <meta property="og:image:height" key="og:image:height" content="255" />
       <link rel="preconnect" href={EXTRA_LIFE_ORG} />
-      <script src="https://embed.twitch.tv/embed/v1.js" />
+      <script src="https://embed.twitch.tv/embed/v1.js" async />
     </Head>
   );
 
@@ -206,7 +202,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
     const twentyFourHours = new Date(scheduleTimeRange.start - 24 * hours);
     isEventLive = checkIfEventIsLive(
       scheduleTimeRange.start,
-      scheduleTimeRange.end
+      scheduleTimeRange.end,
     );
     promoteSchedule = isEventLive || Date.now() > twentyFourHours;
   }
@@ -220,11 +216,11 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
   };
   const startDate = scheduleTimeRange?.start?.toLocaleDateString(
     undefined,
-    options
+    options,
   );
   const endDate = scheduleTimeRange?.end?.toLocaleDateString(
     undefined,
-    options
+    options,
   );
   const scheduleContent = () => {
     const rangeText = `${startDate} to ${endDate}`;
@@ -415,7 +411,7 @@ const ExtraLifeTeam = ({ name, groupInfo }) => {
       </div>
     </>
   );
-};
+}
 
 export default ExtraLifeTeam;
 
@@ -443,8 +439,7 @@ export async function getStaticProps({ params }) {
     oc: { name: 'OC Streamers' },
     sd: { name: 'Twitch San Diego' },
   };
-  // eslint-disable-next-line global-require
-  const groupsData = require('../data.json');
+
   const groupKey = params.group;
 
   return {

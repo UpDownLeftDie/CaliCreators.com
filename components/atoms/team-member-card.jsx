@@ -3,7 +3,7 @@ import ProgressBar from './progress-bar';
 import Card from './card';
 import ExtraLifeMemberButtons from './extralife-member-buttons';
 
-const LinkWrapper = ({ children, links, streamIsLive, twitchUsername }) => {
+function LinkWrapper({ children, links, streamIsLive, twitchUsername }) {
   if (links?.page) {
     let href = links.page;
     if (streamIsLive && twitchUsername) {
@@ -25,7 +25,7 @@ const LinkWrapper = ({ children, links, streamIsLive, twitchUsername }) => {
     );
   }
   return children;
-};
+}
 
 LinkWrapper.defaultProps = {
   links: {},
@@ -42,7 +42,7 @@ LinkWrapper.propTypes = {
   twitchUsername: string,
 };
 
-const TeamMemberCard = ({
+function TeamMemberCard({
   avatarImageURL,
   displayName,
   fundraisingGoal,
@@ -51,7 +51,7 @@ const TeamMemberCard = ({
   streamIsLive,
   twitchUsername,
   sumDonations,
-}) => {
+}) {
   let ribbon = {};
   if (isTeamCaptain) {
     ribbon = {
@@ -117,7 +117,7 @@ const TeamMemberCard = ({
       </>
     </Card>
   );
-};
+}
 
 TeamMemberCard.defaultProps = {
   isTeamCaptain: false,

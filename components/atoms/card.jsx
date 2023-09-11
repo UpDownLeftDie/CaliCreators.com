@@ -1,16 +1,15 @@
-import React from 'react';
 import { string, bool, shape, element } from 'prop-types';
 import LoadingIcon from './loading-icon';
 import Ribbon from './ribbon';
 
-const Card = ({
+function Card({
   children,
   loading,
   backgroundImage,
   ribbon,
   isGlowing,
   isPulsing,
-}) => {
+}) {
   const bgImgStr = backgroundImage
     ? `background-img: url(${backgroundImage});`
     : '';
@@ -159,7 +158,7 @@ const Card = ({
       </style>
     </span>
   );
-};
+}
 
 Card.defaultProps = {
   loading: false,

@@ -1,7 +1,7 @@
 import { number, string, bool } from 'prop-types';
 import { useRef, useEffect } from 'react';
 
-const ProgressBar = ({
+function ProgressBar({
   progress,
   goal,
   height,
@@ -13,7 +13,7 @@ const ProgressBar = ({
   displayPercent,
   width,
   loading,
-}) => {
+}) {
   const percent = Number(((progress / goal) * 100).toFixed(1)) || 0;
   const isLoading = loading || progress === null || goal === null;
   const showProgressText = progressText || progressText === '';
@@ -151,7 +151,7 @@ const ProgressBar = ({
       </style>
     </div>
   );
-};
+}
 
 ProgressBar.defaultProps = {
   progress: null,

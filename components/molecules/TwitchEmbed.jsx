@@ -2,18 +2,14 @@ import { arrayOf, string } from 'prop-types';
 import { TwitchEmbed as ReactTwitchEmbed } from 'react-twitch-embed';
 import TweetButton from './TweetButton';
 
-const TwitchEmbed = ({ twitchUsername, twitter, groupTwitter, hashtags }) => {
+function TwitchEmbed({ twitchUsername, twitter, groupTwitter, hashtags }) {
   const twitterUsername = twitter ? `@${twitter}` : twitchUsername;
   const tweetText = `I'm watching ${twitterUsername} stream for Extra Life raising money for charity! Come and support!`;
   const tweetUrl = `https://twitch.tv/${twitchUsername}`;
   const viaAccount = groupTwitter;
   return (
     <div className="twitchWrapper">
-      <script
-        async
-        src="https://platform.twitter.com/widgets.js"
-        charSet="utf-8"
-      />
+      <script async src="https://platform.twitter.com/widgets.js" />
       <h2>LIVE NOW:</h2>
       {'  '}
       <h3>
@@ -67,7 +63,7 @@ const TwitchEmbed = ({ twitchUsername, twitter, groupTwitter, hashtags }) => {
       </style>
     </div>
   );
-};
+}
 
 TwitchEmbed.defaultProps = {
   twitter: null,

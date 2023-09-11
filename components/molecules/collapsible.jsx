@@ -2,7 +2,7 @@ import { useRef, useState, useLayoutEffect } from 'react';
 import { element, bool } from 'prop-types';
 import useElementSize from '../../src/hooks';
 
-const Collapsible = ({ children, isCollapsed }) => {
+function Collapsible({ children, isCollapsed }) {
   const collapseRef = useRef();
   const measureRef = useRef();
   const [height, setHeight] = useState('auto');
@@ -40,7 +40,7 @@ const Collapsible = ({ children, isCollapsed }) => {
       </style>
     </div>
   );
-};
+}
 
 Collapsible.propTypes = {
   children: element.isRequired,
