@@ -1,4 +1,4 @@
-import { bool, string, shape } from 'prop-types';
+import { bool, string, shape } from "prop-types";
 
 const getButton = (link, text) => (
   <a
@@ -42,8 +42,8 @@ const getButton = (link, text) => (
   </a>
 );
 
-const getTwitchButton = (link) => getButton(link, 'Twitch');
-const getDonateButton = (link) => getButton(link, 'Donate');
+const getTwitchButton = (link) => getButton(link, "Twitch");
+const getDonateButton = (link) => getButton(link, "Donate");
 
 function ExtraLifeMemberButtons({ links, streamIsLive, columnLayout }) {
   if (!links?.donate && !links?.stream) return null;
@@ -56,7 +56,7 @@ function ExtraLifeMemberButtons({ links, streamIsLive, columnLayout }) {
     }
   }
   return (
-    <div className={`buttonContainer ${columnLayout ? 'column' : ''}`}>
+    <div className={`buttonContainer ${columnLayout ? "column" : ""}`}>
       {twitchButton}
       {donateButton}
       <style jsx>

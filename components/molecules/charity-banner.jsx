@@ -1,30 +1,28 @@
-import Link from 'next/link';
-import { string, shape } from 'prop-types';
+import Link from "next/link";
+import { string, shape } from "prop-types";
 
 function CharityBanner({ charity }) {
   const { url, image } = charity;
   if (!url) return null;
-  const isInternalLink = !url.toLowerCase().startsWith('http');
+  const isInternalLink = !url.toLowerCase().startsWith("http");
 
   // eslint-disable-next-line react/prop-types
   function WrapperLink({ children }) {
     if (isInternalLink) {
       return <Link href={url}>{children}</Link>;
     }
-    return children;
+    return (
+      <a href={url} target="_blank" rel="noreferrer">
+        {children}
+      </a>
+    );
   }
 
   return (
     <>
       <WrapperLink>
-        <a
-          href={isInternalLink ? null : url}
-          target={isInternalLink ? null : '_blank'}
-          rel="noreferrer"
-        >
-          <img src={image} alt="Extra Life" />
-          <span>Extra Life Team</span>
-        </a>
+        <img src={image} alt="Extra Life" />
+        <span>Extra Life Team</span>
       </WrapperLink>
       <style jsx>
         {`
@@ -38,7 +36,9 @@ function CharityBanner({ charity }) {
             color: #1d5b7d;
             cursor: pointer;
             border-radius: 20px 20px 0 0;
-            transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
+            transition:
+              all 150ms,
+              transform 150ms cubic-bezier(0, 0, 0.2, 1);
             text-decoration: none;
           }
           a:hover {

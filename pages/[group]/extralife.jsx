@@ -1,25 +1,25 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import Link from 'next/link';
-import fetch from 'isomorphic-unfetch';
-import { string, shape } from 'prop-types';
-import TeamMemberCards from '../../components/molecules/team-member-cards';
-import Header from '../../components/atoms/header';
-import LoadingIcon from '../../components/atoms/loading-icon';
-import ProgressBar from '../../components/atoms/progress-bar';
-import StreamerSchedule from '../../components/organisms/streamer-schedule';
-import Collapsible from '../../components/molecules/collapsible';
-import CollapseArrow from '../../components/atoms/collapse-arrow';
-import checkIfEventIsLive from '../../src/utils';
-import SocialIcons from '../../components/molecules/social-icons';
-import TwitchEmbed from '../../components/molecules/TwitchEmbed';
-import TweetButton from '../../components/molecules/TweetButton';
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Head from "next/head";
+import Link from "next/link";
+import fetch from "isomorphic-unfetch";
+import { string, shape } from "prop-types";
+import TeamMemberCards from "../../components/molecules/team-member-cards";
+import Header from "../../components/atoms/header";
+import LoadingIcon from "../../components/atoms/loading-icon";
+import ProgressBar from "../../components/atoms/progress-bar";
+import StreamerSchedule from "../../components/organisms/streamer-schedule";
+import Collapsible from "../../components/molecules/collapsible";
+import CollapseArrow from "../../components/atoms/collapse-arrow";
+import checkIfEventIsLive from "../../src/utils";
+import SocialIcons from "../../components/molecules/social-icons";
+import TwitchEmbed from "../../components/molecules/TwitchEmbed";
+import TweetButton from "../../components/molecules/TweetButton";
 
-import data from './data.json';
-import groupsData from '../data.json';
+import data from "./data.json";
+import groupsData from "../data.json";
 
-const EXTRA_LIFE_ORG = 'https://www.extra-life.org';
+const EXTRA_LIFE_ORG = "https://www.extra-life.org";
 const API_BASE = `${EXTRA_LIFE_ORG}/api`;
 
 function sortSchedule(schedule) {
@@ -93,7 +93,7 @@ function ExtraLifeTeam({ name, groupInfo }) {
         const fetchedTeam = await res.json();
         return fetchedTeam;
       } catch (err) {
-        console.log('Error fetching team');
+        console.log("Error fetching team");
         return {};
       }
     }
@@ -106,13 +106,13 @@ function ExtraLifeTeam({ name, groupInfo }) {
         const fetchedTeamMembers = await res.json();
         return fetchedTeamMembers;
       } catch (err) {
-        console.log('Error fetching fetchTeamMembers');
+        console.log("Error fetching fetchTeamMembers");
         return [];
       }
     }
     async function getData() {
       const storageKey = `${group}-extralife`;
-      const cachedData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+      const cachedData = JSON.parse(localStorage.getItem(storageKey) || "{}");
       const fiveMinsAgo = new Date(Date.now() - 5 * 60000);
       const updatedAt = cachedData?.updatedAt;
       let teamData = cachedData.team;
@@ -148,7 +148,7 @@ function ExtraLifeTeam({ name, groupInfo }) {
 
   const siteTitle = `${teamName} Extra Life Team | Cali Creators`;
   const description = `${teamName} Extra Life Team Page. We're raising money to help our local children's hospital!`;
-  const url = 'https://calicreators.com';
+  const url = "https://calicreators.com";
   const pageUrl = `${url}${router.asPath}`;
   const head = (
     <Head>
@@ -208,11 +208,11 @@ function ExtraLifeTeam({ name, groupInfo }) {
   }
 
   const options = {
-    hour: 'numeric',
-    minute: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    timeZoneName: 'short',
+    hour: "numeric",
+    minute: "numeric",
+    month: "numeric",
+    day: "numeric",
+    timeZoneName: "short",
   };
   const startDate = scheduleTimeRange?.start?.toLocaleDateString(
     undefined,
@@ -224,14 +224,14 @@ function ExtraLifeTeam({ name, groupInfo }) {
   );
   const scheduleContent = () => {
     const rangeText = `${startDate} to ${endDate}`;
-    let cssClass = 'upcoming';
+    let cssClass = "upcoming";
     let title = `Upcoming Schedule - ${rangeText} `;
     let twitchEmbed = null;
     let shareButton = null;
     if (promoteSchedule) {
       if (isEventLive) {
-        cssClass = 'live';
-        title = 'Live Schedule ';
+        cssClass = "live";
+        title = "Live Schedule ";
         twitchEmbed = (
           <TwitchEmbed
             twitchUsername={schedule[0].streamer}
@@ -369,7 +369,7 @@ function ExtraLifeTeam({ name, groupInfo }) {
       <div className="page">
         <Header title={teamName} />
         <h2 className="subheader">Extra Life Team</h2>
-        <div style={{ width: '200px' }}>
+        <div style={{ width: "200px" }}>
           <SocialIcons groupName={groupInfo.name} links={groupInfo.links} />
         </div>
         <Link href="/">
@@ -429,15 +429,15 @@ ExtraLifeTeam.propTypes = {
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { group: 'oc' } }, { params: { group: 'sd' } }],
+    paths: [{ params: { group: "oc" } }, { params: { group: "sd" } }],
     fallback: false,
   };
 }
 
 export async function getStaticProps({ params }) {
   const groups = {
-    oc: { name: 'OC Streamers' },
-    sd: { name: 'Twitch San Diego' },
+    oc: { name: "OC Streamers" },
+    sd: { name: "Twitch San Diego" },
   };
 
   const groupKey = params.group;

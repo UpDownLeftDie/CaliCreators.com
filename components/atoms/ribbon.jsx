@@ -1,7 +1,7 @@
-import { string, bool } from 'prop-types';
+import { string, bool } from "prop-types";
 
 function Ribbon({ text, color, leftSide }) {
-  const leftOrRight = leftSide ? 'left' : 'right';
+  const leftOrRight = leftSide ? "left" : "right";
   return (
     <>
       <div>{text}</div>
@@ -9,7 +9,7 @@ function Ribbon({ text, color, leftSide }) {
         {`
           background: ${color};
           filter: drop-shadow(0px 5px 3px rgba(0, 0, 0, 0.6));
-          transform: rotate(${leftSide ? '-' : ''}45deg);
+          transform: rotate(${leftSide ? "-" : ""}45deg);
           position: absolute;
           z-index: 1;
           ${leftOrRight}: -31px;
@@ -24,7 +24,7 @@ function Ribbon({ text, color, leftSide }) {
 }
 
 Ribbon.defaultProps = {
-  color: '#ec0000',
+  color: "#ec0000",
   leftSide: false,
 };
 

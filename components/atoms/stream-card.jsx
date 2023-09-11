@@ -1,8 +1,8 @@
-import { string, bool, shape, number } from 'prop-types';
-import Card from './card';
-import ExtraLifeMemberButtons from './extralife-member-buttons';
-import ProgressBar from './progress-bar';
-import useElementSize from '../../src/hooks';
+import { string, bool, shape, number } from "prop-types";
+import Card from "./card";
+import ExtraLifeMemberButtons from "./extralife-member-buttons";
+import ProgressBar from "./progress-bar";
+import useElementSize from "../../src/hooks";
 
 function StreamCard({
   avatarImageURL,
@@ -19,11 +19,11 @@ function StreamCard({
   const breakPoint = 600;
   const pastBreakPoint = windowSize.width < breakPoint;
   const options = {
-    hour: 'numeric',
-    minute: 'numeric',
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
+    hour: "numeric",
+    minute: "numeric",
+    weekday: "short",
+    month: "short",
+    day: "numeric",
   };
   let startDate = null;
   let endDate = null;
@@ -38,12 +38,12 @@ function StreamCard({
     if (pastBreakPoint) {
       ribbon = {
         ...ribbon,
-        text: 'Live now!',
+        text: "Live now!",
       };
     }
   }
   return (
-    <div className={`cardWrapper${streamIsLive ? ' isLive' : ''}`}>
+    <div className={`cardWrapper${streamIsLive ? " isLive" : ""}`}>
       <Card isPulsing={streamIsLive} ribbon={ribbon}>
         <div className="streamCard">
           <a
@@ -164,7 +164,7 @@ StreamCard.defaultProps = {
   streamIsLive: false,
   sumDonations: 0,
   avatarImageURL:
-    'https://assets.donordrive.com/clients/extralife/img/avatar-constituent-default.gif',
+    "https://assets.donordrive.com/clients/extralife/img/avatar-constituent-default.gif",
   fundraisingGoal: 0,
   links: {},
 };

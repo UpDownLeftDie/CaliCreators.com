@@ -2,8 +2,8 @@
 // Event handlers like onClick can't be added to this file
 
 // ./pages/_document.js
-import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { GA_TRACKING_ID } from '../lib/gtag.ts';
+import Document, { Html, Head, Main, NextScript } from "next/document";
+import { GA_TRACKING_ID } from "../lib/gtag.ts";
 
 class MyDocument extends Document {
   render() {

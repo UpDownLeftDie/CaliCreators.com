@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/jsx-filename-extension */
-import App from 'next/app';
-import Router from 'next/router';
-import Head from 'next/head';
+import App from "next/app";
+import Router from "next/router";
+import Head from "next/head";
 
-import * as gtag from '../lib/gtag.ts';
+import * as gtag from "../lib/gtag.ts";
 
-Router.events.on('routeChangeComplete', (url) => gtag.pageview(url));
+Router.events.on("routeChangeComplete", (url) => gtag.pageview(url));
 
-const url = 'https://calicreators.com';
+const url = "https://calicreators.com";
 
 class MyApp extends App {
   render() {
@@ -61,13 +61,18 @@ class MyApp extends App {
               body {
                 background-color: #7230d3;
                 color: #fff;
-                font-family: 'Kanit', sans-serif, Avenir Next, Avenir, Helvetica,
+                font-family:
+                  "Kanit",
+                  sans-serif,
+                  Avenir Next,
+                  Avenir,
+                  Helvetica,
                   sans-serif;
               }
               .container::before {
-                content: '';
+                content: "";
                 z-index: -999;
-                background-image: url('/funky-lines.png');
+                background-image: url("/funky-lines.png");
                 background-size: 700px;
                 filter: blur(2px);
                 position: fixed;

@@ -1,4 +1,4 @@
-import { arrayOf, string } from 'prop-types';
+import { arrayOf, string } from "prop-types";
 
 function TweetButton({ url, hashtags, viaAccount, text }) {
   return (

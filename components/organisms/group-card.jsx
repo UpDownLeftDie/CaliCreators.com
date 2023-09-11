@@ -1,21 +1,21 @@
-import Head from 'next/head';
-import { bool, number, shape, string } from 'prop-types';
-import moment from 'moment';
-import SocialIcons from '../molecules/social-icons';
-import LoadingIcon from '../atoms/loading-icon';
-import Ribbon from '../atoms/ribbon';
-import CharityBanner from '../molecules/charity-banner';
+import Head from "next/head";
+import { bool, number, shape, string } from "prop-types";
+import moment from "moment";
+import SocialIcons from "../molecules/social-icons";
+import LoadingIcon from "../atoms/loading-icon";
+import Ribbon from "../atoms/ribbon";
+import CharityBanner from "../molecules/charity-banner";
 
 function GroupCard({ group, loading, totalCards, position }) {
   const isFirst = !loading && position === 1;
   const isLast = !loading && position === totalCards;
-  let backgroundImage = '';
+  let backgroundImage = "";
   let socialIcons = null;
   let startsInSevenDays = null;
   let nextEvent = {
-    title: 'TBA',
-    date: 'Click here for updates',
-    url: loading ? '#' : group.url,
+    title: "TBA",
+    date: "Click here for updates",
+    url: loading ? "#" : group.url,
   };
 
   if (!loading) {
@@ -29,14 +29,14 @@ function GroupCard({ group, loading, totalCards, position }) {
     if (Object.keys(group.nextEvent).length) {
       const { url, title } = group.nextEvent;
       const startDate = group.nextEvent.start_date;
-      const sevenDays = moment().add(8, 'days');
+      const sevenDays = moment().add(8, "days");
       startsInSevenDays = moment(startDate).isBefore(sevenDays);
 
       nextEvent = {
         ...nextEvent,
         title,
-        date: moment(startDate).format('MMM Do YYYY'),
-        url: loading ? '#' : url,
+        date: moment(startDate).format("MMM Do YYYY"),
+        url: loading ? "#" : url,
       };
     }
   }
@@ -123,11 +123,11 @@ function GroupCard({ group, loading, totalCards, position }) {
     return null;
   };
 
-  let firstLastClass = '';
+  let firstLastClass = "";
   if (isFirst) {
-    firstLastClass = 'first-card';
+    firstLastClass = "first-card";
   } else if (isLast) {
-    firstLastClass = 'last-card';
+    firstLastClass = "last-card";
   }
   return (
     <>
@@ -137,7 +137,7 @@ function GroupCard({ group, loading, totalCards, position }) {
       <span className={`card-container ${firstLastClass}`}>
         {charityBanner}
         <a href={nextEvent.url} name={group.name}>
-          <div className={`card ${startsInSevenDays ? 'glow' : ''}`}>
+          <div className={`card ${startsInSevenDays ? "glow" : ""}`}>
             {renderRibbon(startsInSevenDays)}
             {cardInfo}
             <span className="cardBackground" />
@@ -173,7 +173,9 @@ function GroupCard({ group, loading, totalCards, position }) {
               color: #fff;
               text-align: left;
               text-decoration: none;
-              transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
+              transition:
+                all 150ms,
+                transform 150ms cubic-bezier(0, 0, 0.2, 1);
               filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.4))
                 drop-shadow(0 -4px 3px rgba(0, 0, 0, 0.3));
               border-radius: 20px;
@@ -192,7 +194,7 @@ function GroupCard({ group, loading, totalCards, position }) {
               }
             }
             .card::after {
-              content: '';
+              content: "";
               border-radius: 20px;
               position: absolute;
               z-index: -1;
@@ -203,7 +205,9 @@ function GroupCard({ group, loading, totalCards, position }) {
               filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.3))
                 drop-shadow(0 0px 6px rgba(0, 0, 0, 0.2));
               opacity: 0;
-              transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
+              transition:
+                all 150ms,
+                transform 150ms cubic-bezier(0, 0, 0.2, 1);
             }
             .card:hover {
               transform: scale(1.06);
@@ -213,7 +217,7 @@ function GroupCard({ group, loading, totalCards, position }) {
               opacity: 1;
             }
             .cardBackground {
-              background: ${loading ? '#3d2769' : '#555'};
+              background: ${loading ? "#3d2769" : "#555"};
               ${backgroundImage}
               background-size: cover;
               background-position: center;
@@ -226,7 +230,7 @@ function GroupCard({ group, loading, totalCards, position }) {
               top: 0;
             }
             .cardBackground:before {
-              content: '';
+              content: "";
               position: absolute;
               height: 100%;
               width: 100%;

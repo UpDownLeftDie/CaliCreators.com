@@ -1,23 +1,26 @@
-import { useState, useEffect } from 'react';
-import Head from 'next/head';
-import fetch from 'isomorphic-unfetch';
-import moment from 'moment';
-import GroupCard from '../components/organisms/group-card';
+import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
+import Head from "next/head";
+import fetch from "isomorphic-unfetch";
+import moment from "moment";
+const GroupCard = dynamic(() => import("../components/organisms/group-card"), {
+  ssr: false,
+});
 
-import data from './data.json';
+import data from "./data.json";
 
 const meetupUrlIds = [];
 const twitchUrlIds = [];
 Object.values(data.groups).forEach((group) => {
   const url = new URL(group.url);
-  const urlPaths = url.pathname.split('/');
+  const urlPaths = url.pathname.split("/");
   // const cid = url.searchParams.get('cid');
   switch (true) {
-    case group.url.indexOf('meetups.twitch.tv') > -1:
+    case group.url.indexOf("meetups.twitch.tv") > -1:
       // Not needed at the moment
       if (urlPaths.length > 1) twitchUrlIds.push(urlPaths[1]);
       break;
-    case group.url.indexOf('meetups.com') > -1:
+    case group.url.indexOf("meetups.com") > -1:
       if (urlPaths.length > 1) meetupUrlIds.push(urlPaths[1]);
       break;
     default:
@@ -25,13 +28,13 @@ Object.values(data.groups).forEach((group) => {
   }
 });
 
-const siteTitle = 'Cali Creators MeetUps';
+const siteTitle = "Cali Creators MeetUps";
 const description =
   "We're the meetup groups for Twitch, Facebook, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
 
 function convertMeetupToTwitch(meetup) {
   const meetupList = meetup.map((event) => {
-    const city = event.group.localized_location.split(',')[0];
+    const city = event.group.localized_location.split(",")[0];
     const startDate = moment
       .utc(event.time)
       .utcOffset(event.utc_offset / 3600000)
@@ -97,7 +100,7 @@ function Home() {
   const fiveMinsBefore = (date) => new Date(date - 5 * 60000);
 
   useEffect(() => {
-    const cachedData = JSON.parse(localStorage.getItem('twitchEvents') || '{}');
+    const cachedData = JSON.parse(localStorage.getItem("twitchEvents") || "{}");
     if (cachedData?.updatedAt) {
       const fiveMinsAgo = fiveMinsBefore(Date.now());
       if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
@@ -107,7 +110,7 @@ function Home() {
     }
     getUpcomingTwitchEvents().then((twitchEvents) => {
       localStorage.setItem(
-        'twitchEvents',
+        "twitchEvents",
         JSON.stringify({
           events: twitchEvents,
           updatedAt: Date.now(),
@@ -118,7 +121,7 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    const cachedData = JSON.parse(localStorage.getItem('meetupEvents') || '{}');
+    const cachedData = JSON.parse(localStorage.getItem("meetupEvents") || "{}");
     if (cachedData?.updatedAt) {
       const fiveMinsAgo = fiveMinsBefore(Date.now());
       if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
@@ -129,7 +132,7 @@ function Home() {
 
     getUpcomingMeetupEvents().then((meetupEvents) => {
       localStorage.setItem(
-        'meetupEvents',
+        "meetupEvents",
         JSON.stringify({
           events: meetupEvents,
           updatedAt: Date.now(),
@@ -139,8 +142,8 @@ function Home() {
     });
   }, []);
 
-  const findNextEvent = (groups, upcomingEvents) =>
-    groups.map((group) => {
+  const findNextEvent = (groups, upcomingEvents) => {
+    return groups.map((group) => {
       const nextEvent = upcomingEvents.find((event) => {
         if (event.chapter.city === group.city) return true;
         return false;
@@ -150,6 +153,7 @@ function Home() {
         nextEvent: nextEvent || {},
       };
     });
+  };
 
   const renderCards = () => {
     const upcomingEvents = upcomingTwitchEvents.events.concat(
@@ -186,12 +190,12 @@ function Home() {
         <meta
           property="og:description"
           key="og:description"
-          content={description.replace('<br/>', ' ')}
+          content={description.replace("<br/>", " ")}
         />
         <meta
           name="Description"
           key="description"
-          content={description.replace('<br/>', ' ')}
+          content={description.replace("<br/>", " ")}
         />
         <link
           rel="preconnect"
@@ -223,7 +227,7 @@ function Home() {
             min-height: 120px;
             line-height: 1.15;
             font-size: 48px;
-            font-family: 'Knewave', sans-serif;
+            font-family: "Knewave", sans-serif;
             animation: colorwipe 6s infinite;
             background: rgb(255, 255, 255);
             background: linear-gradient(
@@ -254,7 +258,7 @@ function Home() {
           .description {
             font-size: 22px;
             font-weight: 300;
-            font-family: 'Kanit', sans-serif;
+            font-family: "Kanit", sans-serif;
           }
           .row {
             max-width: 1000px;

@@ -1,6 +1,6 @@
-import { arrayOf, number, shape, string } from 'prop-types';
-import StreamCard from '../atoms/stream-card';
-import checkIfEventIsLive from '../../src/utils';
+import { arrayOf, number, shape, string } from "prop-types";
+import StreamCard from "../atoms/stream-card";
+import checkIfEventIsLive from "../../src/utils";
 
 function StreamerSchedule({ schedule, teamMembers }) {
   if (!schedule) return null;

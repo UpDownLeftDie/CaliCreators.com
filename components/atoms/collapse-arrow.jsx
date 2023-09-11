@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { bool } from 'prop-types';
+import { useEffect, useRef, useState } from "react";
+import { bool } from "prop-types";
 
 function CollapseArrow({ isCollapsed }) {
   const initialDeg = 0;
@@ -25,7 +25,7 @@ function CollapseArrow({ isCollapsed }) {
         ],
         {
           duration: 300,
-          easing: 'linear',
+          easing: "linear",
         },
       );
     }

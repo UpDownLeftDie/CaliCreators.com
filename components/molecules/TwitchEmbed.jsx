@@ -1,6 +1,6 @@
-import { arrayOf, string } from 'prop-types';
-import { TwitchEmbed as ReactTwitchEmbed } from 'react-twitch-embed';
-import TweetButton from './TweetButton';
+import { arrayOf, string } from "prop-types";
+import { TwitchEmbed as ReactTwitchEmbed } from "react-twitch-embed";
+import TweetButton from "./TweetButton";
 
 function TwitchEmbed({ twitchUsername, twitter, groupTwitter, hashtags }) {
   const twitterUsername = twitter ? `@${twitter}` : twitchUsername;
@@ -11,7 +11,7 @@ function TwitchEmbed({ twitchUsername, twitter, groupTwitter, hashtags }) {
     <div className="twitchWrapper">
       <script async src="https://platform.twitter.com/widgets.js" />
       <h2>LIVE NOW:</h2>
-      {'  '}
+      {"  "}
       <h3>
         <a
           href={`https://www.twitch.tv/${twitchUsername}`}

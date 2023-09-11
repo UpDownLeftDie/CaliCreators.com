@@ -1,11 +1,11 @@
-import { useRef, useState, useLayoutEffect } from 'react';
-import { element, bool } from 'prop-types';
-import useElementSize from '../../src/hooks';
+import { useRef, useState, useLayoutEffect } from "react";
+import { element, bool } from "prop-types";
+import useElementSize from "../../src/hooks";
 
 function Collapsible({ children, isCollapsed }) {
   const collapseRef = useRef();
   const measureRef = useRef();
-  const [height, setHeight] = useState('auto');
+  const [height, setHeight] = useState("auto");
   const windowSize = useElementSize(window);
 
   useLayoutEffect(() => {
@@ -20,7 +20,7 @@ function Collapsible({ children, isCollapsed }) {
   return (
     <div
       ref={collapseRef}
-      className={`collapsible ${isCollapsed ? 'collapsed' : ''}`}
+      className={`collapsible ${isCollapsed ? "collapsed" : ""}`}
     >
       <div ref={measureRef} className="measure">
         {children}

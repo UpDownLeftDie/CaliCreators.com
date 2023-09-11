@@ -1,7 +1,7 @@
-import { string, number, bool, shape, node } from 'prop-types';
-import ProgressBar from './progress-bar';
-import Card from './card';
-import ExtraLifeMemberButtons from './extralife-member-buttons';
+import { string, number, bool, shape, node } from "prop-types";
+import ProgressBar from "./progress-bar";
+import Card from "./card";
+import ExtraLifeMemberButtons from "./extralife-member-buttons";
 
 function LinkWrapper({ children, links, streamIsLive, twitchUsername }) {
   if (links?.page) {
@@ -30,7 +30,7 @@ function LinkWrapper({ children, links, streamIsLive, twitchUsername }) {
 LinkWrapper.defaultProps = {
   links: {},
   streamIsLive: false,
-  twitchUsername: '',
+  twitchUsername: "",
 };
 
 LinkWrapper.propTypes = {
@@ -56,15 +56,15 @@ function TeamMemberCard({
   if (isTeamCaptain) {
     ribbon = {
       ...ribbon,
-      text: 'Team Captain',
-      color: '#e0bd00',
+      text: "Team Captain",
+      color: "#e0bd00",
     };
   }
   if (streamIsLive) {
     ribbon = {
       ...ribbon,
       color: undefined,
-      text: 'Live now!',
+      text: "Live now!",
       leftSide: true,
     };
   }

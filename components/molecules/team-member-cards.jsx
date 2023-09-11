@@ -1,5 +1,5 @@
-import { arrayOf, shape, string, number, bool } from 'prop-types';
-import TeamMemberCard from '../atoms/team-member-card';
+import { arrayOf, shape, string, number, bool } from "prop-types";
+import TeamMemberCard from "../atoms/team-member-card";
 
 function TeamMemberCards({ teamMembers }) {
   const cards =

@@ -9,7 +9,7 @@
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
-    "plugin:@next/next/recommended",
+    "next/core-web-vitals",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "eslint-config-prettier"
@@ -30,7 +30,7 @@
       "error",
       {
         "endOfLine": "lf",
-        "singleQuote": true,
+        "singleQuote": false,
         "bracketSameLine": false,
         "trailingComma": "all"
       }

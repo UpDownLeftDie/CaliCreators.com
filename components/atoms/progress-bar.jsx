@@ -1,5 +1,5 @@
-import { number, string, bool } from 'prop-types';
-import { useRef, useEffect } from 'react';
+import { number, string, bool } from "prop-types";
+import { useRef, useEffect } from "react";
 
 function ProgressBar({
   progress,
@@ -16,15 +16,15 @@ function ProgressBar({
 }) {
   const percent = Number(((progress / goal) * 100).toFixed(1)) || 0;
   const isLoading = loading || progress === null || goal === null;
-  const showProgressText = progressText || progressText === '';
-  const showGoalText = goalText || goalText === '';
+  const showProgressText = progressText || progressText === "";
+  const showGoalText = goalText || goalText === "";
   let progressTextCombined = null;
   let goalTextCombined = null;
 
   const ref = useRef();
 
   useEffect(() => {
-    ref.current.animate([{ width: '0%' }, { width: `${percent}%` }], {
+    ref.current.animate([{ width: "0%" }, { width: `${percent}%` }], {
       duration: 1500,
     });
   }, [percent]);
@@ -57,7 +57,7 @@ function ProgressBar({
   if (isLoading) {
     if (showProgressText) progressTextCombined = <>&nbsp;</>;
     if (showGoalText) goalTextCombined = <>&nbsp;</>;
-    if (displayProgress) barProgressText = '??';
+    if (displayProgress) barProgressText = "??";
   }
   const text = (
     <>
@@ -66,14 +66,14 @@ function ProgressBar({
       <style jsx>
         {`
           .progressText {
-            position: ${inlineText ? 'absolute' : 'relative'};
+            position: ${inlineText ? "absolute" : "relative"};
             font-size: 1rem;
             margin-left: 10px;
             z-index: 1;
             justify-self: start;
           }
           .goalText {
-            position: ${inlineText ? 'absolute' : 'relative'};
+            position: ${inlineText ? "absolute" : "relative"};
             font-size: 1rem;
             margin-right: 10px;
             z-index: 1;
@@ -84,12 +84,12 @@ function ProgressBar({
     </>
   );
   return (
-    <div className={`wrapper ${inlineText ? 'inlineText' : ''}`}>
+    <div className={`wrapper ${inlineText ? "inlineText" : ""}`}>
       {inlineText ? null : text}
       <div className="progressBar">
         {inlineText ? text : null}
         {displayProgress && (
-          <span style={{ position: 'absolute' }}>{barProgressText}</span>
+          <span style={{ position: "absolute" }}>{barProgressText}</span>
         )}
         <div ref={ref} className="progress" />
       </div>
@@ -102,8 +102,8 @@ function ProgressBar({
             position: relative;
             display: grid;
             grid-template:
-              'a b'
-              'bar bar';
+              "a b"
+              "bar bar";
           }
           .wrapper.inlineText {
             display: block;

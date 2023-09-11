@@ -1,10 +1,10 @@
-import { shape, string } from 'prop-types';
+import { shape, string } from "prop-types";
 
 const siteUrls = {
-  twitter: 'https://www.twitter.com',
-  twitch: 'https://www.twitch.tv',
-  discord: 'https://discord.gg',
-  instagram: 'https://www.instagram.com',
+  twitter: "https://www.twitter.com",
+  twitch: "https://www.twitch.tv",
+  discord: "https://discord.gg",
+  instagram: "https://www.instagram.com",
 };
 
 function SocialIcons({ links, groupName }) {

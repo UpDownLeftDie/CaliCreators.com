@@ -1,8 +1,8 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 const links = [
-  { href: 'https://zeit.co/now', label: 'ZEIT' },
-  { href: 'https://github.com/zeit/next.js', label: 'GitHub' },
+  { href: "https://zeit.co/now", label: "ZEIT" },
+  { href: "https://github.com/zeit/next.js", label: "GitHub" },
 ].map((link) => {
   const newLink = { ...link };
   newLink.key = `nav-link-${link.href}-${link.label}`;

@@ -23,6 +23,7 @@
       },
       "charity": {
         "internalPage": false,
+        "url": "",
         "image": "/extralife-icon.png"
       }
     },

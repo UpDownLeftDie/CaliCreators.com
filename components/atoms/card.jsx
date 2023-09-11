@@ -1,6 +1,6 @@
-import { string, bool, shape, element } from 'prop-types';
-import LoadingIcon from './loading-icon';
-import Ribbon from './ribbon';
+import { string, bool, shape, element } from "prop-types";
+import LoadingIcon from "./loading-icon";
+import Ribbon from "./ribbon";
 
 function Card({
   children,
@@ -12,7 +12,7 @@ function Card({
 }) {
   const bgImgStr = backgroundImage
     ? `background-img: url(${backgroundImage});`
-    : '';
+    : "";
   const cardInfo = loading ? (
     <>
       <span className="loadingIcon">
@@ -38,11 +38,11 @@ function Card({
     if (text) return <Ribbon text={text} color={color} leftSide={leftSide} />;
     return null;
   };
-  let className = 'card';
+  let className = "card";
   if (isGlowing) {
-    className += ' glow';
+    className += " glow";
   } else if (isPulsing) {
-    className += ' pulse';
+    className += " pulse";
   }
   return (
     <span className={className}>
@@ -135,7 +135,7 @@ function Card({
             opacity: 1;
           }
           .cardBackground {
-            background: ${loading ? '#444' : '#fff'};
+            background: ${loading ? "#444" : "#fff"};
             ${bgImgStr}
             background-size: cover;
             background-position: center;
@@ -162,7 +162,7 @@ function Card({
 
 Card.defaultProps = {
   loading: false,
-  backgroundImage: '',
+  backgroundImage: "",
   ribbon: {},
   isGlowing: false,
   isPulsing: false,
