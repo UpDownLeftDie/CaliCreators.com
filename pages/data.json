@@ -22,9 +22,9 @@
         "discord": "a5SUFUK"
       },
       "charity": {
-        "internalPage": false,
+        "internalPage": true,
         "url": "",
-        "image": "/extralife-icon.png"
+        "image": "extralife"
       }
     },
     "sd": {

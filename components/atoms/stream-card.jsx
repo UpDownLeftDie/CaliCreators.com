@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { string, bool, shape, number } from "prop-types";
 import Card from "./card";
 import ExtraLifeMemberButtons from "./extralife-member-buttons";
@@ -51,7 +52,7 @@ function StreamCard({
             rel="noreferrer"
             href={`https://www.twitch.tv/${twitchUsername}`}
           >
-            <img
+            <Image
               className="streamerAvatar"
               src={avatarImageURL}
               alt={`${streamer}'s profile`}

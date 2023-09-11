@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { string, number, bool, shape, node } from "prop-types";
 import ProgressBar from "./progress-bar";
 import Card from "./card";
@@ -78,7 +79,7 @@ function TeamMemberCard({
             streamIsLive={streamIsLive}
             twitchUsername={twitchUsername}
           >
-            <img src={avatarImageURL} alt={`${displayName}'s profile`} />
+            <Image src={avatarImageURL} alt={`${displayName}'s profile`} />
             <div className="name">{displayName}</div>
             <ProgressBar
               progress={sumDonations || 0}

@@ -13,7 +13,6 @@
   "scripts": {
     "build": "next build",
     "dev": "cross-env NODE_ENV=development next dev",
-    "export": "yarn build && touch build/.nojekyll && touch build/CNAME && echo calicreators.com>> build/CNAME",
     "start": "yarn build && next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix"
@@ -47,6 +46,7 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "husky": "7.0.4",
     "prettier": "3.0.3",
+    "sharp": "^0.32.5",
     "typescript": "5.2.2"
   }
 }
