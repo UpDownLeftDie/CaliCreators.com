@@ -4,7 +4,6 @@ import { shape, string } from 'prop-types';
 const siteUrls = {
   twitter: 'https://www.twitter.com',
   twitch: 'https://www.twitch.tv',
-  guilded: 'http://guilded.gg/i',
   discord: 'https://discord.gg',
   instagram: 'https://www.instagram.com',
 };
@@ -17,8 +16,7 @@ const SocialIcons = ({ links, groupName }) => {
       aria-label={`${groupName}'s ${link[0]}`}
       title={link[0].charAt(0).toUpperCase() + link[0].slice(1)}
       target="_blank"
-      rel="noopener noreferrer"
-    >
+      rel="noopener noreferrer">
       <i className={`fab fa-${link[0]}`} />
     </a>
   ));
@@ -62,7 +60,6 @@ SocialIcons.propTypes = {
     instagram: string,
     discord: string,
     twitch: string,
-    guilded: string,
   }).isRequired,
   groupName: string.isRequired,
 };

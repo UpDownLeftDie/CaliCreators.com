@@ -7,7 +7,6 @@ import GroupCard from '../components/organisms/group-card';
 const data = require('./data.json');
 
 const meetupUrlIds = [];
-const guildedUrlObjs = [];
 const twitchUrlIds = [];
 Object.values(data.groups).forEach((group) => {
   const url = new URL(group.url);
@@ -20,19 +19,6 @@ Object.values(data.groups).forEach((group) => {
       break;
     case group.url.indexOf('meetups.com') > -1:
       if (urlPaths.length > 1) meetupUrlIds.push(urlPaths[1]);
-      break;
-    case group.url.indexOf('guilded.gg') > -1:
-      if (
-        cid &&
-        url.searchParams.get('intent') === 'event' &&
-        group.guildedURLKey
-      ) {
-        guildedUrlObjs.push({
-          city: group.city,
-          guildedUrl: group.guildedURLKey,
-          cid,
-        });
-      }
       break;
     default:
       break;
@@ -63,37 +49,10 @@ function convertMeetupToTwitch(meetup) {
   return meetupList;
 }
 
-function convertGuildedToTwitch(guildedGroupsEvents) {
-  const guildedList = guildedGroupsEvents.reduce((acc, guildedGroup) => {
-    const events = guildedGroup.events.map((event) => {
-      const startDate = moment
-        .utc(event.happensAt)
-        // .utcOffset(event.utc_offset / 3600000)
-        .format();
-      const group = Object.entries(data.groups).find(
-        ([, groupData]) =>
-          groupData.city.toLowerCase() === event.city.toLowerCase()
-      )[1];
-      const guildedUrl = group?.guildedURLKey;
-      return {
-        chapter: {
-          city: event.city,
-        },
-        url: `https://www.guilded.gg/${guildedUrl}/groups/${event.groupId}/channels/${event.channelId}/calendar/${event.eventId}`,
-        start_date: startDate,
-        title: event.name,
-      };
-    });
-    return acc.concat(events);
-  }, []);
-
-  return guildedList;
-}
-
 async function getUpcomingTwitchEvents() {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
   const twitchReq = await fetch(
-    `https://meetups.twitch.tv/api/search/?result_types=upcoming_event&country_code=Earth${cacheBuster}`
+    `https://meetups.twitch.tv/api/search/?result_types=upcoming_event&country_code=Earth${cacheBuster}`,
   ).catch((err) => {
     console.log(err);
   });
@@ -105,39 +64,6 @@ async function getUpcomingTwitchEvents() {
   }
 
   return [];
-}
-
-async function getUpcomingGuildedEvents() {
-  if (guildedUrlObjs.length < 1) return [];
-
-  const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
-  const startDate = encodeURIComponent(
-    new Date(Date.now() - 24 * 60 * 60000).toISOString()
-  ); // 1 day ago
-  const endDate = encodeURIComponent(
-    new Date(Date.now() + 6 * 30 * 24 * 60 * 60000).toISOString()
-  ); // 6 months from now
-
-  const guildedReqs = guildedUrlObjs.map(async (guildedUrlObj) => {
-    const guildedUrl = `https://www.guilded.gg/api/channels/${guildedUrlObj.cid}/events?endDate=${endDate}&maxItems=250&startDate=${startDate}${cacheBuster}`;
-    // const meetupUrlProxy = `https://lym20nhb8j.execute-api.us-west-2.amazonaws.com/dev?url=${meetupUrl}`;
-    const res = await fetch(guildedUrl);
-    const json = await res.json();
-    if (json?.events?.length > 0) {
-      json.events = json.events.map((event) => {
-        const eventWithCity = event;
-        eventWithCity.city = guildedUrlObj.city;
-        return eventWithCity;
-      });
-    }
-
-    return json;
-  });
-  const guildedResponses = await Promise.all(guildedReqs).catch((err) => {
-    console.log(err);
-  });
-
-  return convertGuildedToTwitch(guildedResponses);
 }
 
 async function getUpcomingMeetupEvents() {
@@ -167,10 +93,6 @@ const Home = () => {
     events: [],
     loading: true,
   });
-  const [upcomingGuildedEvents, setGuildedEvents] = useState({
-    events: [],
-    loading: true,
-  });
 
   const fiveMinsBefore = (date) => new Date(date - 5 * 60000);
 
@@ -189,7 +111,7 @@ const Home = () => {
         JSON.stringify({
           events: twitchEvents,
           updatedAt: Date.now(),
-        })
+        }),
       );
       setTwitchEvents({ events: twitchEvents, loading: false });
     });
@@ -211,33 +133,9 @@ const Home = () => {
         JSON.stringify({
           events: meetupEvents,
           updatedAt: Date.now(),
-        })
+        }),
       );
       setMeetupEvents({ events: meetupEvents, loading: false });
-    });
-  }, []);
-
-  useEffect(() => {
-    const cachedData = JSON.parse(
-      localStorage.getItem('guildedEvents') || '{}'
-    );
-    if (cachedData?.updatedAt) {
-      const fiveMinsAgo = fiveMinsBefore(Date.now());
-      if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
-        setGuildedEvents({ events: cachedData.events, loading: false });
-        return;
-      }
-    }
-
-    getUpcomingGuildedEvents().then((guildedEvents) => {
-      localStorage.setItem(
-        'guildedEvents',
-        JSON.stringify({
-          events: guildedEvents,
-          updatedAt: Date.now(),
-        })
-      );
-      setGuildedEvents({ events: guildedEvents, loading: false });
     });
   }, []);
 
@@ -256,15 +154,12 @@ const Home = () => {
   const renderCards = () => {
     const upcomingEvents = upcomingTwitchEvents.events.concat(
       upcomingMeetupEvents.events,
-      upcomingGuildedEvents.events
     );
     const loading =
-      upcomingTwitchEvents.loading ||
-      upcomingMeetupEvents.loading ||
-      upcomingGuildedEvents.loading;
+      upcomingTwitchEvents.loading || upcomingMeetupEvents.loading;
     const groupsWithEvents = findNextEvent(
       Object.values(data.groups),
-      upcomingEvents
+      upcomingEvents,
     ).sort((a, b) => {
       if (!a.nextEvent.start_date) return 1;
       if (!b.nextEvent.start_date) return -1;
@@ -303,7 +198,6 @@ const Home = () => {
           href="https://lym20nhb8j.execute-api.us-west-2.amazonaws.com"
         />
         <link rel="preconnect" href="https://meetups.twitch.tv" />
-        <link rel="preconnect" href="https://www.guilded.gg" />
       </Head>
       <div className="hero">
         <span className="title-wrapper">

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=14.17.0"
+    "node": ">=20.0.0"
   },
   "author": {
     "name": "Jared Kotoff",
@@ -11,41 +11,43 @@
     "url": "https://www.updownleftdie.com/"
   },
   "scripts": {
-    "build": "next build",
-    "dev": "cross-env NODE_ENV=development next dev",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider next build",
+    "dev": "cross-env NODE_ENV=development NODE_OPTIONS=--openssl-legacy-provider next dev",
     "export": "yarn run build && next export -o build/ && touch build/.nojekyll && touch build/CNAME && echo calicreators.com>> build/CNAME",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint \"{,!(node_modules)/**/}*.{js,jsx}\" --fix"
   },
   "dependencies": {
-    "isomorphic-unfetch": "^3.1.0",
-    "moment": "^2.29.4",
-    "next": "^11.1.4",
-    "prop-types": "^15.8.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-twitch-embed": "^3.0.1"
+    "isomorphic-unfetch": "3.1.0",
+    "moment": "2.29.4",
+    "next": "11.1.4",
+    "prop-types": "15.8.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-twitch-embed": "3.0.1"
   },
   "devDependencies": {
-    "@ijsto/eslint-config": "^4.5.21",
-    "@next/eslint-plugin-next": "^12.3.4",
-    "@types/gtag.js": "^0.0.13",
-    "@types/node": "^20.6.0",
-    "@types/react": "^17.0.65",
-    "babel-eslint": "^10.1.0",
-    "cross-env": "^7.0.3",
-    "eslint": "^8.49.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-html": "^7.1.0",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "husky": "^7.0.4",
-    "prettier": "^3.0.3",
-    "typescript": "^5.2.2"
+    "@next/eslint-plugin-next": "^13.4.19",
+    "@types/gtag.js": "0.0.13",
+    "@types/node": "20.6.0",
+    "@types/react": "18.0.1",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "babel-eslint": "10.1.0",
+    "cross-env": "7.0.3",
+    "eslint": "7.11.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-next": "^13.4.19",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-html": "7.1.0",
+    "eslint-plugin-import": "2.28.1",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-react": "7.33.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "husky": "7.0.4",
+    "prettier": "2.3.2",
+    "typescript": "5.2.2"
   }
 }

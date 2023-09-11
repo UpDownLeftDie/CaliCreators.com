@@ -4,13 +4,14 @@
     "es2021": true
   },
   "extends": [
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "@ijsto",
     "airbnb",
-    "prettier",
+    "eslint-config-prettier",
     "plugin:@next/next/recommended"
   ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -18,7 +19,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": ["@typescript-eslint", "react", "eslint-plugin-prettier"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "prettier/prettier": [

@@ -61,7 +61,7 @@ const GroupCard = ({ group, loading, totalCards, position }) => {
     </>
   );
   const charityBanner =
-    !loading && group?.charity ? (
+    !loading && group?.charity?.url ? (
       <CharityBanner charity={group.charity} />
     ) : null;
   if (!loading) {
@@ -282,7 +282,7 @@ GroupCard.propTypes = {
       title: string,
     }),
     charity: shape({
-      url: string.isRequired,
+      url: string,
       image: string.isRequired,
     }),
   }).isRequired,

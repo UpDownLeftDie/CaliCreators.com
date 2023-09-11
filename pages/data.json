@@ -1,44 +1,41 @@
 {
-    "groups": {
-        "la": {
-            "city": "Los Angeles",
-            "name": "Twitch LA",
-            "path": "la.jpg",
-            "url": "https://meetups.twitch.tv/los-angeles",
-            "links": {
-                "twitter": "TwitchLosAngele",
-                "guilded": "aE9ZGxD2",
-                "discord": "8E75rA5",
-                "instagram": "twitch_LA"
-            }
-        },
-        "oc": {
-            "city": "Anaheim",
-            "name": "OC Streamers",
-            "path": "oc.jpg",
-            "url": "https://www.guilded.gg/i/7pYx1BXk?cid=f25d19de-488e-4ec9-bcdb-ede1678879a1&intent=event",
-            "guildedURLKey": "OCStreamers",
-            "links": {
-                "twitter": "OCStreamers",
-                "guilded": "3E0GJaZp",
-                "instagram": "ocstreamers"
-            },
-            "charity": {
-                "internalPage": true,
-                "url": "/oc/extralife",
-                "image": "/extralife-icon.png"
-            }
-        },
-        "sd": {
-            "city": "San Diego",
-            "name": "Twitch SD",
-            "path": "sd.jpg",
-            "url": "https://meetups.twitch.tv/san-diego",
-            "links": {
-                "twitch": "twitch_sandiego",
-                "twitter": "TwitchSanDiego",
-                "discord": "twitchsandiego"
-            }
-        }
+  "groups": {
+    "la": {
+      "city": "Los Angeles",
+      "name": "Twitch LA",
+      "path": "la.jpg",
+      "url": "https://meetups.twitch.tv/los-angeles",
+      "links": {
+        "twitter": "TwitchLosAngele",
+        "discord": "8E75rA5",
+        "instagram": "twitch_LA"
+      }
+    },
+    "oc": {
+      "city": "Anaheim",
+      "name": "OC Streamers",
+      "path": "oc.jpg",
+      "url": "https://udld.rocks/ocdiscord",
+      "links": {
+        "twitter": "OCStreamers",
+        "instagram": "ocstreamers",
+        "discord": "a5SUFUK"
+      },
+      "charity": {
+        "internalPage": false,
+        "image": "/extralife-icon.png"
+      }
+    },
+    "sd": {
+      "city": "San Diego",
+      "name": "Twitch SD",
+      "path": "sd.jpg",
+      "url": "https://meetups.twitch.tv/san-diego",
+      "links": {
+        "twitch": "twitch_sandiego",
+        "twitter": "TwitchSanDiego",
+        "discord": "twitchsandiego"
+      }
     }
+  }
 }
