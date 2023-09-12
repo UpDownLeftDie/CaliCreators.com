@@ -40,7 +40,7 @@ class MyDocument extends Document {
           <script
             src="https://kit.fontawesome.com/d03f0d01ad.js"
             crossOrigin="anonymous"
-            async
+            defer
           />
           <link
             rel="apple-touch-icon"
