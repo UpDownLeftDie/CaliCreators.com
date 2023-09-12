@@ -3,7 +3,7 @@
     "la": {
       "city": "Los Angeles",
       "name": "Twitch LA",
-      "path": "la.jpg",
+      "imagePath": "la.jpg",
       "url": "https://meetups.twitch.tv/los-angeles",
       "links": {
         "twitter": "TwitchLosAngele",
@@ -14,7 +14,7 @@
     "oc": {
       "city": "Anaheim",
       "name": "OC Streamers",
-      "path": "oc.jpg",
+      "imagePath": "oc.jpg",
       "url": "https://udld.rocks/ocdiscord",
       "links": {
         "twitter": "OCStreamers",
@@ -24,13 +24,13 @@
       "charity": {
         "internalPage": true,
         "url": "",
-        "image": "extralife"
+        "imageKey": "extralife"
       }
     },
     "sd": {
       "city": "San Diego",
       "name": "Twitch SD",
-      "path": "sd.jpg",
+      "imagePath": "sd.jpg",
       "url": "https://meetups.twitch.tv/san-diego",
       "links": {
         "twitch": "twitch_sandiego",

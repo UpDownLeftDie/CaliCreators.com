@@ -1,8 +1,17 @@
 {
-  "prettier.prettierPath": "./node_modules/prettier",
+  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
   "cSpell.words": [
+    "fontawesome",
+    "fortawesome",
     "gtag",
     "ocstreamers",
     "pageview"
-  ]
+  ],
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "eslint.nodePath": ".yarn/sdks",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

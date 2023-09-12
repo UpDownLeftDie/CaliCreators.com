@@ -1,36 +1,44 @@
-import dynamic from "next/dynamic";
+import type { InferGetStaticPropsType, GetStaticProps } from "next";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import fetch from "isomorphic-unfetch";
 import moment from "moment";
+import data from "./data.json";
+
+import dynamic from "next/dynamic";
 const GroupCard = dynamic(() => import("../components/organisms/group-card"), {
   ssr: false,
 });
 
-import data from "./data.json";
-
-const meetupUrlIds = [];
-const twitchUrlIds = [];
-Object.values(data.groups).forEach((group) => {
-  const url = new URL(group.url);
-  const urlPaths = url.pathname.split("/");
-  // const cid = url.searchParams.get('cid');
-  switch (true) {
-    case group.url.indexOf("meetups.twitch.tv") > -1:
-      // Not needed at the moment
-      if (urlPaths.length > 1) twitchUrlIds.push(urlPaths[1]);
-      break;
-    case group.url.indexOf("meetups.com") > -1:
-      if (urlPaths.length > 1) meetupUrlIds.push(urlPaths[1]);
-      break;
-    default:
-      break;
-  }
-});
+type Groups = { [key: string]: Group };
+type Group = {
+  city: string;
+  name: string;
+  imagePath: string;
+  url: string;
+  links: {
+    twitter?: string;
+    instagram?: string;
+    discord?: string;
+    twitch?: string;
+  };
+  charity?: {
+    internalPage: boolean;
+    url: string;
+    imageKey: string;
+  };
+};
 
 const siteTitle = "Cali Creators MeetUps";
 const description =
   "We're the meetup groups for Twitch, Facebook, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
+
+export const getStaticProps = (async () => {
+  const groups: Groups = data?.groups || {};
+  return { props: { groups } };
+}) satisfies GetStaticProps<{
+  groups: Groups;
+}>;
 
 function convertMeetupToTwitch(meetup) {
   const meetupList = meetup.map((event) => {
@@ -54,26 +62,27 @@ function convertMeetupToTwitch(meetup) {
 
 async function getUpcomingTwitchEvents() {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
-  const twitchReq = await fetch(
+  const twitchRes = await fetch(
     `https://meetups.twitch.tv/api/search/?result_types=upcoming_event&country_code=Earth${cacheBuster}`,
   ).catch((err) => {
     console.log(err);
   });
 
-  const twitchJson = await twitchReq.json();
-
-  if (twitchJson) {
-    return twitchJson.results;
+  if (twitchRes) {
+    const twitchJson = await twitchRes.json();
+    if (twitchJson) {
+      return twitchJson.results;
+    }
   }
 
   return [];
 }
 
-async function getUpcomingMeetupEvents() {
+async function getUpcomingMeetupEvents(meetupUrlIds) {
   if (meetupUrlIds.length < 1) return [];
 
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
-  const meetupReqs = meetupUrlIds.map((meetupId) => {
+  const meetupReqs: [Promise<Response>] = meetupUrlIds.map((meetupId) => {
     const meetupUrl = `https://api.meetup.com/${meetupId}/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`;
     const meetupUrlProxy = `https://lym20nhb8j.execute-api.us-west-2.amazonaws.com/dev?url=${meetupUrl}`;
     return fetch(meetupUrlProxy);
@@ -83,11 +92,34 @@ async function getUpcomingMeetupEvents() {
     console.log(err);
   });
 
+  if (!responses) {
+    return [];
+  }
+
   const meetupResJsons = await Promise.all(responses.map((res) => res.json()));
   return convertMeetupToTwitch(meetupResJsons);
 }
 
-function Home() {
+function Home({ groups }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const meetupUrlIds = [];
+  const twitchUrlIds = [];
+  Object.values(groups).forEach((group) => {
+    const url = new URL(group.url);
+    const urlPaths = url.pathname.split("/");
+    // const cid = url.searchParams.get('cid');
+    switch (true) {
+      case group.url.indexOf("meetups.twitch.tv") > -1:
+        // Not needed at the moment
+        if (urlPaths.length > 1) twitchUrlIds.push(urlPaths[1]);
+        break;
+      case group.url.indexOf("meetups.com") > -1:
+        if (urlPaths.length > 1) meetupUrlIds.push(urlPaths[1]);
+        break;
+      default:
+        break;
+    }
+  });
+
   const [upcomingTwitchEvents, setTwitchEvents] = useState({
     events: [],
     loading: true,
@@ -130,7 +162,7 @@ function Home() {
       }
     }
 
-    getUpcomingMeetupEvents().then((meetupEvents) => {
+    getUpcomingMeetupEvents(meetupUrlIds).then((meetupEvents) => {
       localStorage.setItem(
         "meetupEvents",
         JSON.stringify({
@@ -140,6 +172,7 @@ function Home() {
       );
       setMeetupEvents({ events: meetupEvents, loading: false });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const findNextEvent = (groups, upcomingEvents) => {
@@ -162,13 +195,14 @@ function Home() {
     const loading =
       upcomingTwitchEvents.loading || upcomingMeetupEvents.loading;
     const groupsWithEvents = findNextEvent(
-      Object.values(data.groups),
+      Object.values(groups),
       upcomingEvents,
     ).sort((a, b) => {
       if (!a.nextEvent.start_date) return 1;
       if (!b.nextEvent.start_date) return -1;
       return (
-        new Date(a.nextEvent.start_date) - new Date(b.nextEvent.start_date)
+        new Date(a.nextEvent.start_date).getTime() -
+        new Date(b.nextEvent.start_date).getTime()
       );
     });
     return groupsWithEvents.map((groupWithEvent, i) => (

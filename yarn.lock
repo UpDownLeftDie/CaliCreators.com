@@ -337,7 +337,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:20.6.0":
+"@types/node@npm:^20.6.0":
   version: 20.6.0
   resolution: "@types/node@npm:20.6.0"
   checksum: 8244a0e8ceadbc7e44687b536cb98889002671d9e873127814206ef0a2b9d6190294df794bc3bc57e8c4987fbc6504b2b27b599193aca6acbed4a6a4f535230e
@@ -895,7 +895,7 @@ __metadata:
     "@fortawesome/react-fontawesome": "npm:latest"
     "@next/eslint-plugin-next": "npm:^13.4.19"
     "@types/gtag.js": "npm:0.0.13"
-    "@types/node": "npm:20.6.0"
+    "@types/node": "npm:^20.6.0"
     "@types/react": "npm:18.2.21"
     "@typescript-eslint/eslint-plugin": "npm:^6.7.0"
     "@typescript-eslint/parser": "npm:^6.7.0"
@@ -920,6 +920,7 @@ __metadata:
     react-twitch-embed: "npm:3.0.1"
     sharp: "npm:^0.32.5"
     typescript: "npm:5.2.2"
+    workbox-sw: "npm:^7.0.0"
   languageName: unknown
   linkType: soft
 
@@ -4597,6 +4598,13 @@ __metadata:
   dependencies:
     string-width: "npm:^1.0.2 || 2 || 3 || 4"
   checksum: d5f8027b9a8255a493a94e4ec1b74a27bff6679d5ffe29316a3215e4712945c84ef73ca4045c7e20ae7d0c72f5f57f296e04a4928e773d4276a2f1222e4c2e99
+  languageName: node
+  linkType: hard
+
+"workbox-sw@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "workbox-sw@npm:7.0.0"
+  checksum: 2b34da7efad8788e024bb22b25293459a9b0adc19fe185c3d155a4956f67ccdd35829a88b82436b4afe956a99c0ac934e5624a1469a762a53b522c2f32329d34
   languageName: node
   linkType: hard
 

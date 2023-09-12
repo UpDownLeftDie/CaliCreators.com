@@ -19,8 +19,8 @@ function GroupCard({ group, loading, totalCards, position }) {
   };
 
   if (!loading) {
-    if (group.path) {
-      backgroundImage = `background-image: url('/${group.path}');`;
+    if (group.imagePath) {
+      backgroundImage = `background-image: url('/${group.imagePath}');`;
     }
     if (group.links && group.name) {
       socialIcons = <SocialIcons links={group.links} groupName={group.name} />;
@@ -132,11 +132,11 @@ function GroupCard({ group, loading, totalCards, position }) {
   return (
     <>
       <Head>
-        <link rel="preload" href={group.path} as="image" />
+        <link rel="preload" href={group.imagePath} as="image" />
       </Head>
       <span className={`card-container ${firstLastClass}`}>
         {charityBanner}
-        <a href={nextEvent.url} name={group.name}>
+        <a href={nextEvent.url}>
           <div className={`card ${startsInSevenDays ? "glow" : ""}`}>
             {renderRibbon(startsInSevenDays)}
             {cardInfo}
@@ -271,7 +271,7 @@ GroupCard.propTypes = {
   position: number.isRequired,
   group: shape({
     url: string.isRequired,
-    path: string.isRequired,
+    imagePath: string.isRequired,
     links: shape({
       twitter: string.isRequired,
       discord: string,
@@ -285,8 +285,9 @@ GroupCard.propTypes = {
       title: string,
     }),
     charity: shape({
-      url: string,
-      image: string.isRequired,
+      internalPage: bool,
+      url: string.isRequired,
+      imageKey: string.isRequired,
     }),
   }).isRequired,
 };

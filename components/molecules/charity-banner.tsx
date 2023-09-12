@@ -1,13 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { string, shape } from "prop-types";
+import { string, shape, bool } from "prop-types";
 import extraLifeIcon from "../../public/extralife-icon.png";
 
 import styles from "./charity-banner.module.css";
 
 function CharityBanner({ charity }) {
   const { url } = charity;
-  const image = charity.image === "extralife" ? extraLifeIcon : charity.image;
+  const image =
+    charity.imageKey === "extralife" ? extraLifeIcon : charity.imageKey;
   if (!url) return null;
   const isInternalLink = !url.toLowerCase().startsWith("http");
 
@@ -41,7 +42,8 @@ function CharityBanner({ charity }) {
 
 CharityBanner.propTypes = {
   charity: shape({
-    image: string.isRequired,
+    internalPage: bool,
+    imageKey: string.isRequired,
     url: string.isRequired,
   }).isRequired,
 };
