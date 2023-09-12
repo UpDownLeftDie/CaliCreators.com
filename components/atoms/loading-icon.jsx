@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinnerThird } from "@fortawesome/pro-duotone-svg-icons";
+
 function LoadingIcon() {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => {
@@ -8,7 +11,7 @@ function LoadingIcon() {
 
   return (
     <>
-      <i aria-hidden className="fad fa-spinner-third fa-spin" />
+      <FontAwesomeIcon icon={faSpinnerThird} spin />
       <style jsx>
         {`
           .fad {

@@ -4,6 +4,10 @@ import App from "next/app";
 import Router from "next/router";
 import Head from "next/head";
 
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
+
 import * as gtag from "../lib/gtag.ts";
 
 Router.events.on("routeChangeComplete", (url) => gtag.pageview(url));

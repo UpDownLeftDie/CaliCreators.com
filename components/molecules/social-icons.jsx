@@ -1,4 +1,18 @@
 import { shape, string } from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faDiscord,
+  faTwitter,
+  faTwitch,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
+
+const brands = {
+  discord: faDiscord,
+  twitter: faTwitter,
+  twitch: faTwitch,
+  instagram: faInstagram,
+};
 
 const siteUrls = {
   twitter: "https://www.twitter.com",
@@ -17,7 +31,7 @@ function SocialIcons({ links, groupName }) {
       target="_blank"
       rel="noopener noreferrer"
     >
-      <i className={`fab fa-${link[0]}`} />
+      <FontAwesomeIcon icon={brands[link[0]]} />
     </a>
   ));
   return (

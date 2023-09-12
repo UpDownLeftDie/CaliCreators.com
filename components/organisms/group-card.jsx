@@ -173,9 +173,7 @@ function GroupCard({ group, loading, totalCards, position }) {
               color: #fff;
               text-align: left;
               text-decoration: none;
-              transition:
-                all 150ms,
-                transform 150ms cubic-bezier(0, 0, 0.2, 1);
+              transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
               filter: drop-shadow(0 5px 3px rgba(0, 0, 0, 0.4))
                 drop-shadow(0 -4px 3px rgba(0, 0, 0, 0.3));
               border-radius: 20px;
@@ -205,9 +203,7 @@ function GroupCard({ group, loading, totalCards, position }) {
               filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.3))
                 drop-shadow(0 0px 6px rgba(0, 0, 0, 0.2));
               opacity: 0;
-              transition:
-                all 150ms,
-                transform 150ms cubic-bezier(0, 0, 0.2, 1);
+              transition: all 150ms, transform 150ms cubic-bezier(0, 0, 0.2, 1);
             }
             .card:hover {
               transform: scale(1.06);

@@ -18,6 +18,11 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/pro-duotone-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "latest",
     "isomorphic-unfetch": "4.0.2",
     "moment": "2.29.4",
     "next": "^13.4.19",
@@ -33,7 +38,6 @@
     "@types/react": "18.2.21",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
-    "babel-eslint": "10.1.0",
     "cross-env": "7.0.3",
     "eslint": "8.49.0",
     "eslint-config-next": "^13.4.19",
@@ -43,8 +47,8 @@
     "eslint-plugin-jsx-a11y": "6.7.1",
     "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-react": "7.33.2",
-    "eslint-plugin-react-hooks": "4.6.0",
     "husky": "7.0.4",
+    "node-gyp": "^9.4.0",
     "prettier": "3.0.3",
     "sharp": "^0.32.5",
     "typescript": "5.2.2"
