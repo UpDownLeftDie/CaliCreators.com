@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { bool } from "prop-types";
 
-import {faAngleDown} from "@fortawesome/free-solid-svg-icons"
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 function CollapseArrow({ isCollapsed }) {
   const initialDeg = 0;
@@ -36,7 +37,7 @@ function CollapseArrow({ isCollapsed }) {
 
   return (
     <span ref={ref}>
-      <FontAwesomeIcon icon={faAngleDown} title="Collapse/Expand"  />
+      <FontAwesomeIcon icon={faAngleDown} title="Collapse/Expand" />
       <style jsx>
         {`
           display: inline-block;

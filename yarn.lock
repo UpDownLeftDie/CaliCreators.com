@@ -917,6 +917,7 @@ __metadata:
     prop-types: 15.8.1
     react: ^18.2.0
     react-dom: ^18.2.0
+    react-github-fork-ribbon: ^0.7.1
     react-twitch-embed: 3.0.1
     sharp: ^0.32.5
     typescript: 5.2.2
@@ -3643,6 +3644,15 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
+  languageName: node
+  linkType: hard
+
+"react-github-fork-ribbon@npm:^0.7.1":
+  version: 0.7.1
+  resolution: "react-github-fork-ribbon@npm:0.7.1"
+  peerDependencies:
+    react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 608b336bd229b774ea3d41b75c49d5ba89316308aca2fec439dc29fab2d987126d57ba960a9e09913dce6b32e82eb73fa196104b33734c45d8a74ccd69bc67b2
   languageName: node
   linkType: hard
 

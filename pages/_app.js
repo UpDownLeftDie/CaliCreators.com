@@ -1,12 +1,11 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/jsx-filename-extension */
 import App from "next/app";
 import Router from "next/router";
 import Head from "next/head";
+import GitHubForkRibbon from "react-github-fork-ribbon";
 
-import { config } from '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-config.autoAddCss = false
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
 
 import * as gtag from "../lib/gtag.ts";
 
@@ -41,6 +40,13 @@ class MyApp extends App {
           <meta property="og:locale" content="en_US" />
           <link rel="preconnect" href="https://stats.g.doubleclick.net" />
         </Head>
+        <GitHubForkRibbon
+          href="https://github.com/UpDownLeftDie/CaliCreators.com"
+          target="_blank"
+          position="right"
+        >
+          Contribute on GitHub!
+        </GitHubForkRibbon>
         <div className="container">
           <Component {...pageProps} />
           <div className="footer">
