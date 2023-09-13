@@ -1,18 +1,26 @@
 import Link from "next/link";
 import Image from "next/image";
-import { string, shape, bool } from "prop-types";
 import extraLifeIcon from "../../public/extralife-icon.png";
 
 import styles from "./charity-banner.module.css";
+import { ReactNode } from "react";
 
-function CharityBanner({ charity }) {
+type Props = {
+  charity: {
+    internalPage: boolean;
+    imageKey: string;
+    url: string;
+  };
+};
+
+function CharityBanner({ charity }: Props) {
   const { url } = charity;
   const image =
     charity.imageKey === "extralife" ? extraLifeIcon : charity.imageKey;
   if (!url) return null;
   const isInternalLink = !url.toLowerCase().startsWith("http");
 
-  function WrapperLink({ children }) {
+  function WrapperLink({ children }: { children: ReactNode }) {
     if (isInternalLink) {
       return (
         <Link href={url} className={styles.charityWrapper}>
@@ -39,13 +47,5 @@ function CharityBanner({ charity }) {
     </WrapperLink>
   );
 }
-
-CharityBanner.propTypes = {
-  charity: shape({
-    internalPage: bool,
-    imageKey: string.isRequired,
-    url: string.isRequired,
-  }).isRequired,
-};
 
 export default CharityBanner;

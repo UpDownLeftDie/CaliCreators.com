@@ -10,20 +10,31 @@
 
 # next.js
 /.next/
-*.hot-update.*
+/out/
 
 # production
 /build
-/docs
+/dist
 
 # misc
 .DS_Store
-.env*
+*.pem
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# local env files
+.env
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
 
 .pnp.*
 .yarn/*

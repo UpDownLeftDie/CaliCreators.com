@@ -1,17 +1,43 @@
 import Head from "next/head";
-import { bool, number, shape, string } from "prop-types";
 import moment from "moment";
 import SocialIcons from "../molecules/social-icons";
 import LoadingIcon from "../atoms/loading-icon";
 import Ribbon from "../atoms/ribbon";
 import CharityBanner from "../molecules/charity-banner";
 
-function GroupCard({ group, loading, totalCards, position }) {
+type Props = {
+  loading: boolean;
+  totalCards: number;
+  position: number;
+  group: {
+    url: string;
+    imagePath: string;
+    links: {
+      twitter?: string;
+      discord?: string;
+      instagram?: string;
+      twitch?: string;
+    };
+    name: string;
+    nextEvent?: {
+      url: string;
+      start_date: string;
+      title: string;
+    };
+    charity?: {
+      internalPage: boolean;
+      url: string;
+      imageKey: string;
+    };
+  };
+};
+
+function GroupCard({ group, loading, totalCards, position }: Props) {
   const isFirst = !loading && position === 1;
   const isLast = !loading && position === totalCards;
   let backgroundImage = "";
   let socialIcons = null;
-  let startsInSevenDays = null;
+  let startsInSevenDays = false;
   let nextEvent = {
     title: "TBA",
     date: "Click here for updates",
@@ -26,7 +52,7 @@ function GroupCard({ group, loading, totalCards, position }) {
       socialIcons = <SocialIcons links={group.links} groupName={group.name} />;
     }
 
-    if (Object.keys(group.nextEvent).length) {
+    if (group?.nextEvent?.url) {
       const { url, title } = group.nextEvent;
       const startDate = group.nextEvent.start_date;
       const sevenDays = moment().add(8, "days");
@@ -118,7 +144,7 @@ function GroupCard({ group, loading, totalCards, position }) {
     );
   }
 
-  const renderRibbon = (startsSoon) => {
+  const renderRibbon = (startsSoon: boolean) => {
     if (startsSoon) return <Ribbon text="Soon!" />;
     return null;
   };
@@ -264,32 +290,5 @@ function GroupCard({ group, loading, totalCards, position }) {
     </>
   );
 }
-
-GroupCard.propTypes = {
-  loading: bool.isRequired,
-  totalCards: number.isRequired,
-  position: number.isRequired,
-  group: shape({
-    url: string.isRequired,
-    imagePath: string.isRequired,
-    links: shape({
-      twitter: string.isRequired,
-      discord: string,
-      instagram: string,
-      twitch: string,
-    }).isRequired,
-    name: string.isRequired,
-    nextEvent: shape({
-      url: string,
-      start_date: string,
-      title: string,
-    }),
-    charity: shape({
-      internalPage: bool,
-      url: string.isRequired,
-      imageKey: string.isRequired,
-    }),
-  }).isRequired,
-};
 
 export default GroupCard;

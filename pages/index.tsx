@@ -10,8 +10,13 @@ const GroupCard = dynamic(() => import("../components/organisms/group-card"), {
   ssr: false,
 });
 
+const siteTitle = "Cali Creators MeetUps";
+const description =
+  "We're the meetup groups for Twitch, Facebook, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
+
 type Groups = { [key: string]: Group };
 type Group = {
+  nextEvent?: TwitchEvent;
   city: string;
   name: string;
   imagePath: string;
@@ -28,19 +33,30 @@ type Group = {
     imageKey: string;
   };
 };
+type CachedTwitchEvents = {
+  updatedAt: number;
+  events: TwitchEvent[];
+};
+type TwitchEvent = {
+  chapter: {
+    city: string;
+  };
+  url: string;
+  start_date: string;
+  title: string;
+};
+type MeetupEvent = {
+  group: {
+    localized_location: string;
+  };
+  time: string;
+  utc_offset: number;
+  link: string;
+  startDate: string;
+  name: string;
+};
 
-const siteTitle = "Cali Creators MeetUps";
-const description =
-  "We're the meetup groups for Twitch, Facebook, streamers, and gamers in California!<br/>Find the closest one to you or come to all our events!";
-
-export const getStaticProps = (async () => {
-  const groups: Groups = data?.groups || {};
-  return { props: { groups } };
-}) satisfies GetStaticProps<{
-  groups: Groups;
-}>;
-
-function convertMeetupToTwitch(meetup) {
+function convertMeetupToTwitch(meetup: MeetupEvent[]): TwitchEvent[] {
   const meetupList = meetup.map((event) => {
     const city = event.group.localized_location.split(",")[0];
     const startDate = moment
@@ -60,7 +76,7 @@ function convertMeetupToTwitch(meetup) {
   return meetupList;
 }
 
-async function getUpcomingTwitchEvents() {
+async function getUpcomingTwitchEvents(): Promise<TwitchEvent[]> {
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
   const twitchRes = await fetch(
     `https://meetups.twitch.tv/api/search/?result_types=upcoming_event&country_code=Earth${cacheBuster}`,
@@ -78,17 +94,19 @@ async function getUpcomingTwitchEvents() {
   return [];
 }
 
-async function getUpcomingMeetupEvents(meetupUrlIds) {
+async function getUpcomingMeetupEvents(
+  meetupUrlIds: string[],
+): Promise<TwitchEvent[]> {
   if (meetupUrlIds.length < 1) return [];
 
   const cacheBuster = `&${Math.floor(Math.random() * 1000)}`;
-  const meetupReqs: [Promise<Response>] = meetupUrlIds.map((meetupId) => {
+  const meetupRequests = meetupUrlIds.map((meetupId) => {
     const meetupUrl = `https://api.meetup.com/${meetupId}/events?&sign=true&photo-host=secure&page=5&has_ended=false${cacheBuster}`;
     const meetupUrlProxy = `https://lym20nhb8j.execute-api.us-west-2.amazonaws.com/dev?url=${meetupUrl}`;
     return fetch(meetupUrlProxy);
   });
 
-  const responses = await Promise.all(meetupReqs).catch((err) => {
+  const responses = await Promise.all(meetupRequests).catch((err) => {
     console.log(err);
   });
 
@@ -96,13 +114,15 @@ async function getUpcomingMeetupEvents(meetupUrlIds) {
     return [];
   }
 
-  const meetupResJsons = await Promise.all(responses.map((res) => res.json()));
-  return convertMeetupToTwitch(meetupResJsons);
+  const meetupResJSONs: MeetupEvent[] = await Promise.all(
+    responses.map((res) => res.json()),
+  );
+  return convertMeetupToTwitch(meetupResJSONs);
 }
 
 function Home({ groups }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const meetupUrlIds = [];
-  const twitchUrlIds = [];
+  const meetupUrlIds: string[] = [];
+  const twitchUrlIds: string[] = [];
   Object.values(groups).forEach((group) => {
     const url = new URL(group.url);
     const urlPaths = url.pathname.split("/");
@@ -120,19 +140,27 @@ function Home({ groups }: InferGetStaticPropsType<typeof getStaticProps>) {
     }
   });
 
-  const [upcomingTwitchEvents, setTwitchEvents] = useState({
+  const [upcomingTwitchEvents, setTwitchEvents] = useState<{
+    events: TwitchEvent[];
+    loading: boolean;
+  }>({
     events: [],
     loading: true,
   });
-  const [upcomingMeetupEvents, setMeetupEvents] = useState({
+  const [upcomingMeetupEvents, setMeetupEvents] = useState<{
+    events: TwitchEvent[];
+    loading: boolean;
+  }>({
     events: [],
     loading: true,
   });
 
-  const fiveMinsBefore = (date) => new Date(date - 5 * 60000);
+  const fiveMinsBefore = (date: number) => new Date(date - 5 * 60000);
 
   useEffect(() => {
-    const cachedData = JSON.parse(localStorage.getItem("twitchEvents") || "{}");
+    const cachedData: CachedTwitchEvents = JSON.parse(
+      localStorage.getItem("twitchEvents") || "{}",
+    );
     if (cachedData?.updatedAt) {
       const fiveMinsAgo = fiveMinsBefore(Date.now());
       if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
@@ -153,7 +181,9 @@ function Home({ groups }: InferGetStaticPropsType<typeof getStaticProps>) {
   }, []);
 
   useEffect(() => {
-    const cachedData = JSON.parse(localStorage.getItem("meetupEvents") || "{}");
+    const cachedData: CachedTwitchEvents = JSON.parse(
+      localStorage.getItem("meetupEvents") || "{}",
+    );
     if (cachedData?.updatedAt) {
       const fiveMinsAgo = fiveMinsBefore(Date.now());
       if (new Date(cachedData.updatedAt) > fiveMinsAgo) {
@@ -175,18 +205,21 @@ function Home({ groups }: InferGetStaticPropsType<typeof getStaticProps>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const findNextEvent = (groups, upcomingEvents) => {
-    return groups.map((group) => {
+  function findNextEvent(
+    groups: Groups,
+    upcomingEvents: TwitchEvent[],
+  ): Group[] {
+    return Object.values(groups).map((group) => {
       const nextEvent = upcomingEvents.find((event) => {
         if (event.chapter.city === group.city) return true;
         return false;
       });
       return {
         ...group,
-        nextEvent: nextEvent || {},
+        nextEvent,
       };
     });
-  };
+  }
 
   const renderCards = () => {
     const upcomingEvents = upcomingTwitchEvents.events.concat(
@@ -194,18 +227,17 @@ function Home({ groups }: InferGetStaticPropsType<typeof getStaticProps>) {
     );
     const loading =
       upcomingTwitchEvents.loading || upcomingMeetupEvents.loading;
-    const groupsWithEvents = findNextEvent(
-      Object.values(groups),
-      upcomingEvents,
-    ).sort((a, b) => {
-      if (!a.nextEvent.start_date) return 1;
-      if (!b.nextEvent.start_date) return -1;
-      return (
-        new Date(a.nextEvent.start_date).getTime() -
-        new Date(b.nextEvent.start_date).getTime()
-      );
-    });
-    return groupsWithEvents.map((groupWithEvent, i) => (
+    const groupsWithEvents = findNextEvent(groups, upcomingEvents).sort(
+      (a, b) => {
+        if (!a.nextEvent?.start_date) return 1;
+        if (!b.nextEvent?.start_date) return -1;
+        return (
+          new Date(a.nextEvent.start_date).getTime() -
+          new Date(b.nextEvent.start_date).getTime()
+        );
+      },
+    );
+    return groupsWithEvents.map((groupWithEvent, i: number) => (
       <GroupCard
         key={groupWithEvent.name}
         group={groupWithEvent}
@@ -322,5 +354,12 @@ function Home({ groups }: InferGetStaticPropsType<typeof getStaticProps>) {
     </>
   );
 }
+
+export const getStaticProps = (async () => {
+  const groups = data?.groups || {};
+  return { props: { groups } };
+}) satisfies GetStaticProps<{
+  groups: Groups;
+}>;
 
 export default Home;
