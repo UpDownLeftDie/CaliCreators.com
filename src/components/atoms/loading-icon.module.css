@@ -1,0 +1,12 @@
+.icon :global(.fad) {
+  display: block;
+}
+
+.icon :global(.fad.fa-spinner-third:after) {
+  position: relative;
+  top: 4.4px;
+}
+
+.icon :global(.fad:before) {
+  top: 4.4px;
+}

@@ -1,0 +1,8 @@
+.collapsible {
+  transition: height 350ms;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.collapsed {
+  height: 0px;
+}

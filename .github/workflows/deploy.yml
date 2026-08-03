@@ -5,6 +5,13 @@ on:
       - main
       - master
 
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
 env:
   FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
 
@@ -24,13 +31,20 @@ jobs:
           node-version-file: ".nvmrc"
           cache: "pnpm"
 
+      # pnpm ignores env expansion in project .npmrc auth (supply-chain); set user-level auth instead
+      - name: Configure Font Awesome registry auth
+        run: |
+          echo "//npm.fontawesome.com/:_authToken=${FONTAWESOME_NPM_AUTH_TOKEN}" >> "$HOME/.npmrc"
+
       - name: Install and Build 🔧
         run: |
           pnpm install --frozen-lockfile
           pnpm run build
+          # Client-router fallback for unknown paths on GitHub Pages
+          cp dist/client/index.html dist/client/404.html
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages # The branch the action should deploy to.
-          folder: out # The folder the action should deploy.
+          branch: gh-pages
+          folder: dist/client

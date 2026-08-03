@@ -1,0 +1,78 @@
+.loading {
+  margin-top: 0px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  font-size: 10rem;
+}
+.streamerSchedule {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 800px;
+}
+.upcoming {
+  text-align: center;
+}
+.upcoming h2 {
+  margin-top: 0;
+}
+.shareContainer {
+  justify-self: center;
+}
+@media (max-width: 600px) {
+  .streamerSchedule.upcoming h2 {
+    text-align: center;
+    margin-left: 0;
+  }
+}
+.teamLink {
+  color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 24px;
+  background: #26c2eb;
+  text-decoration: none;
+  font-weight: bold;
+}
+.teamLink:hover {
+  background: #13a2c8;
+}
+.teamMembers {
+  margin-top: 40px;
+  text-align: center;
+  position: relative;
+}
+.sectionHeader {
+  margin-bottom: -30px;
+}
+.page :global(h2 button) {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+  font-weight: inherit;
+  background: inherit;
+  border: inherit;
+  color: inherit;
+}
+.page :global(h2 button:focus:not(:focus-visible)) {
+  outline: none;
+}
+.page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  padding: 50px 16px 0 16px;
+}
+.subheader {
+  padding: 0;
+  margin: 0;
+}
+.homeLink {
+  color: #fff;
+  font-size: 18px;
+}

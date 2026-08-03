@@ -1,0 +1,160 @@
+/* Skip Tailwind preflight so production styled-jsx / global styles stay intact */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/* Keep faces in this critical stylesheet (linked from <head>), not only via JS chunks */
+@import '@fontsource/kanit/latin-300.css';
+@import '@fontsource/kanit/latin-400.css';
+@import '@fontsource/kanit/latin-700.css';
+@import '@fontsource/knewave/latin-400.css';
+
+:root {
+  --font-kanit: 'Kanit', sans-serif;
+  --font-knewave: 'Knewave', sans-serif;
+}
+
+html {
+  min-height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #7230d3;
+  color: #fff;
+  font-family:
+    var(--font-kanit),
+    'Kanit',
+    sans-serif,
+    Avenir Next,
+    Avenir,
+    Helvetica,
+    sans-serif;
+}
+
+/* Avoid Tailwind's `.container` utility (max-width breakpoints). */
+.site-shell::before {
+  content: '';
+  z-index: -999;
+  background-image: url('/funky-lines.png');
+  background-size: 700px;
+  filter: blur(2px);
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+
+.site-shell {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  min-width: 350px;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: stretch;
+  overflow: hidden;
+}
+
+.footer {
+  color: #fff;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 14px;
+  padding-top: 50px;
+}
+
+.footer > p {
+  margin: 0;
+}
+
+.hero {
+  color: #fff;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 50px 16px 0;
+}
+
+.hero .title-wrapper {
+  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.4));
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.hero .title {
+  margin: 0;
+  width: 100%;
+  min-height: 120px;
+  line-height: 1.15;
+  font-size: 48px;
+  font-family: var(--font-knewave), 'Knewave', sans-serif;
+  animation: colorwipe 6s infinite;
+  background: linear-gradient(
+    40deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 25%,
+    rgba(131, 58, 180, 1) 30%,
+    rgba(253, 29, 29, 1) 55%,
+    rgba(252, 176, 69, 1) 70%,
+    rgba(255, 255, 255, 1) 75%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  background-size: 2400px;
+  background-position: 0%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.hero .description {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 300;
+  font-family: var(--font-kanit), 'Kanit', sans-serif;
+}
+
+.hero .row {
+  width: 100%;
+  max-width: 1000px;
+  margin: 65px auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  min-height: 410px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .hero .row {
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+
+@keyframes colorwipe {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}

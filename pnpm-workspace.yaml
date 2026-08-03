@@ -5,3 +5,4 @@ allowBuilds:
   '@fortawesome/free-solid-svg-icons': true
   '@fortawesome/pro-duotone-svg-icons': true
   sharp: true
+  unrs-resolver: true

@@ -6,13 +6,14 @@
 # testing
 /coverage
 
-# next.js
+# next.js (legacy)
 /.next/
 /out/
 
 # production
 /build
 /dist
+/.output
 
 # misc
 .DS_Store
