@@ -2,26 +2,31 @@ import styles from './charity-banner.module.css';
 
 type Props = {
   charity: {
-    internalPage: boolean;
     imageKey: string;
     url: string;
   };
 };
 
-function CharityBanner({charity}: Readonly<Props>) {
+function resolveImage(imageKey: string): {src: string; alt: string} {
+  if (imageKey === 'extralife') {
+    return {src: '/extralife-icon.png', alt: 'Extra Life'};
+  }
+
+  return {src: imageKey, alt: 'Charity'};
+}
+
+export default function CharityBanner({charity}: Readonly<Props>) {
   if (charity.url === '') {
     return null;
   }
 
   const {url} = charity;
-  const image =
-    charity.imageKey === 'extralife' ? '/extralife-icon.png' : charity.imageKey;
-
+  const {src, alt} = resolveImage(charity.imageKey);
   const isInternalLink = !url.toLowerCase().startsWith('http');
 
   const content = (
     <>
-      <img src={image} alt="Extra Life" width={254} height={213} />
+      <img src={src} alt={alt} width={254} height={213} />
       <span>Extra Life Team</span>
     </>
   );
@@ -45,5 +50,3 @@ function CharityBanner({charity}: Readonly<Props>) {
     </a>
   );
 }
-
-export default CharityBanner;

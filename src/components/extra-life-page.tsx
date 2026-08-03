@@ -1,26 +1,26 @@
 import {Link} from '@tanstack/react-router';
 import {useEffect, useState} from 'react';
-import {loadExtraLifeTeam} from '../lib/extralife';
+import {loadExtraLifeTeam, type ExtraLifeParticipant} from '../lib/extralife';
 import type {ExtraLifeGroup, ExtraLifeSearch, Group} from '../lib/schemas';
 import checkIfEventIsLive from '../lib/utils';
-import CollapseArrow from './atoms/collapse-arrow.jsx';
-import Header from './atoms/header.jsx';
-import LoadingIcon from './atoms/loading-icon.jsx';
-import ProgressBar from './atoms/progress-bar.jsx';
+import CollapseArrow from './atoms/collapse-arrow';
+import Header from './atoms/header';
+import LoadingIcon from './atoms/loading-icon';
+import ProgressBar from './atoms/progress-bar';
 import styles from './extra-life-page.module.css';
-import Collapsible from './molecules/collapsible.jsx';
-import SocialIcons from './molecules/social-icons.jsx';
-import TeamMemberCards from './molecules/team-member-cards.jsx';
-import TweetButton from './molecules/tweet-button.jsx';
-import TwitchEmbed from './molecules/twitch-embed.jsx';
-import StreamerSchedule from './organisms/streamer-schedule.jsx';
+import Collapsible from './molecules/collapsible';
+import SocialIcons from './molecules/social-icons';
+import TeamMemberCards from './molecules/team-member-cards';
+import TweetButton from './molecules/tweet-button';
+import TwitchEmbed from './molecules/twitch-embed';
+import StreamerSchedule from './organisms/streamer-schedule';
 
 type TeamState = {
   name?: string;
   fundraisingGoal?: number;
   sumDonations?: number;
   links?: {page?: string};
-  participants?: unknown[];
+  participants?: ExtraLifeParticipant[];
 };
 
 type ScheduleItem = NonNullable<ExtraLifeGroup['schedule']>[number];
@@ -81,8 +81,9 @@ export function ExtraLifePage({groupKey, group, config, search}: Props) {
   const [isTeamCollapsed, setIsTeamCollapsed] = useState(false);
   const [isScheduleCollapsed, setIsScheduleCollapsed] = useState(false);
   const [now, setNow] = useState(() => Date.now());
-  const teamName = (team.name === undefined || team.name === '' ? group : team)
-    .name;
+  const teamName =
+    (team.name === undefined || team.name === '' ? group : team).name ??
+    group.name;
 
   const handleTeamCollapse = () => {
     setIsTeamCollapsed(!isTeamCollapsed);
@@ -192,7 +193,11 @@ export function ExtraLifePage({groupKey, group, config, search}: Props) {
         <div className={`${styles.streamerSchedule}${upcomingClass}`}>
           {shareButton}
           <h2>
-            <button type="button" onClick={handleScheduleCollapse}>
+            <button
+              type="button"
+              aria-expanded={!isScheduleCollapsed}
+              onClick={handleScheduleCollapse}
+            >
               {title}
               <CollapseArrow isCollapsed={isScheduleCollapsed} />
             </button>
@@ -200,7 +205,7 @@ export function ExtraLifePage({groupKey, group, config, search}: Props) {
           <Collapsible isCollapsed={isScheduleCollapsed}>
             <StreamerSchedule
               schedule={schedule}
-              teamMembers={team.participants}
+              teamMembers={team.participants ?? []}
             />
           </Collapsible>
         </div>
@@ -225,13 +230,17 @@ export function ExtraLifePage({groupKey, group, config, search}: Props) {
               Join Team
             </a>
             <h2 className={styles.sectionHeader}>
-              <button type="button" onClick={handleTeamCollapse}>
+              <button
+                type="button"
+                aria-expanded={!isTeamCollapsed}
+                onClick={handleTeamCollapse}
+              >
                 Team Members&nbsp;
                 <CollapseArrow isCollapsed={isTeamCollapsed} />
               </button>
             </h2>
             <Collapsible isCollapsed={isTeamCollapsed}>
-              <TeamMemberCards teamMembers={team.participants} />
+              <TeamMemberCards teamMembers={team.participants ?? []} />
             </Collapsible>
           </div>
         ) : null}
@@ -257,7 +266,7 @@ export function ExtraLifePage({groupKey, group, config, search}: Props) {
         <ProgressBar
           isMoney
           isDisplayProgress
-          isLoading
+          isLoading={isLoading}
           progress={team.sumDonations}
           goal={team.fundraisingGoal}
           progressText="Raised"

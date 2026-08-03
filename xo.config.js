@@ -14,7 +14,7 @@ const xoConfig = [
   ...fixupConfigRules(xoReact({space: true})),
   sonarjs.configs.recommended,
   {
-    // Align with n/file-extension-in-import: TypeScript source extensions omitted.
+    // Bundler resolves TS/JS without extensions; keep CSS/etc. extensions required.
     rules: {
       'import-x/extensions': [
         'error',
@@ -22,11 +22,19 @@ const xoConfig = [
         {
           ignorePackages: true,
           pattern: {
+            js: 'never',
+            jsx: 'never',
+            cjs: 'never',
+            mjs: 'never',
             ts: 'never',
             tsx: 'never',
+            cts: 'never',
+            mts: 'never',
           },
         },
       ],
+      // Off: Node's rule fights bundler/TS resolution (demands .js for .tsx modules).
+      'n/file-extension-in-import': 'off',
     },
   },
   {

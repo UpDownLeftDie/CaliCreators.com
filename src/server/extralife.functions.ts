@@ -14,7 +14,7 @@ export const getExtraLifeConfig = createServerFn({method: 'GET'})
       throw new Error(`No Extra Life config for group: ${data.groupKey}`);
     }
 
-    return configs[data.groupKey]!;
+    return configs[data.groupKey];
   });
 
 export const getExtraLifePage = createServerFn({method: 'GET'})

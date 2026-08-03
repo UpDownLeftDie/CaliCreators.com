@@ -13,12 +13,27 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function asTwitchEvent(value: unknown): TwitchEvent | undefined {
-  if (!isRecord(value)) return;
-  const chapter = value.chapter;
-  if (!isRecord(chapter) || typeof chapter.city !== 'string') return;
-  if (typeof value.url !== 'string') return;
-  if (typeof value.start_date !== 'string') return;
-  if (typeof value.title !== 'string') return;
+  if (!isRecord(value)) {
+    return;
+  }
+
+  const {chapter} = value;
+  if (!isRecord(chapter) || typeof chapter.city !== 'string') {
+    return;
+  }
+
+  if (typeof value.url !== 'string') {
+    return;
+  }
+
+  if (typeof value.start_date !== 'string') {
+    return;
+  }
+
+  if (typeof value.title !== 'string') {
+    return;
+  }
+
   return {
     chapter: {city: chapter.city},
     url: value.url,
@@ -28,13 +43,31 @@ function asTwitchEvent(value: unknown): TwitchEvent | undefined {
 }
 
 function asMeetupEvent(value: unknown): MeetupEvent | undefined {
-  if (!isRecord(value)) return;
-  const group = value.group;
-  if (!isRecord(group) || typeof group.localized_location !== 'string') return;
-  if (typeof value.time !== 'string' && typeof value.time !== 'number') return;
-  if (typeof value.utc_offset !== 'number') return;
-  if (typeof value.link !== 'string') return;
-  if (typeof value.name !== 'string') return;
+  if (!isRecord(value)) {
+    return;
+  }
+
+  const {group} = value;
+  if (!isRecord(group) || typeof group.localized_location !== 'string') {
+    return;
+  }
+
+  if (typeof value.time !== 'string' && typeof value.time !== 'number') {
+    return;
+  }
+
+  if (typeof value.utc_offset !== 'number') {
+    return;
+  }
+
+  if (typeof value.link !== 'string') {
+    return;
+  }
+
+  if (typeof value.name !== 'string') {
+    return;
+  }
+
   return {
     group: {localized_location: group.localized_location},
     time: value.time,
@@ -47,9 +80,9 @@ function asMeetupEvent(value: unknown): MeetupEvent | undefined {
 function convertMeetupToTwitch(meetup: MeetupEvent[]): TwitchEvent[] {
   return meetup.map((event) => {
     const city = event.group.localized_location.split(',', 1)[0] ?? '';
-    const offsetHours = event.utc_offset / 3_600_000;
     const startDate = new Date(event.time);
-    const local = new Date(startDate.getTime() + offsetHours * 3_600_000);
+    // Meetup utc_offset is milliseconds; shift the instant into the event's local wall time.
+    const local = new Date(startDate.getTime() + event.utc_offset);
     const pad = (n: number) => String(n).padStart(2, '0');
     const startDateIso = `${local.getUTCFullYear()}-${pad(local.getUTCMonth() + 1)}-${pad(local.getUTCDate())}T${pad(local.getUTCHours())}:${pad(local.getUTCMinutes())}:${pad(local.getUTCSeconds())}`;
 

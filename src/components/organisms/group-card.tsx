@@ -1,7 +1,6 @@
-import LoadingIcon from '../atoms/loading-icon.jsx';
-import Ribbon from '../atoms/ribbon.jsx';
+import Card from '../atoms/card';
 import CharityBanner from '../molecules/charity-banner';
-import SocialIcons from '../molecules/social-icons.jsx';
+import SocialIcons from '../molecules/social-icons';
 import styles from './group-card.module.css';
 
 const soonWindowMs = 8 * 24 * 60 * 60 * 1000;
@@ -117,54 +116,19 @@ function resolveNextEvent(
   };
 }
 
-function renderRibbon(isStartingSoon: boolean) {
-  if (isStartingSoon) {
-    return <Ribbon text="Soon!" />;
-  }
-
-  return null;
-}
-
-function CardBackground({
-  imageSrc,
-  fetchPriority,
-}: Readonly<{
-  imageSrc: string | undefined;
-  fetchPriority: 'high' | 'auto';
-}>) {
-  return (
-    <span className={styles.cardBackground}>
-      {imageSrc === undefined ? null : (
-        <img
-          className={styles.cardImage}
-          src={imageSrc}
-          alt=""
-          width={500}
-          height={600}
-          decoding="async"
-          fetchPriority={fetchPriority}
-          // First card is LCP — never lazy-load it
-          loading={fetchPriority === 'high' ? 'eager' : 'lazy'}
-        />
-      )}
-    </span>
-  );
-}
-
 function GroupCard({group, isLoading, totalCards, position}: Readonly<Props>) {
   const imageSrc = resolveImageSrc(group.imagePath);
-  const fetchPriority = position === 1 ? 'high' : 'auto';
+  const fetchPriority: 'high' | 'auto' = position === 1 ? 'high' : 'auto';
+  const backgroundImg =
+    imageSrc === undefined
+      ? undefined
+      : {src: imageSrc, fetchPriority, width: 500, height: 600};
 
   if (isLoading) {
     return (
-      <span className={styles.cardContainer}>
-        <div className={styles.card}>
-          <span className={styles.loadingIcon}>
-            <LoadingIcon />
-          </span>
-          <CardBackground imageSrc={imageSrc} fetchPriority={fetchPriority} />
-        </div>
-      </span>
+      <div className={styles.cardContainer}>
+        <Card isLoading variant="group" backgroundImg={backgroundImg} />
+      </div>
     );
   }
 
@@ -180,25 +144,27 @@ function GroupCard({group, isLoading, totalCards, position}: Readonly<Props>) {
       <CharityBanner charity={charity} />
     ) : null;
   const lastCardClass = isLast ? ` ${styles.lastCard}` : '';
-  const glowClass = isStartingSoon ? ` ${styles.glow}` : '';
 
   return (
-    <span className={`${styles.cardContainer}${lastCardClass}`}>
+    <div className={`${styles.cardContainer}${lastCardClass}`}>
       {charityBanner}
       <a href={nextEvent.url} className={styles.cardLink}>
-        <div className={`${styles.card}${glowClass}`}>
-          {renderRibbon(isStartingSoon)}
+        <Card
+          variant="group"
+          isGlowing={isStartingSoon}
+          backgroundImg={backgroundImg}
+          ribbon={isStartingSoon ? [{text: 'Soon!'}] : undefined}
+        >
           <div className={styles.cardInfo}>
             <h4>Next Event</h4>
             <h3>{group.name}</h3>
             <h5 className={styles.eventTitle}>{nextEvent.title}</h5>
             <span className={styles.eventDate}>{nextEvent.date}</span>
           </div>
-          <CardBackground imageSrc={imageSrc} fetchPriority={fetchPriority} />
-        </div>
+        </Card>
       </a>
       {socialIcons}
-    </span>
+    </div>
   );
 }
 

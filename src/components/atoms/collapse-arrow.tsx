@@ -1,16 +1,18 @@
 import {faAngleDown} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import PropTypes from 'prop-types';
-const {bool} = PropTypes;
 import {useEffect, useRef} from 'react';
 import styles from './collapse-arrow.module.css';
 
 const INITIAL_DEG = 0;
 const ROTATED_DEG = -90;
 
-function CollapseArrow({isCollapsed}) {
+type Props = {
+  isCollapsed?: boolean;
+};
+
+export default function CollapseArrow({isCollapsed = false}: Readonly<Props>) {
   const deg = isCollapsed ? ROTATED_DEG : INITIAL_DEG;
-  const ref = useRef();
+  const ref = useRef<HTMLSpanElement>(null);
   const previousCollapsed = useRef(isCollapsed);
 
   useEffect(() => {
@@ -35,17 +37,9 @@ function CollapseArrow({isCollapsed}) {
       ref={ref}
       className={styles.arrow}
       style={{transform: `rotate(${deg}deg)`}}
+      aria-hidden="true"
     >
-      <FontAwesomeIcon icon={faAngleDown} aria-label="Collapse/Expand" />
+      <FontAwesomeIcon icon={faAngleDown} />
     </span>
   );
 }
-
-CollapseArrow.defaultProps = {
-  isCollapsed: false,
-};
-CollapseArrow.propTypes = {
-  isCollapsed: bool,
-};
-
-export default CollapseArrow;

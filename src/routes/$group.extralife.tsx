@@ -1,12 +1,7 @@
 import {createFileRoute, notFound} from '@tanstack/react-router';
 import groupsJson from '../data/groups.json';
 import extralifeJson from '../data/extralife.json';
-import type {
-  ExtraLifeGroup,
-  ExtraLifeSearch,
-  Group,
-  Groups,
-} from '../lib/schemas';
+import type {ExtraLifeGroup, ExtraLifeSearch, Groups} from '../lib/schemas';
 import {ExtraLifePage} from '../components/extra-life-page';
 
 function validateExtraLifeSearch(
@@ -30,10 +25,14 @@ export const Route = createFileRoute('/$group/extralife')({
   loader({params}) {
     const groups = groupsJson.groups as Groups;
     const configs = extralifeJson as Record<string, ExtraLifeGroup>;
-    const group = groups[params.group] as Group | undefined;
-    const config = configs[params.group];
+    const group = Object.hasOwn(groups, params.group)
+      ? groups[params.group]
+      : undefined;
+    const config = Object.hasOwn(configs, params.group)
+      ? configs[params.group]
+      : undefined;
 
-    if (!group || !config) {
+    if (group === undefined || config === undefined) {
       // eslint-disable-next-line @typescript-eslint/only-throw-error -- required router control flow
       throw notFound();
     }

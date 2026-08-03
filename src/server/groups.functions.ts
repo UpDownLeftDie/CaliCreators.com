@@ -16,5 +16,5 @@ export const getGroup = createServerFn({method: 'GET'})
       throw new Error(`Unknown group: ${data.groupKey}`);
     }
 
-    return {groupKey: data.groupKey, group: groups[data.groupKey]!};
+    return {groupKey: data.groupKey, group: groups[data.groupKey]};
   });

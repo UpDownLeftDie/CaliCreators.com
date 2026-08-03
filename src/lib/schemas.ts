@@ -30,7 +30,6 @@ export type TwitchEvent = {
 export type ExtraLifeScheduleItem = {
   streamer: string;
   twitter?: string;
-  rawstarr?: string;
   timeStart: string;
   timeEnd: string;
 };

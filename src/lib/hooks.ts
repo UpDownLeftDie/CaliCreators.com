@@ -1,17 +1,21 @@
-import {useState, useLayoutEffect} from 'react';
+import {useSyncExternalStore} from 'react';
 
-export default function useElementSize(element = globalThis) {
-  const [elementSize, setElementSize] = useState({width: 0, height: 0});
-  useLayoutEffect(() => {
-    function updateSize() {
-      setElementSize({width: element.innerWidth, height: element.innerHeight});
-    }
+function subscribeToMediaQuery(query: string, onStoreChange: () => void) {
+  const mediaQueryList = globalThis.matchMedia(query);
+  mediaQueryList.addEventListener('change', onStoreChange);
+  return () => {
+    mediaQueryList.removeEventListener('change', onStoreChange);
+  };
+}
 
-    element.addEventListener('resize', updateSize);
-    updateSize();
-    return () => {
-      element.removeEventListener('resize', updateSize);
-    };
-  }, [element]);
-  return elementSize;
+/** Client media query; SSR/snapshot before hydrate uses `isServerMatch`. */
+export function useIsMediaQuery(
+  query: string,
+  isServerMatch: () => boolean = () => false,
+): boolean {
+  return useSyncExternalStore(
+    (onStoreChange) => subscribeToMediaQuery(query, onStoreChange),
+    () => globalThis.matchMedia(query).matches,
+    isServerMatch,
+  );
 }

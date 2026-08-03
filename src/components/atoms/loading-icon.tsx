@@ -3,7 +3,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useSyncExternalStore} from 'react';
 import styles from './loading-icon.module.css';
 
-const emptySubscribe = () => () => {};
+const emptySubscribe = () => () => {
+  // No external store; client-only gate for Font Awesome.
+};
 
 export default function LoadingIcon() {
   const isClient = useSyncExternalStore(

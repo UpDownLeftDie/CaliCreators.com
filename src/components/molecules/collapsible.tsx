@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
-const {bool, element} = PropTypes;
-import {useLayoutEffect, useRef, useState} from 'react';
+import {type ReactNode, useLayoutEffect, useRef, useState} from 'react';
 import styles from './collapsible.module.css';
 
-function Collapsible({children, isCollapsed}) {
-  const measureRef = useRef(null);
+type Props = {
+  children: ReactNode;
+  isCollapsed: boolean;
+};
+
+export default function Collapsible({children, isCollapsed}: Readonly<Props>) {
+  const measureRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState('auto');
 
   useLayoutEffect(() => {
@@ -15,7 +18,7 @@ function Collapsible({children, isCollapsed}) {
 
     const updateHeight = () => {
       const measureHeight = measureElement.offsetHeight;
-      if (!measureHeight) {
+      if (measureHeight === 0) {
         return;
       }
 
@@ -24,7 +27,7 @@ function Collapsible({children, isCollapsed}) {
 
     // Delay initial measure to avoid a race where offsetHeight is short
     const timeoutId = setTimeout(updateHeight, 250);
-    const observer = new globalThis.ResizeObserver(updateHeight);
+    const observer = new ResizeObserver(updateHeight);
     observer.observe(measureElement);
 
     return () => {
@@ -44,10 +47,3 @@ function Collapsible({children, isCollapsed}) {
     </div>
   );
 }
-
-Collapsible.propTypes = {
-  children: element.isRequired,
-  isCollapsed: bool.isRequired,
-};
-
-export default Collapsible;
