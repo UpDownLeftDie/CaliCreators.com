@@ -9,6 +9,10 @@ import {
 } from '@tanstack/react-router';
 import {config} from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import kanit300 from '@fontsource/kanit/files/kanit-latin-300-normal.woff2?url';
+import kanit400 from '@fontsource/kanit/files/kanit-latin-400-normal.woff2?url';
+import kanit700 from '@fontsource/kanit/files/kanit-latin-700-normal.woff2?url';
+import knewave400 from '@fontsource/knewave/files/knewave-latin-400-normal.woff2?url';
 import appCss from '../styles/globals.css?url';
 
 type ForkRibbonProps = {
@@ -36,6 +40,15 @@ const GitHubForkRibbon = lazy(async () => {
 config.autoAddCss = false;
 
 const siteUrl = 'https://calicreators.com';
+
+const fontPreloads = [knewave400, kanit300, kanit400, kanit700].map((href) => ({
+  rel: 'preload' as const,
+  as: 'font' as const,
+  type: 'font/woff2',
+  href,
+  // Required so the preload matches @font-face (even same-origin)
+  crossOrigin: 'anonymous' as const,
+}));
 
 export const Route = createRootRoute({
   head: () => ({
@@ -66,6 +79,7 @@ export const Route = createRootRoute({
       {title: 'Cali Creators MeetUps'},
     ],
     links: [
+      ...fontPreloads,
       {rel: 'stylesheet', href: appCss},
       {rel: 'apple-touch-icon', href: '/apple-touch-icon.png'},
       {

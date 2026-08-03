@@ -81,12 +81,12 @@ type ResolvedEvent = {
   url: string;
 };
 
-function resolveBackgroundImage(imagePath: string): string | undefined {
+function resolveImageSrc(imagePath: string): string | undefined {
   if (imagePath === '') {
     return undefined;
   }
 
-  return `url('/${imagePath}')`;
+  return `/${imagePath}`;
 }
 
 function resolveNextEvent(
@@ -125,7 +125,36 @@ function renderRibbon(isStartingSoon: boolean) {
   return null;
 }
 
+function CardBackground({
+  imageSrc,
+  fetchPriority,
+}: Readonly<{
+  imageSrc: string | undefined;
+  fetchPriority: 'high' | 'auto';
+}>) {
+  return (
+    <span className={styles.cardBackground}>
+      {imageSrc === undefined ? null : (
+        <img
+          className={styles.cardImage}
+          src={imageSrc}
+          alt=""
+          width={500}
+          height={600}
+          decoding="async"
+          fetchPriority={fetchPriority}
+          // First card is LCP — never lazy-load it
+          loading={fetchPriority === 'high' ? 'eager' : 'lazy'}
+        />
+      )}
+    </span>
+  );
+}
+
 function GroupCard({group, isLoading, totalCards, position}: Readonly<Props>) {
+  const imageSrc = resolveImageSrc(group.imagePath);
+  const fetchPriority = position === 1 ? 'high' : 'auto';
+
   if (isLoading) {
     return (
       <span className={styles.cardContainer}>
@@ -133,17 +162,13 @@ function GroupCard({group, isLoading, totalCards, position}: Readonly<Props>) {
           <span className={styles.loadingIcon}>
             <LoadingIcon />
           </span>
-          <span
-            className={styles.cardBackground}
-            style={{backgroundColor: '#3d2769'}}
-          />
+          <CardBackground imageSrc={imageSrc} fetchPriority={fetchPriority} />
         </div>
       </span>
     );
   }
 
   const isLast = position === totalCards;
-  const backgroundImage = resolveBackgroundImage(group.imagePath);
   const socialIcons =
     group.name === '' ? null : (
       <SocialIcons links={group.links} groupName={group.name} />
@@ -169,13 +194,7 @@ function GroupCard({group, isLoading, totalCards, position}: Readonly<Props>) {
             <h5 className={styles.eventTitle}>{nextEvent.title}</h5>
             <span className={styles.eventDate}>{nextEvent.date}</span>
           </div>
-          <span
-            className={styles.cardBackground}
-            style={{
-              backgroundColor: '#555',
-              backgroundImage,
-            }}
-          />
+          <CardBackground imageSrc={imageSrc} fetchPriority={fetchPriority} />
         </div>
       </a>
       {socialIcons}

@@ -1,8 +1,7 @@
-import {lazy, Suspense, useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import type {Groups, TwitchEvent} from '../lib/schemas';
 import {loadMeetupEvents, loadTwitchEvents} from '../lib/events';
-
-const GroupCard = lazy(async () => import('./organisms/group-card'));
+import GroupCard from './organisms/group-card';
 
 const siteTitle = 'Cali Creators MeetUps';
 const fiveMinutesMs = 5 * 60_000;
@@ -153,30 +152,30 @@ export function HomePage({groups}: HomeProps) {
     ];
     const isLoading =
       upcomingTwitchEvents.loading || upcomingMeetupEvents.loading;
-    const groupsWithEvents = findNextEvent(groups, upcomingEvents).toSorted(
-      (a, b) => {
-        const aStart = a.nextEvent?.start_date;
-        if (typeof aStart !== 'string' || aStart === '') {
-          return 1;
-        }
+    // Keep a stable initial order (matches preload) until events resolve
+    const groupsWithEvents = isLoading
+      ? Object.values(groups).map((group) => ({...group, nextEvent: undefined}))
+      : findNextEvent(groups, upcomingEvents).toSorted((a, b) => {
+          const aStart = a.nextEvent?.start_date;
+          if (typeof aStart !== 'string' || aStart === '') {
+            return 1;
+          }
 
-        const bStart = b.nextEvent?.start_date;
-        if (typeof bStart !== 'string' || bStart === '') {
-          return -1;
-        }
+          const bStart = b.nextEvent?.start_date;
+          if (typeof bStart !== 'string' || bStart === '') {
+            return -1;
+          }
 
-        return new Date(aStart).getTime() - new Date(bStart).getTime();
-      },
-    );
+          return new Date(aStart).getTime() - new Date(bStart).getTime();
+        });
     return groupsWithEvents.map((groupWithEvent, i: number) => (
-      <Suspense key={groupWithEvent.name} fallback={null}>
-        <GroupCard
-          group={groupWithEvent}
-          isLoading={isLoading}
-          totalCards={groupsWithEvents.length}
-          position={i + 1}
-        />
-      </Suspense>
+      <GroupCard
+        key={groupWithEvent.name}
+        group={groupWithEvent}
+        isLoading={isLoading}
+        totalCards={groupsWithEvents.length}
+        position={i + 1}
+      />
     ));
   };
 

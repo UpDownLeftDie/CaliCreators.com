@@ -3,7 +3,7 @@
     "la": {
       "city": "Los Angeles",
       "name": "Twitch LA",
-      "imagePath": "la.jpg",
+      "imagePath": "la.webp",
       "url": "https://meetups.twitch.tv/los-angeles",
       "links": {
         "twitter": "TwitchLosAngele",
@@ -14,7 +14,7 @@
     "oc": {
       "city": "Anaheim",
       "name": "OC Streamers",
-      "imagePath": "oc.jpg",
+      "imagePath": "oc.webp",
       "url": "https://udld.rocks/ocdiscord",
       "links": {
         "twitter": "OCStreamers",
@@ -25,7 +25,7 @@
     "sd": {
       "city": "San Diego",
       "name": "Twitch SD",
-      "imagePath": "sd.jpg",
+      "imagePath": "sd.webp",
       "url": "https://meetups.twitch.tv/san-diego",
       "links": {
         "twitch": "twitch_sandiego",
